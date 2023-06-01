@@ -1,0 +1,10 @@
+%indents-reset {
+  margin: 0;
+  padding: 0;
+}
+
+%scrollbar {
+  background: $color-text-inactive;
+  border: 3px solid $color-background-element;
+  border-radius: 6px;
+}

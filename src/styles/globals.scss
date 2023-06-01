@@ -1,0 +1,170 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: 'Jet Brains Mono', 'Arial', 'Helvetica', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $color-text-primary;
+
+  background: $color-background-alt;
+}
+
+body,
+h1,
+h2,
+h3,
+h5,
+h6,
+ul,
+ol,
+a,
+button {
+  @extend %indents-reset;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style-type: none;
+}
+
+:root {
+  scrollbar-width: thin;
+}
+
+@-moz-document url-prefix() {
+  :root {
+    scrollbar-color: $color-text-inactive $color-background-element;
+  }
+}
+
+// SCROLLBAR
+.custom-scroll {
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-background-element;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @extend %scrollbar;
+  }
+}
+
+.body {
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-background-element;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @extend %scrollbar;
+  }
+}
+
+// TYPOGRAPHY
+.text {
+  @extend %indents-reset;
+
+  &Type {
+    &Main {
+      &Default {
+        @include showFont(
+          $size: $font-size-xs,
+          $line-height: $font-line-height-xxl
+        );
+      }
+
+      &Large {
+        @include showFont(
+          $size: $font-size-l,
+          $weight: 700,
+          $line-height: $font-line-height-m
+        );
+      }
+
+      &Medium {
+        @include showFont(
+          $size: $font-size-s,
+          $weight: 700,
+          $line-height: $font-line-height-l
+        );
+      }
+
+      &Small {
+        @include showFont(
+          $size: $font-size-xxs,
+          $line-height: $font-line-height-xl
+        );
+      }
+    }
+
+    &Digits {
+      &Default {
+        @include showFont(
+          $family: 'Iceland',
+          $size: $font-size-m,
+          $line-height: $font-line-height-s
+        );
+      }
+
+      &Medium {
+        @include showFont(
+          $family: 'Iceland',
+          $size: $font-size-xl,
+          $line-height: $font-line-height-xxs
+        );
+      }
+
+      &Large {
+        @include showFont(
+          $family: 'Iceland',
+          $size: $font-size-xxl,
+          $line-height: $font-line-height-xs
+        );
+      }
+    }
+
+    &Color {
+      &Primary {
+        color: $color-text-primary;
+      }
+
+      &Accent {
+        color: $colors-interface-accent;
+      }
+
+      &Success {
+        color: $colors-interface-success;
+      }
+
+      &Error {
+        color: $colors-interface-error;
+      }
+
+      &Inactive {
+        color: $color-text-inactive;
+      }
+    }
+  }
+}
+
+.noselect {
+  -webkit-touch-callout: none; // iOS Safari
+  -webkit-user-select: none; // Safari
+  -khtml-user-select: none; // Konqueror HTML
+  -moz-user-select: none; // Old versions of Firefox
+  -ms-user-select: none; // Internet Explorer/Edge
+  user-select: none; // Non-prefixed version, currently
+  //  supported by Chrome, Edge, Opera and Firefox
+}

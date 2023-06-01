@@ -1,0 +1,13 @@
+@mixin showFont(
+  $family: 'Jet Brains Mono',
+  $weight: 400,
+  $size,
+  $line-height,
+  $color: $color-text-primary
+) {
+  font-family: $family;
+  font-weight: $weight;
+  size: $size;
+  line-height: $line-height;
+  color: $color;
+}
