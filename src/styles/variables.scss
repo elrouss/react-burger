@@ -7,7 +7,7 @@ $font-size-s: 2.4rem;
 $font-size-xs: 1.6rem;
 $font-size-xxs: 1.4rem;
 
-$font-line-height-xxl: 1.5;
+$font-line-height-xxl: 114%;
 $font-line-height-xl: 1.43;
 $font-line-height-l: 1.25;
 $font-line-height-m: 1.1;
@@ -27,6 +27,9 @@ $colors-interface-error: #e52b1a;
 $colors-interface-success: #00cccc;
 $colors-button-inactive: #3a3a55;
 $color-scrollbar: $color-background-element $color-text-inactive;
+
+// CONTAINERS
+$wrapper-desktop-xl: 1240px;
 
 // SIZES
 $offset-base-variable: 2px;
