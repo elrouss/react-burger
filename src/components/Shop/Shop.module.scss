@@ -1,0 +1,21 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.main {
+  color: $color-text-primary;
+}
+
+.wrapper {
+  max-width: $wrapper-desktop-xl;
+  margin: 0 auto;
+}
+
+.heading {
+  padding: 40px 0 20px;
+
+  @include showFont(
+    $weight: 700,
+    $size: $font-size-l,
+    $line-height: $font-line-height-m,
+  );
+}
