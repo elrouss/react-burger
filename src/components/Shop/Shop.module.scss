@@ -1,5 +1,4 @@
-@import '../../styles/variables.scss';
-@import '../../styles/mixins.scss';
+@import '../../index.scss';
 
 .main {
   color: $color-text-primary;
@@ -8,6 +7,7 @@
 .wrapper {
   max-width: $wrapper-desktop-xl;
   margin: 0 auto;
+  padding-bottom: 40px;
 }
 
 .heading {
@@ -16,6 +16,12 @@
   @include showFont(
     $weight: 700,
     $size: $font-size-l,
-    $line-height: $font-line-height-m,
+    $line-height: $font-line-height-m
   );
+}
+
+.shop {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
 }

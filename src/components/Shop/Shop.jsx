@@ -7,7 +7,9 @@ function Shop() {
     <main className={styles.main}>
       <div className={styles.wrapper}>
         <h1 className={styles.heading}>Соберите бургер</h1>
-        <BurgerIngredients />
+        <div className={styles.shop}>
+          <BurgerIngredients />
+        </div>
       </div>
     </main>
   );

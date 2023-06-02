@@ -44,7 +44,7 @@ ol {
 }
 
 // SCROLLBAR
-.custom-scroll {
+body {
   &::-webkit-scrollbar {
     width: 12px;
   }
@@ -58,7 +58,7 @@ ol {
   }
 }
 
-.body {
+.custom-scroll {
   &::-webkit-scrollbar {
     width: 12px;
   }
