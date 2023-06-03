@@ -16,13 +16,13 @@ function AppHeader() {
             <ul className={styles.navLinks}>
               <li>
                 <a className={styles.navLink} href="/test">
-                  <BurgerIcon />
+                  <BurgerIcon type="primary" />
                   <span>Конструктор</span>
                 </a>
               </li>
               <li>
                 <a className={styles.navLink} href="/test">
-                  <ListIcon />
+                  <ListIcon type="primary" />
                   <span>Лента заказов</span>
                 </a>
               </li>
@@ -31,7 +31,7 @@ function AppHeader() {
           <Logo />
         </div>
         <a className={styles.account} href="/test">
-          <ProfileIcon />
+          <ProfileIcon type="primary" />
           <span>Личный кабинет</span>
         </a>
       </div>
