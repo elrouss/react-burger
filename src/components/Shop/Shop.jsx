@@ -1,4 +1,5 @@
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 
 import styles from './Shop.module.scss';
 
@@ -9,6 +10,7 @@ function Shop() {
         <h1 className={styles.heading}>Соберите бургер</h1>
         <div className={styles.shop}>
           <BurgerIngredients />
+          <BurgerConstructor />
         </div>
       </div>
     </main>
