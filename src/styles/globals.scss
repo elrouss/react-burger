@@ -35,6 +35,7 @@ ol {
   list-style-type: none;
 }
 
+// SCROLLBAR
 :root {
   scrollbar-width: thin;
 }
@@ -45,7 +46,6 @@ ol {
   }
 }
 
-// SCROLLBAR
 body {
   &::-webkit-scrollbar {
     width: 12px;
@@ -71,93 +71,6 @@ body {
 
   &::-webkit-scrollbar-thumb {
     @extend %scrollbar;
-  }
-}
-
-// TYPOGRAPHY
-.text {
-  @extend %indents-reset;
-
-  &Type {
-    &Main {
-      &Default {
-        @include showFont(
-          $size: $font-size-xs,
-          $line-height: $font-line-height-xxl
-        );
-      }
-
-      &Large {
-        @include showFont(
-          $size: $font-size-l,
-          $weight: 700,
-          $line-height: $font-line-height-m
-        );
-      }
-
-      &Medium {
-        @include showFont(
-          $size: $font-size-s,
-          $weight: 700,
-          $line-height: $font-line-height-l
-        );
-      }
-
-      &Small {
-        @include showFont(
-          $size: $font-size-xxs,
-          $line-height: $font-line-height-xl
-        );
-      }
-    }
-
-    &Digits {
-      &Default {
-        @include showFont(
-          $family: 'Iceland',
-          $size: $font-size-m,
-          $line-height: $font-line-height-s
-        );
-      }
-
-      &Medium {
-        @include showFont(
-          $family: 'Iceland',
-          $size: $font-size-xl,
-          $line-height: $font-line-height-xxs
-        );
-      }
-
-      &Large {
-        @include showFont(
-          $family: 'Iceland',
-          $size: $font-size-xxl,
-          $line-height: $font-line-height-xs
-        );
-      }
-    }
-
-    &Color {
-      &Primary {
-        color: $color-text-primary;
-      }
-
-      &Accent {
-        color: $colors-interface-accent;
-      }
-
-      &Success {
-        color: $colors-interface-success;
-      }
-
-      &Error {
-        color: $colors-interface-error;
-      }
-
-      &Inactive {
-        color: $color-text-inactive;
-      }
-    }
   }
 }
 
