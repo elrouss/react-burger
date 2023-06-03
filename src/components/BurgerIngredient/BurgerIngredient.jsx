@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types';
 
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+  CurrencyIcon,
+  Counter,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './BurgerIngredient.module.scss';
 
 function BurgerIngredient({ name, link, price }) {
   return (
     <article className={styles.card}>
+      <Counter count={1} size="default" />
       <img className={styles.image} src={link} alt={`Ингредиент: ${name}`} />
       <div className={styles.price}>
         <span>{price}</span>
