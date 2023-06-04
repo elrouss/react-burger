@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import AppHeader from '../AppHeader/AppHeader';
 import Shop from '../Shop/Shop';
+import Modal from '../Modal/Modal';
 
 import API from '../../utils/constants';
 
@@ -33,6 +34,8 @@ function App() {
     <>
       <AppHeader />
       <Shop data={ingredients} />
+
+      <Modal />
     </>
   );
 }
