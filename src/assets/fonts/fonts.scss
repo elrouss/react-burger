@@ -1,0 +1,46 @@
+@mixin uploadFont($file, $format, $family, $weight: 400) {
+  @font-face {
+    font-family: $family;
+    font-weight: $weight;
+    font-display: swap;
+    src: url(#{$file}) format($format);
+  }
+}
+
+@include uploadFont(
+  $file: './JetBrainsMono-Regular.woff2',
+  $format: 'woff2',
+  $family: 'Jet Brains Mono'
+);
+
+@include uploadFont(
+  $file: './JetBrainsMono-Regular.woff',
+  $format: 'woff',
+  $family: 'Jet Brains Mono'
+);
+
+@include uploadFont(
+  $file: './JetBrainsMono-Bold.woff2',
+  $format: 'woff2',
+  $family: 'Jet Brains Mono',
+  $weight: 700
+);
+
+@include uploadFont(
+  $file: './JetBrainsMono-Bold.woff',
+  $format: 'woff',
+  $family: 'Jet Brains Mono',
+  $weight: 700
+);
+
+@include uploadFont(
+  $file: './iceland.woff2',
+  $format: 'woff2',
+  $family: 'Iceland'
+);
+
+@include uploadFont(
+  $file: './iceland.woff',
+  $format: 'woff',
+  $family: 'Iceland'
+);
