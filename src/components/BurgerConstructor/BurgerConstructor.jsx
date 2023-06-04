@@ -7,11 +7,11 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import data from '../../utils/data';
+import ingredientsTypes from '../../utils/types/ingredients';
 
 import styles from './BurgerConstructor.module.scss';
 
-function BurgerConstructor() {
+function BurgerConstructor({ data }) {
   let sum = 0;
 
   const [totalPrice, setTotalPrice] = useState(sum);
@@ -27,9 +27,9 @@ function BurgerConstructor() {
           extraClass={styles.bun}
           type="top"
           isLocked
-          text={`${data[0].name} (верх)`}
-          price={data[0].price}
-          thumbnail={data[0].image}
+          text={`${data[0]?.name} (верх)`}
+          price={data[0]?.price}
+          thumbnail={data[0]?.image}
         />
         <div className={styles.components}>
           {data
@@ -54,9 +54,9 @@ function BurgerConstructor() {
           extraClass={styles.bun}
           type="bottom"
           isLocked
-          text={`${data[0].name} (низ)`}
-          price={data[0].price}
-          thumbnail={data[0].image}
+          text={`${data[0]?.name} (низ)`}
+          price={data[0]?.price}
+          thumbnail={data[0]?.image}
         />
         <div className={styles.info}>
           <div className={styles.price}>
@@ -71,5 +71,7 @@ function BurgerConstructor() {
     </section>
   );
 }
+
+BurgerConstructor.propTypes = ingredientsTypes;
 
 export default BurgerConstructor;

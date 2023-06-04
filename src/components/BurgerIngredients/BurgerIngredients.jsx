@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 
-import data from '../../utils/data';
+import ingredientsTypes from '../../utils/types/ingredients';
 
 import styles from './BurgerIngredients.module.scss';
 
-function BurgerIngredients() {
+function BurgerIngredients({ data }) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
   const [current, setCurrent] = useState('one');
 
@@ -59,5 +59,7 @@ function BurgerIngredients() {
     </section>
   );
 }
+
+BurgerIngredients.propTypes = ingredientsTypes;
 
 export default BurgerIngredients;
