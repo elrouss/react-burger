@@ -12,6 +12,13 @@
   height: 100%;
 
   background-color: rgba(0, 0, 0, 0.6);
-  // opacity: 0;
-  // visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
+
+  transition: $common-transition;
+}
+
+.opened {
+  opacity: 1;
+  visibility: visible;
 }
