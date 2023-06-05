@@ -7,11 +7,11 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay';
 
 import styles from './Modal.module.scss';
 
-function Modal({ children, onModalClose, ...rest }) {
+function Modal({ children, ...rest }) {
   return createPortal(
-    <ModalOverlay onModalClose={onModalClose} {...rest}>
-      <div className={styles.modal} onClick={(evt) => evt.stopPropagation()}>
-        <CloseIcon type="primary" onClick={() => onModalClose()} />
+    <ModalOverlay {...rest}>
+      <div className={styles.modal}>
+        <CloseIcon type="primary" onClick={() => rest.onModalClose()} />
         {children}
       </div>
     </ModalOverlay>,

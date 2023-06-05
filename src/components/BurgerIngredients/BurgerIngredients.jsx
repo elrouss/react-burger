@@ -38,7 +38,7 @@ function BurgerIngredients({ data }) {
   useEffect(() => {
     if (isIngredientDetailsModalOpened) return;
 
-  // Time is the same as the animation of modals' appearing
+    // Time is the same as the animation of modals' appearing
     setTimeout(() => setCurrentIngredient({}), 300);
   }, [isIngredientDetailsModalOpened]);
 
@@ -87,6 +87,7 @@ function BurgerIngredients({ data }) {
       </section>
 
       <IngredientDetails
+        id="ingredient-details"
         currentIngredient={currentIngredient}
         isModalOpened={isIngredientDetailsModalOpened}
         onModalClose={handleModalClose}

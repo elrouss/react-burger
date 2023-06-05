@@ -1,19 +1,18 @@
 import PropTypes from 'prop-types';
 
-import useCloseModalEscape from '../../hooks/useCloseModalEscape';
+import useCloseModal from '../../hooks/useCloseModal';
 
 import styles from './ModalOverlay.module.scss';
 
-function ModalOverlay({ children, isModalOpened, onModalClose }) {
-  useCloseModalEscape(isModalOpened, onModalClose);
+function ModalOverlay({ id, children, isModalOpened, onModalClose }) {
+  useCloseModal(id, isModalOpened, onModalClose);
 
   return (
     <div
       className={`${styles.overlay}${
         (isModalOpened && ` ${styles.opened}`) || ''
       }`}
-      onClick={() => onModalClose()}
-      onKeyDown={(evt) => onModalClose(evt)}
+      id={id}
     >
       {children}
     </div>
@@ -21,6 +20,7 @@ function ModalOverlay({ children, isModalOpened, onModalClose }) {
 }
 
 ModalOverlay.propTypes = {
+  id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   isModalOpened: PropTypes.bool.isRequired,
   onModalClose: PropTypes.func.isRequired,

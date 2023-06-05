@@ -8,6 +8,28 @@ function IngredientDetails({
   currentIngredient: { image, name, calories, proteins, fat, carbohydrates },
   ...rest
 }) {
+  const list = [
+    {
+      param: calories,
+      nameEng: 'calories',
+      nameRus: 'Калории,ккал',
+    },
+    {
+      param: proteins,
+      nameEng: 'proteins',
+      nameRus: 'Белки, г',
+    },
+    {
+      param: fat,
+      nameEng: 'fat',
+      nameRus: 'Жиры, г',
+    },
+    {
+      param: carbohydrates,
+      nameEng: 'carbohydrates',
+      nameRus: 'Углеводы, г',
+    },
+  ];
 
   return (
     <Modal {...rest}>
@@ -21,22 +43,12 @@ function IngredientDetails({
           />
           <h4 className={styles.headingItem}>{name}</h4>
           <ul className={styles.list}>
-            <li className={styles.listItem}>
-              <h5 className={styles.listHeading}>Калории,ккал</h5>
-              <span>{calories}</span>
-            </li>
-            <li className={styles.listItem}>
-              <h5 className={styles.listHeading}>Белки, г</h5>
-              <span>{proteins}</span>
-            </li>
-            <li className={styles.listItem}>
-              <h5 className={styles.listHeading}>Жиры, г</h5>
-              <span>{fat}</span>
-            </li>
-            <li className={styles.listItem}>
-              <h5 className={styles.listHeading}>Углеводы, г</h5>
-              <span>{carbohydrates}</span>
-            </li>
+            {list.map(({ param, nameEng, nameRus }) => (
+              <li key={`key-${nameEng}`} className={styles.listItem}>
+                <h5 className={styles.listHeading}>{nameRus}</h5>
+                <span>{param}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

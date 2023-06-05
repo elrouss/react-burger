@@ -82,6 +82,7 @@ function BurgerConstructor({ data }) {
       </section>
 
       <OrderDetails
+        id="order-details"
         isModalOpened={isOrderDetailsModalOpened}
         onModalClose={handleModalClose}
       />
