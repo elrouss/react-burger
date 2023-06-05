@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   ConstructorElement,
@@ -7,37 +7,44 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import OrderDetails from '../OrderDetails/OrderDetails';
+
 import ingredientsTypes from '../../utils/types/ingredients';
 
 import styles from './BurgerConstructor.module.scss';
 
 function BurgerConstructor({ data }) {
-  let sum = 0;
+  const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
+    useState(false);
 
-  const [totalPrice, setTotalPrice] = useState(sum);
+  const handleModalOpen = (evt) => {
+    evt.preventDefault();
 
-  useEffect(() => {
-    setTotalPrice(sum);
-  }, [sum]);
+    if (evt.type === 'click' || evt?.key === 'Enter') {
+      setIsOrderDetailsModalOpened(true);
+    }
+  };
+
+  const handleModalClose = () => {
+    setIsOrderDetailsModalOpened(false);
+  };
 
   return (
-    <section>
-      <form className={styles.order}>
-        <ConstructorElement
-          extraClass={styles.bun}
-          type="top"
-          isLocked
-          text={`${data[0]?.name} (верх)`}
-          price={data[0]?.price}
-          thumbnail={data[0]?.image}
-        />
-        <div className={styles.components}>
-          {data
-            .filter(({ type }) => type !== 'bun')
-            .map(({ _id, name, price, image }) => {
-              sum += price;
-
-              return (
+    <>
+      <section>
+        <form className={styles.order}>
+          <ConstructorElement
+            extraClass={styles.bun}
+            type="top"
+            isLocked
+            text={`${data[0]?.name} (верх)`}
+            price={data[0]?.price}
+            thumbnail={data[0]?.image}
+          />
+          <div className={styles.components}>
+            {data
+              .filter(({ type }) => type !== 'bun')
+              .map(({ _id, name, price, image }) => (
                 <div key={`container-${_id}`} className={styles.item}>
                   <DragIcon key={`icon-${_id}`} type="primary" />
                   <ConstructorElement
@@ -47,28 +54,38 @@ function BurgerConstructor({ data }) {
                     thumbnail={image}
                   />
                 </div>
-              );
-            })}
-        </div>
-        <ConstructorElement
-          extraClass={styles.bun}
-          type="bottom"
-          isLocked
-          text={`${data[0]?.name} (низ)`}
-          price={data[0]?.price}
-          thumbnail={data[0]?.image}
-        />
-        <div className={styles.info}>
-          <div className={styles.price}>
-            <span>{totalPrice}</span>
-            <CurrencyIcon />
+              ))}
           </div>
-          <Button htmlType="submit" type="primary" size="large">
-            Оформить заказ
-          </Button>
-        </div>
-      </form>
-    </section>
+          <ConstructorElement
+            extraClass={styles.bun}
+            type="bottom"
+            isLocked
+            text={`${data[0]?.name} (низ)`}
+            price={data[0]?.price}
+            thumbnail={data[0]?.image}
+          />
+          <div className={styles.info}>
+            <div className={styles.price}>
+              <span>610</span>
+              <CurrencyIcon />
+            </div>
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              onClick={(evt) => handleModalOpen(evt)}
+            >
+              Оформить заказ
+            </Button>
+          </div>
+        </form>
+      </section>
+
+      <OrderDetails
+        isModalOpened={isOrderDetailsModalOpened}
+        onModalClose={handleModalClose}
+      />
+    </>
   );
 }
 

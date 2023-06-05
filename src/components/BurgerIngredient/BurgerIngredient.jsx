@@ -9,7 +9,12 @@ import styles from './BurgerIngredient.module.scss';
 
 function BurgerIngredient({ _id, name, link, price, onModalOpen }) {
   return (
-    <div role="button" tabIndex={0} onClick={(evt) => onModalOpen(evt, _id)}>
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={(evt) => onModalOpen(evt, _id)}
+      onKeyDown={(evt) => onModalOpen(evt, _id)}
+    >
       <article className={styles.card}>
         <Counter count={1} size="default" />
         <img className={styles.image} src={link} alt={`Ингредиент: ${name}`} />

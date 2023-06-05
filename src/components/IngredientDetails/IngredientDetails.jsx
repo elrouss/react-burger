@@ -8,6 +8,7 @@ function IngredientDetails({
   currentIngredient: { image, name, calories, proteins, fat, carbohydrates },
   ...rest
 }) {
+
   return (
     <Modal {...rest}>
       <div className={styles.wrapper}>

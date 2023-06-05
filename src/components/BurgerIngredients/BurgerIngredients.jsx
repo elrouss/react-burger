@@ -13,7 +13,8 @@ function BurgerIngredients({ data }) {
   // TODO: использовать useCallback
   const [current, setCurrent] = useState('one');
   const [currentIngredient, setCurrentIngredient] = useState({});
-  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
+    useState(false);
 
   const ingredients = [
     { typeRus: 'Булки', typeEng: 'bun', value: 'one' },
@@ -26,20 +27,20 @@ function BurgerIngredients({ data }) {
       const desired = data.find((ingredient) => ingredient._id === id);
 
       setCurrentIngredient(desired);
-      setIsModalOpened(true);
+      setIsIngredientDetailsModalOpened(true);
     }
   };
 
   const handleModalClose = () => {
-    setIsModalOpened(false);
+    setIsIngredientDetailsModalOpened(false);
   };
 
   useEffect(() => {
-    if (isModalOpened) return;
+    if (isIngredientDetailsModalOpened) return;
 
-    // Time is the same as the animation of modals' appearing
+  // Time is the same as the animation of modals' appearing
     setTimeout(() => setCurrentIngredient({}), 300);
-  }, [isModalOpened]);
+  }, [isIngredientDetailsModalOpened]);
 
   return (
     <>
@@ -87,7 +88,7 @@ function BurgerIngredients({ data }) {
 
       <IngredientDetails
         currentIngredient={currentIngredient}
-        isModalOpened={isModalOpened}
+        isModalOpened={isIngredientDetailsModalOpened}
         onModalClose={handleModalClose}
       />
     </>
