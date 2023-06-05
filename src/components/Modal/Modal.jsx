@@ -5,13 +5,17 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 
+import useCloseModal from '../../hooks/useCloseModal';
+
 import styles from './Modal.module.scss';
 
-function Modal({ children, ...rest }) {
+function Modal({ children, id, isModalOpened, onModalClose }) {
+  useCloseModal(id, isModalOpened, onModalClose);
+
   return createPortal(
-    <ModalOverlay {...rest}>
+    <ModalOverlay id={id} isModalOpened={isModalOpened}>
       <div className={styles.modal}>
-        <CloseIcon type="primary" onClick={() => rest.onModalClose()} />
+        <CloseIcon type="primary" onClick={() => onModalClose()} />
         {children}
       </div>
     </ModalOverlay>,
@@ -21,6 +25,8 @@ function Modal({ children, ...rest }) {
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
+  id: PropTypes.string.isRequired,
+  isModalOpened: PropTypes.bool.isRequired,
   onModalClose: PropTypes.func.isRequired,
 };
 

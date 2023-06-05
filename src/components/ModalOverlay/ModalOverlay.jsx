@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types';
 
-import useCloseModal from '../../hooks/useCloseModal';
-
 import styles from './ModalOverlay.module.scss';
 
-function ModalOverlay({ id, children, isModalOpened, onModalClose }) {
-  useCloseModal(id, isModalOpened, onModalClose);
-
+function ModalOverlay({ children, id, isModalOpened }) {
   return (
     <div
       className={`${styles.overlay}${
@@ -20,10 +16,9 @@ function ModalOverlay({ id, children, isModalOpened, onModalClose }) {
 }
 
 ModalOverlay.propTypes = {
-  id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  id: PropTypes.string.isRequired,
   isModalOpened: PropTypes.bool.isRequired,
-  onModalClose: PropTypes.func.isRequired,
 };
 
 export default ModalOverlay;
