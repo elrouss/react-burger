@@ -3,7 +3,7 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 
 import styles from './Shop.module.scss';
 
-function Shop(props) {
+function Shop({ ...props }) {
   return (
     <main className={styles.main}>
       <div className={styles.wrapper}>

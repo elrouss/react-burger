@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -7,24 +8,33 @@ import {
 
 import styles from './BurgerIngredient.module.scss';
 
-function BurgerIngredient({ name, link, price }) {
+function BurgerIngredient({ _id, name, link, price, onModalOpen }) {
   return (
-    <article className={styles.card}>
-      <Counter count={1} size="default" />
-      <img className={styles.image} src={link} alt={`Ингредиент: ${name}`} />
-      <div className={styles.price}>
-        <span>{price}</span>
-        <CurrencyIcon />
-      </div>
-      <h3 className={styles.heading}>{name}</h3>
-    </article>
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={(evt) => onModalOpen(evt, _id)}
+      onKeyDown={(evt) => onModalOpen(evt, _id)}
+    >
+      <article className={styles.card}>
+        <Counter count={1} size="default" />
+        <img className={styles.image} src={link} alt={`Ингредиент: ${name}`} />
+        <div className={styles.price}>
+          <span>{price}</span>
+          <CurrencyIcon />
+        </div>
+        <h3 className={styles.heading}>{name}</h3>
+      </article>
+    </div>
   );
 }
 
 BurgerIngredient.propTypes = {
+  _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  onModalOpen: PropTypes.func.isRequired,
 };
 
-export default BurgerIngredient;
+export default memo(BurgerIngredient);

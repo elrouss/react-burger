@@ -1,0 +1,24 @@
+@import '../../index.scss';
+
+.modal {
+  $color-shadow: rgba(0, 0, 0, 0.04);
+
+  position: relative;
+
+  width: 720px;
+  min-height: 538px;
+
+  border-radius: 40px;
+  background-color: $color-background;
+  filter: drop-shadow(0 0 1px $color-shadow)
+    drop-shadow(0 4px 8px $color-shadow) drop-shadow(0 16px 24px $color-shadow)
+    drop-shadow(0 24px 32px $color-shadow);
+
+  > svg {
+    position: absolute;
+    top: 60px;
+    right: 40px;
+
+    cursor: pointer;
+  }
+}
