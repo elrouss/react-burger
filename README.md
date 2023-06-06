@@ -1,46 +1,67 @@
-# Getting Started with Create React App
+<h1 align="center">Учебный проект: "Stellar Burgers"</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+  <img width="575" alt="Основной функционал приложения" src="https://github.com/elrouss/react-burger/assets/108838349/366eb98b-23b7-4409-954e-769d97b649b1">
+</div>
 
-## Available Scripts
+<a name="summary">
+  <details>
+    <summary>Оглавление</summary>
+    <ol>
+      <li><a href="#project-description">Описание проекта</a></li>
+      <li><a href="#technologies">Стек технологий</a></li>
+      <li><a href="#installation">Установка и запуск приложения в локальном репозитории, эксплуатация</a></li>
+      <li><a href="#establishing">Процесс создания</a></li>
+      <li><a href="#functionality">Функционал</a></li>
+      <li><a href="#enhancement">Статус</a></li>
+    </ol>
+  </details>
+</a>
 
-In the project directory, you can run:
+<a name="project-description"><h2>1. Описание проекта</h2></a>
+"Stellar Burgers" - приложение (SPA) с регистрацией и авторизацией пользователей, в котором можно собрать и заказать свой личный бургер (без доставки на дом). Выполнен в рамках углубленной образовательной программы по библиотеке "React" <a href="https://practicum.yandex.ru/">Яндекс Практикума</a>.
 
-### `npm start`
+<b>Ссылки на проект:</b>
+<br>
+<b>Макет:</b> https://www.figma.com/file/zFGN2O5xktHl9VmoOieq5E/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link?node-id=0%3A1
+<br>
+<b>Чек-листы</b>: https://code.s3.yandex.net/react/checklists-pdf/checklist-1.pdf
+<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<i>* - проект прошел код-ревью</i>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
-### `npm test`
+<a name="technologies"><h2>2. Стек технологий</h2></a>
+<span>
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="Иконка React">
+  <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="Иконка 'JavaScript'">
+  <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" alt="Иконка 'Sass (SCSS)'">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="Иконка HTML5">
+</span>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
-### `npm run build`
+<a name="installation"><h2>3. Установка и запуск приложения в локальном репозитории, эксплуатация</h2></a>
+1. `git clone https://github.com/elrouss/react-burger.git` - клонировать репозиторий на свое устройство (HTTPS)
+2. `npm i` - установить зависимости
+3. `npm run start` - запустить приложение
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<a name="establishing"><h2>4. Процесс создания</h2></a>
+Работа разделена на <b>6 этапов</b>. Выполнены следующие:
+<br>
+1. Верстка на десктоп (`1920px`) и написание логики с открытием и закрытием модальных окон
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
-### `npm run eject`
+<a name="functionality"><h2>5. Функционал</h2></a>
+- Открытие и закрытие модальных окон по кнопке, оверлею и клавише `Escape`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<a name="enhancement"><h2>6. Статус</h2></a>
+На этапе разработки
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<div align="right">(<a href="#summary">к оглавлению</a>)</div>
