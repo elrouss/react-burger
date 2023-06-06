@@ -31,7 +31,7 @@ function BurgerConstructor({ data }) {
 
   return (
     <>
-      <section>
+      <section aria-label="Оформление заказа">
         <form className={styles.order}>
           <ConstructorElement
             extraClass={styles.bun}

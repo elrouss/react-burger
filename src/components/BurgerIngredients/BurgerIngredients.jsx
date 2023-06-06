@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
@@ -10,7 +10,6 @@ import styles from './BurgerIngredients.module.scss';
 
 function BurgerIngredients({ data }) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
-  // TODO: использовать useCallback
   const [current, setCurrent] = useState('one');
   const [currentIngredient, setCurrentIngredient] = useState({});
   const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
@@ -22,14 +21,17 @@ function BurgerIngredients({ data }) {
     { typeRus: 'Начинки', typeEng: 'main', value: 'three' },
   ];
 
-  const handleModalOpen = (evt, id) => {
-    if (evt.type === 'click' || evt?.key === 'Enter') {
-      const desired = data.find((ingredient) => ingredient._id === id);
+  const handleModalOpen = useCallback(
+    (evt, id) => {
+      if (evt.type === 'click' || evt?.key === 'Enter') {
+        const desired = data.find((ingredient) => ingredient._id === id);
 
-      setCurrentIngredient(desired);
-      setIsIngredientDetailsModalOpened(true);
-    }
-  };
+        setCurrentIngredient(desired);
+        setIsIngredientDetailsModalOpened(true);
+      }
+    },
+    [data]
+  );
 
   const handleModalClose = () => {
     setIsIngredientDetailsModalOpened(false);
@@ -44,7 +46,7 @@ function BurgerIngredients({ data }) {
 
   return (
     <>
-      <section>
+      <section aria-label="Ингредиенты бургера">
         <div className={styles.wrapper}>
           <div className={styles.tabs}>
             {ingredients.map(({ typeRus, typeEng, value }) => (
@@ -62,7 +64,11 @@ function BurgerIngredients({ data }) {
           </div>
           <div className={styles.ingredients}>
             {ingredients.map(({ typeRus, typeEng, value }) => (
-              <section key={typeEng} className={styles.section}>
+              <section
+                key={typeEng}
+                className={styles.section}
+                aria-label={typeRus}
+              >
                 <h2 className={styles.heading} id={value}>
                   {typeRus}
                 </h2>

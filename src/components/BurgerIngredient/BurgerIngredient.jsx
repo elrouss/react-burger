@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -36,4 +37,4 @@ BurgerIngredient.propTypes = {
   onModalOpen: PropTypes.func.isRequired,
 };
 
-export default BurgerIngredient;
+export default memo(BurgerIngredient);
