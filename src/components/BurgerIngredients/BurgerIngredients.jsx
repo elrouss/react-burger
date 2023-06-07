@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
+import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 import ingredientsTypes from '../../utils/types/ingredients';
@@ -92,12 +93,13 @@ function BurgerIngredients({ data }) {
         </div>
       </section>
 
-      <IngredientDetails
+      <Modal
         id="ingredient-details"
-        currentIngredient={currentIngredient}
         isModalOpened={isIngredientDetailsModalOpened}
         onModalClose={handleModalClose}
-      />
+      >
+        <IngredientDetails currentIngredient={currentIngredient} />
+      </Modal>
     </>
   );
 }

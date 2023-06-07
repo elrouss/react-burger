@@ -7,6 +7,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
 import ingredientsTypes from '../../utils/types/ingredients';
@@ -81,11 +82,13 @@ function BurgerConstructor({ data }) {
         </form>
       </section>
 
-      <OrderDetails
+      <Modal
         id="order-details"
         isModalOpened={isOrderDetailsModalOpened}
         onModalClose={handleModalClose}
-      />
+      >
+        <OrderDetails />
+      </Modal>
     </>
   );
 }
