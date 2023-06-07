@@ -11,22 +11,26 @@ function App() {
   const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
-    (async function getIngredients() {
+    // eslint-disable-next-line consistent-return
+    async function getIngredients() {
       try {
         const res = await fetch(API.ingredients);
-        const success = await res.json();
 
-        if (success) {
-          setIngredients(success.data);
-        } else {
-          throw new Error();
+        if (res.ok) {
+          const success = await res.json();
+
+          return setIngredients(success.data);
         }
+
+        return Promise.reject(new Error(`Ошибка ${res.status}`));
       } catch (err) {
         console.error(
           `Ошибка в процессе получения данных об ингредиентах с сервера: ${err}`
         );
       }
-    })();
+    }
+
+    getIngredients();
   }, []);
 
   return (

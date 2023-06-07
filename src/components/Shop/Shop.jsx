@@ -1,9 +1,11 @@
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 
+import ingredientsTypes from '../../utils/types/ingredients';
+
 import styles from './Shop.module.scss';
 
-function Shop({ ...props }) {
+function Shop(props) {
   return (
     <main className={styles.main}>
       <div className={styles.wrapper}>
@@ -16,5 +18,7 @@ function Shop({ ...props }) {
     </main>
   );
 }
+
+Shop.propTypes = ingredientsTypes;
 
 export default Shop;

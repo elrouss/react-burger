@@ -73,7 +73,7 @@ function BurgerConstructor({ data }) {
               htmlType="submit"
               type="primary"
               size="large"
-              onClick={(evt) => handleModalOpen(evt)}
+              onClick={handleModalOpen}
             >
               Оформить заказ
             </Button>
