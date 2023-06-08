@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import {
   Logo,
   BurgerIcon,
@@ -39,4 +41,4 @@ function AppHeader() {
   );
 }
 
-export default AppHeader;
+export default memo(AppHeader);
