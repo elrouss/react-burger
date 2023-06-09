@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import {
   ConstructorElement,
@@ -7,14 +7,16 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import IngredientsContext from '../../contexts/IngredientsContext';
+
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
-import ingredientsTypes from '../../utils/types/ingredients';
-
 import styles from './BurgerConstructor.module.scss';
 
-function BurgerConstructor({ data }) {
+function BurgerConstructor() {
+  const ingredients = useContext(IngredientsContext);
+
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
     useState(false);
 
@@ -38,12 +40,12 @@ function BurgerConstructor({ data }) {
             extraClass={styles.bun}
             type="top"
             isLocked
-            text={`${data[0]?.name} (верх)`}
-            price={data[0]?.price}
-            thumbnail={data[0]?.image}
+            text={`${ingredients[0]?.name} (верх)`}
+            price={ingredients[0]?.price}
+            thumbnail={ingredients[0]?.image}
           />
           <div className={styles.components}>
-            {data
+            {ingredients
               .filter(({ type }) => type !== 'bun')
               .map(({ _id, name, price, image }) => (
                 <div key={`container-${_id}`} className={styles.item}>
@@ -61,9 +63,9 @@ function BurgerConstructor({ data }) {
             extraClass={styles.bun}
             type="bottom"
             isLocked
-            text={`${data[0]?.name} (низ)`}
-            price={data[0]?.price}
-            thumbnail={data[0]?.image}
+            text={`${ingredients[0]?.name} (низ)`}
+            price={ingredients[0]?.price}
+            thumbnail={ingredients[0]?.image}
           />
           <div className={styles.info}>
             <div className={styles.price}>
@@ -92,7 +94,5 @@ function BurgerConstructor({ data }) {
     </>
   );
 }
-
-BurgerConstructor.propTypes = ingredientsTypes;
 
 export default BurgerConstructor;

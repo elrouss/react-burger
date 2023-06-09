@@ -5,8 +5,6 @@ import Shop from '../Shop/Shop';
 
 import API from '../../utils/constants';
 
-import './App.module.scss';
-
 function App() {
   const [ingredients, setIngredients] = useState([]);
 
