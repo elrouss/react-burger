@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import IngredientsContext from '../../contexts/IngredientsContext';
 
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
@@ -8,14 +10,25 @@ import ingredientsTypes from '../../utils/types/ingredients';
 import styles from './Shop.module.scss';
 
 function Shop({ data }) {
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [selectedBun, setSelectedBun] = useState({});
+
   return (
     <main className={styles.main}>
       <div className={styles.wrapper}>
         <h1 className={styles.heading}>Соберите бургер</h1>
         <div className={styles.shop}>
-          <BurgerIngredients data={data} />
+          <BurgerIngredients
+            data={data}
+            selectedIngredients={selectedIngredients}
+            onSelectedIngredients={setSelectedIngredients}
+            onSelectedBun={setSelectedBun}
+          />
           <IngredientsContext.Provider value={data}>
-            <BurgerConstructor />
+            <BurgerConstructor
+              selectedIngredients={selectedIngredients}
+              selectedBun={selectedBun}
+            />
           </IngredientsContext.Provider>
         </div>
       </div>

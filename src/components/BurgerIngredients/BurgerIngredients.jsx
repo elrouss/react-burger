@@ -9,8 +9,14 @@ import ingredientsTypes from '../../utils/types/ingredients';
 
 import styles from './BurgerIngredients.module.scss';
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients({
+  data,
+  selectedIngredients,
+  onSelectedIngredients,
+  onSelectedBun,
+}) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
+  // TODO: prop-types
   const [current, setCurrent] = useState('one');
   const [currentIngredient, setCurrentIngredient] = useState({});
   const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
@@ -76,13 +82,17 @@ function BurgerIngredients({ data }) {
                 <div className={styles.content}>
                   {data
                     .filter(({ type }) => type === typeEng)
-                    .map(({ _id, name, image, price }) => (
+                    .map(({ _id, name, type, image, price }) => (
                       <BurgerIngredient
                         key={_id}
                         _id={_id}
                         name={name}
+                        type={type}
                         link={image}
                         price={price}
+                        selectedIngredients={selectedIngredients}
+                        onSelectedIngredients={onSelectedIngredients}
+                        onSelectedBun={onSelectedBun}
                         onModalOpen={handleModalOpen}
                       />
                     ))}

@@ -8,12 +8,51 @@ import {
 
 import styles from './BurgerIngredient.module.scss';
 
-function BurgerIngredient({ _id, name, link, price, onModalOpen }) {
+function BurgerIngredient({
+  _id,
+  name,
+  type,
+  link,
+  price,
+  selectedIngredients,
+  onSelectedIngredients,
+  onSelectedBun,
+  onModalOpen,
+}) {
+  const addIngredient = (
+    selectedId,
+    selectedName,
+    selectedType,
+    selectedLink,
+    selectedPrice
+  ) => {
+    const ingredientNew = {
+      _id: selectedId,
+      name: selectedName,
+      type: selectedType,
+      image: selectedLink,
+      price: selectedPrice,
+    };
+
+    if (selectedType === 'bun') return onSelectedBun(ingredientNew);
+
+    const isSelected = selectedIngredients.find(
+      (ingredient) => ingredient._id === _id
+    );
+
+    return isSelected
+      ? undefined
+      : onSelectedIngredients((prevState) => [...prevState, ingredientNew]);
+  };
+
   return (
     <div
       role="button"
       tabIndex={0}
-      onClick={(evt) => onModalOpen(evt, _id)}
+      onClick={(evt) => {
+        addIngredient(_id, name, type, link, price);
+        onModalOpen(evt, _id);
+      }}
       onKeyDown={(evt) => onModalOpen(evt, _id)}
     >
       <article className={styles.card}>
@@ -34,6 +73,8 @@ BurgerIngredient.propTypes = {
   name: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  onSelectedIngredients: PropTypes.func.isRequired,
+  onSelectedBun: PropTypes.func.isRequired,
   onModalOpen: PropTypes.func.isRequired,
 };
 
