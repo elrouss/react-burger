@@ -1,16 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import IngredientsContext from '../../contexts/IngredientsContext';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
-import ingredientsTypes from '../../utils/types/ingredients';
+import { ingredientType } from '../../utils/types/ingredients';
 
 import styles from './BurgerIngredients.module.scss';
 
 function BurgerIngredients({
-  data,
   selectedIngredients,
   selectedBun,
   onSelectedIngredients,
@@ -18,7 +20,8 @@ function BurgerIngredients({
   onTotalPriceDispatcher,
 }) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
-  // TODO: prop-types
+  const data = useContext(IngredientsContext);
+
   const [current, setCurrent] = useState('one');
   const [currentIngredient, setCurrentIngredient] = useState({});
   const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
@@ -30,12 +33,57 @@ function BurgerIngredients({
     { typeRus: 'Начинки', typeEng: 'main', value: 'three' },
   ];
 
+  const addIngredient = useCallback(
+    (_id, name, type, image, price) => {
+      const ingredientNew = {
+        _id,
+        name,
+        type,
+        image,
+        price,
+      };
+
+      if (type === 'bun') {
+        onSelectedBun(ingredientNew);
+
+        if (Object.keys(selectedBun).length) {
+          onTotalPriceDispatcher({
+            type: 'decrement',
+            ingredientType: type,
+            price: selectedBun.price,
+          });
+        }
+
+        onTotalPriceDispatcher({
+          type: 'increment',
+          ingredientType: type,
+          price,
+        });
+
+        return undefined;
+      }
+
+      const isSelected = selectedIngredients.find(
+        (ingredient) => ingredient._id === _id
+      );
+
+      if (isSelected) return undefined;
+
+      onSelectedIngredients((prevState) => [...prevState, ingredientNew]);
+      return onTotalPriceDispatcher({
+        type: 'increment',
+        ingredientType: type,
+        price,
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedIngredients, selectedBun]
+  );
+
   const handleModalOpen = useCallback(
     (evt, id) => {
       if (evt.type === 'click' || evt?.key === 'Enter') {
-        const desired = data.find((ingredient) => ingredient._id === id);
-
-        setCurrentIngredient(desired);
+        setCurrentIngredient(data.find(({ _id }) => _id === id));
         setIsIngredientDetailsModalOpened(true);
       }
     },
@@ -92,11 +140,7 @@ function BurgerIngredients({
                         type={type}
                         link={image}
                         price={price}
-                        selectedIngredients={selectedIngredients}
-                        selectedBun={selectedBun}
-                        onSelectedIngredients={onSelectedIngredients}
-                        onSelectedBun={onSelectedBun}
-                        onTotalPriceDispatcher={onTotalPriceDispatcher}
+                        onAddIngredient={addIngredient}
                         onModalOpen={handleModalOpen}
                       />
                     ))}
@@ -118,6 +162,15 @@ function BurgerIngredients({
   );
 }
 
-BurgerIngredients.propTypes = ingredientsTypes;
+BurgerIngredients.propTypes = {
+  selectedIngredients: PropTypes.arrayOf(
+    PropTypes.shape(ingredientType).isRequired
+  ).isRequired,
+  selectedBun: PropTypes.shape(ingredientType).isRequired,
+
+  onSelectedIngredients: PropTypes.func.isRequired,
+  onSelectedBun: PropTypes.func.isRequired,
+  onTotalPriceDispatcher: PropTypes.func.isRequired,
+};
 
 export default BurgerIngredients;

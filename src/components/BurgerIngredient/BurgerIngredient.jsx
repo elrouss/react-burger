@@ -14,68 +14,15 @@ function BurgerIngredient({
   type,
   link,
   price,
-  selectedIngredients,
-  selectedBun,
-  onSelectedIngredients,
-  onSelectedBun,
-  onTotalPriceDispatcher,
+  onAddIngredient,
   onModalOpen,
 }) {
-  const addIngredient = (
-    selectedId,
-    selectedName,
-    selectedType,
-    selectedLink,
-    selectedPrice
-  ) => {
-    const ingredientNew = {
-      _id: selectedId,
-      name: selectedName,
-      type: selectedType,
-      image: selectedLink,
-      price: selectedPrice,
-    };
-
-    if (selectedType === 'bun') {
-      onSelectedBun(ingredientNew);
-
-      if (Object.keys(selectedBun).length) {
-        onTotalPriceDispatcher({
-          type: 'decrement',
-          ingredientType: selectedType,
-          price: selectedBun.price,
-        });
-      }
-
-      onTotalPriceDispatcher({
-        type: 'increment',
-        ingredientType: selectedType,
-        price,
-      });
-
-      return undefined;
-    }
-
-    const isSelected = selectedIngredients.find(
-      (ingredient) => ingredient._id === _id
-    );
-
-    if (isSelected) return undefined;
-
-    onSelectedIngredients((prevState) => [...prevState, ingredientNew]);
-    return onTotalPriceDispatcher({
-      type: 'increment',
-      ingredientType: selectedType,
-      price,
-    });
-  };
-
   return (
     <div
       role="button"
       tabIndex={0}
       onClick={(evt) => {
-        addIngredient(_id, name, type, link, price);
+        onAddIngredient(_id, name, type, link, price);
         onModalOpen(evt, _id);
       }}
       onKeyDown={(evt) => onModalOpen(evt, _id)}
@@ -96,11 +43,10 @@ function BurgerIngredient({
 BurgerIngredient.propTypes = {
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  onSelectedIngredients: PropTypes.func.isRequired,
-  onSelectedBun: PropTypes.func.isRequired,
-  onTotalPriceDispatcher: PropTypes.func.isRequired,
+  onAddIngredient: PropTypes.func.isRequired,
   onModalOpen: PropTypes.func.isRequired,
 };
 

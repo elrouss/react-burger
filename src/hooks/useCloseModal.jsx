@@ -18,5 +18,6 @@ export default function useCloseModal(id, isOpened, handleClose) {
       document.removeEventListener('click', closeModal);
       document.removeEventListener('keydown', closeModal);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpened]);
 }

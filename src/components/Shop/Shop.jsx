@@ -1,11 +1,7 @@
 import { useReducer, useState } from 'react';
 
-import IngredientsContext from '../../contexts/IngredientsContext';
-
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-
-import ingredientsTypes from '../../utils/types/ingredients';
 
 import styles from './Shop.module.scss';
 
@@ -28,7 +24,7 @@ function reducer({ state }, { type, ingredientType, price }) {
   }
 }
 
-function Shop({ data }) {
+function Shop() {
   const [totalPriceState, totalPriceDispatcher] = useReducer(
     reducer,
     initialTotalPrice
@@ -43,26 +39,21 @@ function Shop({ data }) {
         <h1 className={styles.heading}>Соберите бургер</h1>
         <div className={styles.shop}>
           <BurgerIngredients
-            data={data}
             selectedIngredients={selectedIngredients}
             selectedBun={selectedBun}
             onSelectedIngredients={setSelectedIngredients}
             onSelectedBun={setSelectedBun}
             onTotalPriceDispatcher={totalPriceDispatcher}
           />
-          <IngredientsContext.Provider value={data}>
-            <BurgerConstructor
-              selectedIngredients={selectedIngredients}
-              selectedBun={selectedBun}
-              totalPrice={totalPriceState}
-            />
-          </IngredientsContext.Provider>
+          <BurgerConstructor
+            selectedIngredients={selectedIngredients}
+            selectedBun={selectedBun}
+            totalPrice={totalPriceState}
+          />
         </div>
       </div>
     </main>
   );
 }
-
-Shop.propTypes = ingredientsTypes;
 
 export default Shop;

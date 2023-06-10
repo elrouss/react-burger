@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import IngredientsContext from '../../contexts/IngredientsContext';
+
 import AppHeader from '../AppHeader/AppHeader';
 import Shop from '../Shop/Shop';
 
@@ -34,7 +36,9 @@ function App() {
   return (
     <>
       <AppHeader />
-      <Shop data={ingredients} />
+      <IngredientsContext.Provider value={ingredients}>
+        <Shop />
+      </IngredientsContext.Provider>
     </>
   );
 }
