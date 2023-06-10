@@ -14,11 +14,26 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 
 import styles from './BurgerConstructor.module.scss';
 
-function BurgerConstructor() {
+function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
   const ingredients = useContext(IngredientsContext);
 
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
     useState(false);
+
+  const renderBun = (placeRu, placeEng) => {
+    return (
+      (Object.keys(selectedBun).length && (
+        <ConstructorElement
+          extraClass={styles.bun}
+          type={placeEng}
+          isLocked
+          text={`${selectedBun.name} (${placeRu})`}
+          price={selectedBun.price}
+          thumbnail={selectedBun.image}
+        />
+      )) || <div className={styles.containerBun} />
+    );
+  };
 
   const handleModalOpen = (evt) => {
     evt.preventDefault();
@@ -36,18 +51,11 @@ function BurgerConstructor() {
     <>
       <section aria-label="Оформление заказа">
         <form className={styles.order}>
-          <ConstructorElement
-            extraClass={styles.bun}
-            type="top"
-            isLocked
-            text={`${ingredients[0]?.name} (верх)`}
-            price={ingredients[0]?.price}
-            thumbnail={ingredients[0]?.image}
-          />
-          <div className={styles.components}>
-            {ingredients
-              .filter(({ type }) => type !== 'bun')
-              .map(({ _id, name, price, image }) => (
+          {renderBun('верх', 'top')}
+
+          {(selectedIngredients.length && (
+            <div className={styles.components}>
+              {selectedIngredients.map(({ _id, name, price, image }) => (
                 <div key={`container-${_id}`} className={styles.item}>
                   <DragIcon key={`icon-${_id}`} type="primary" />
                   <ConstructorElement
@@ -58,18 +66,14 @@ function BurgerConstructor() {
                   />
                 </div>
               ))}
-          </div>
-          <ConstructorElement
-            extraClass={styles.bun}
-            type="bottom"
-            isLocked
-            text={`${ingredients[0]?.name} (низ)`}
-            price={ingredients[0]?.price}
-            thumbnail={ingredients[0]?.image}
-          />
+            </div>
+          )) || <div className={styles.componentsEmpty} />}
+
+          {renderBun('низ', 'bottom')}
+
           <div className={styles.info}>
             <div className={styles.price}>
-              <span>610</span>
+              <span>{totalPrice.state}</span>
               <CurrencyIcon />
             </div>
             <Button
