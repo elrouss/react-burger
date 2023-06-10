@@ -14,7 +14,7 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 
 import styles from './BurgerConstructor.module.scss';
 
-function BurgerConstructor({ selectedIngredients, selectedBun }) {
+function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
   const ingredients = useContext(IngredientsContext);
 
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
@@ -73,7 +73,7 @@ function BurgerConstructor({ selectedIngredients, selectedBun }) {
 
           <div className={styles.info}>
             <div className={styles.price}>
-              <span>610</span>
+              <span>{totalPrice.state}</span>
               <CurrencyIcon />
             </div>
             <Button

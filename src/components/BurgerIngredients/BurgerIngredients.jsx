@@ -12,8 +12,10 @@ import styles from './BurgerIngredients.module.scss';
 function BurgerIngredients({
   data,
   selectedIngredients,
+  selectedBun,
   onSelectedIngredients,
   onSelectedBun,
+  onTotalPriceDispatcher,
 }) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
   // TODO: prop-types
@@ -91,8 +93,10 @@ function BurgerIngredients({
                         link={image}
                         price={price}
                         selectedIngredients={selectedIngredients}
+                        selectedBun={selectedBun}
                         onSelectedIngredients={onSelectedIngredients}
                         onSelectedBun={onSelectedBun}
+                        onTotalPriceDispatcher={onTotalPriceDispatcher}
                         onModalOpen={handleModalOpen}
                       />
                     ))}

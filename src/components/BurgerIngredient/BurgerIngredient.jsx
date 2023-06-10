@@ -15,8 +15,10 @@ function BurgerIngredient({
   link,
   price,
   selectedIngredients,
+  selectedBun,
   onSelectedIngredients,
   onSelectedBun,
+  onTotalPriceDispatcher,
   onModalOpen,
 }) {
   const addIngredient = (
@@ -34,15 +36,38 @@ function BurgerIngredient({
       price: selectedPrice,
     };
 
-    if (selectedType === 'bun') return onSelectedBun(ingredientNew);
+    if (selectedType === 'bun') {
+      onSelectedBun(ingredientNew);
+
+      if (Object.keys(selectedBun).length) {
+        onTotalPriceDispatcher({
+          type: 'decrement',
+          ingredientType: selectedType,
+          price: selectedBun.price,
+        });
+      }
+
+      onTotalPriceDispatcher({
+        type: 'increment',
+        ingredientType: selectedType,
+        price,
+      });
+
+      return undefined;
+    }
 
     const isSelected = selectedIngredients.find(
       (ingredient) => ingredient._id === _id
     );
 
-    return isSelected
-      ? undefined
-      : onSelectedIngredients((prevState) => [...prevState, ingredientNew]);
+    if (isSelected) return undefined;
+
+    onSelectedIngredients((prevState) => [...prevState, ingredientNew]);
+    return onTotalPriceDispatcher({
+      type: 'increment',
+      ingredientType: selectedType,
+      price,
+    });
   };
 
   return (
@@ -75,6 +100,7 @@ BurgerIngredient.propTypes = {
   price: PropTypes.number.isRequired,
   onSelectedIngredients: PropTypes.func.isRequired,
   onSelectedBun: PropTypes.func.isRequired,
+  onTotalPriceDispatcher: PropTypes.func.isRequired,
   onModalOpen: PropTypes.func.isRequired,
 };
 
