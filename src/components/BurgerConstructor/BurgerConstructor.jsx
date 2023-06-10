@@ -12,11 +12,37 @@ import IngredientsContext from '../../contexts/IngredientsContext';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
+import API from '../../utils/constants';
+
 import styles from './BurgerConstructor.module.scss';
+
+// eslint-disable-next-line consistent-return
+async function sendOrder(order, saveOrderNum) {
+  try {
+    const res = await fetch(API.order, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ingredients: order }),
+    });
+
+    if (res.ok) {
+      const success = await res.json();
+
+      return saveOrderNum(success);
+    }
+
+    return Promise.reject(new Error(`Ошибка ${res.status}`));
+  } catch (err) {
+    console.error(`Ошибка в процессе отправки данных заказа на сервер: ${err}`);
+  }
+}
 
 function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
   const ingredients = useContext(IngredientsContext);
 
+  const [currentOrder, setCurrentOrder] = useState({});
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
     useState(false);
 
@@ -35,10 +61,15 @@ function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
     );
   };
 
-  const handleModalOpen = (evt) => {
+  const handleOrder = (evt) => {
     evt.preventDefault();
 
     if (evt.type === 'click' || evt?.key === 'Enter') {
+      const order = [selectedBun, ...selectedIngredients].map(
+        (selectedIngredient) => selectedIngredient._id
+      );
+
+      sendOrder(order, setCurrentOrder);
       setIsOrderDetailsModalOpened(true);
     }
   };
@@ -80,7 +111,7 @@ function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
               htmlType="submit"
               type="primary"
               size="large"
-              onClick={handleModalOpen}
+              onClick={handleOrder}
             >
               Оформить заказ
             </Button>
@@ -93,7 +124,7 @@ function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
         isModalOpened={isOrderDetailsModalOpened}
         onModalClose={handleModalClose}
       >
-        <OrderDetails />
+        <OrderDetails currentOrder={currentOrder} />
       </Modal>
     </>
   );
