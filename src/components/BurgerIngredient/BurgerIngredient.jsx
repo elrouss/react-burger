@@ -8,12 +8,23 @@ import {
 
 import styles from './BurgerIngredient.module.scss';
 
-function BurgerIngredient({ _id, name, link, price, onModalOpen }) {
+function BurgerIngredient({
+  _id,
+  name,
+  type,
+  link,
+  price,
+  onAddIngredient,
+  onModalOpen,
+}) {
   return (
     <div
       role="button"
       tabIndex={0}
-      onClick={(evt) => onModalOpen(evt, _id)}
+      onClick={(evt) => {
+        onAddIngredient(_id, name, type, link, price);
+        onModalOpen(evt, _id);
+      }}
       onKeyDown={(evt) => onModalOpen(evt, _id)}
     >
       <article className={styles.card}>
@@ -32,8 +43,10 @@ function BurgerIngredient({ _id, name, link, price, onModalOpen }) {
 BurgerIngredient.propTypes = {
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  onAddIngredient: PropTypes.func.isRequired,
   onModalOpen: PropTypes.func.isRequired,
 };
 

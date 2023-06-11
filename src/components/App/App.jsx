@@ -1,14 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useReducer, useMemo, useEffect, useState } from 'react';
+
+import IngredientsContext from '../../contexts/IngredientsContext';
+import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
+
+import {
+  reducerSelectedIngredients,
+  initialSelectedIngredients,
+} from '../../utils/reducers/reducerSelectedIngredients';
 
 import AppHeader from '../AppHeader/AppHeader';
 import Shop from '../Shop/Shop';
 
 import API from '../../utils/constants';
 
-import './App.module.scss';
-
 function App() {
+  const [selectedIngredientsState, selectedIngredientsDispatcher] = useReducer(
+    reducerSelectedIngredients,
+    initialSelectedIngredients
+  );
+
   const [ingredients, setIngredients] = useState([]);
+
+  const contextIngredients = useMemo(() => ({ ingredients }), [ingredients]);
+  const contextSelectedIngredients = useMemo(
+    () => ({
+      selectedIngredientsState,
+      selectedIngredientsDispatcher,
+    }),
+    [selectedIngredientsState]
+  );
 
   useEffect(() => {
     // eslint-disable-next-line consistent-return
@@ -25,7 +45,7 @@ function App() {
         return Promise.reject(new Error(`Ошибка ${res.status}`));
       } catch (err) {
         console.error(
-          `Ошибка в процессе получения данных об ингредиентах с сервера: ${err}`
+          `Error while getting ingredient data from server: ${err}`
         );
       }
     }
@@ -36,7 +56,11 @@ function App() {
   return (
     <>
       <AppHeader />
-      <Shop data={ingredients} />
+      <IngredientsContext.Provider value={contextIngredients}>
+        <SelectedIngredientsContext.Provider value={contextSelectedIngredients}>
+          <Shop />
+        </SelectedIngredientsContext.Provider>
+      </IngredientsContext.Provider>
     </>
   );
 }

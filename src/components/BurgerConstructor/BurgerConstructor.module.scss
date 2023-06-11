@@ -18,6 +18,16 @@
   composes: custom-scroll;
 }
 
+.componentsEmpty {
+  width: 100%;
+  height: 464px;
+  margin: 16px 0 16px 17px;
+}
+
+.containerBun {
+  height: 80px;
+}
+
 .bun {
   margin-left: 48px;
 }
