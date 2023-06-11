@@ -1,6 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useReducer, useEffect, useState } from 'react';
 
 import IngredientsContext from '../../contexts/IngredientsContext';
+import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
+
+import {
+  reducerSelectedIngredients,
+  initialSelectedIngredients,
+} from '../../utils/reducers/reducerSelectedIngredients';
 
 import AppHeader from '../AppHeader/AppHeader';
 import Shop from '../Shop/Shop';
@@ -8,6 +14,11 @@ import Shop from '../Shop/Shop';
 import API from '../../utils/constants';
 
 function App() {
+  const [selectedIngredientsState, selectedIngredientsDispatcher] = useReducer(
+    reducerSelectedIngredients,
+    initialSelectedIngredients
+  );
+
   const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
@@ -25,7 +36,7 @@ function App() {
         return Promise.reject(new Error(`Ошибка ${res.status}`));
       } catch (err) {
         console.error(
-          `Ошибка в процессе получения данных об ингредиентах с сервера: ${err}`
+          `Error while getting ingredient data from server: ${err}`
         );
       }
     }
@@ -37,7 +48,11 @@ function App() {
     <>
       <AppHeader />
       <IngredientsContext.Provider value={ingredients}>
-        <Shop />
+        <SelectedIngredientsContext.Provider
+          value={{ selectedIngredientsState, selectedIngredientsDispatcher }}
+        >
+          <Shop />
+        </SelectedIngredientsContext.Provider>
       </IngredientsContext.Provider>
     </>
   );

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const ingredientsTypes = {
+const ingredientsTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       calories: PropTypes.number.isRequired,
@@ -19,10 +19,4 @@ export const ingredientsTypes = {
   ),
 };
 
-export const ingredientType = {
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-};
+export default ingredientsTypes;

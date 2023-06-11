@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -8,11 +8,12 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
+
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
 import API from '../../utils/constants';
-import { ingredientType } from '../../utils/types/ingredients';
 
 import styles from './BurgerConstructor.module.scss';
 
@@ -35,24 +36,28 @@ async function sendOrder(order, saveOrderNum) {
 
     return Promise.reject(new Error(`Ошибка ${res.status}`));
   } catch (err) {
-    console.error(`Ошибка в процессе отправки данных заказа на сервер: ${err}`);
+    console.error(`Error while sending order data to the server: ${err}`);
   }
 }
 
-function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
-  const [currentOrder, setCurrentOrder] = useState({});
+function BurgerConstructor({ totalPrice }) {
+  const {
+    selectedIngredientsState: { selectedBun, selectedIngredients },
+  } = useContext(SelectedIngredientsContext);
+
+  const [currentOrder, setCurrentOrder] = useState(null);
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
     useState(false);
 
   const renderBun = (placeRu, placeEng) =>
-    (Object.keys(selectedBun).length && (
+    (selectedBun && (
       <ConstructorElement
         extraClass={styles.bun}
         type={placeEng}
         isLocked
-        text={`${selectedBun.name} (${placeRu})`}
-        price={selectedBun.price}
-        thumbnail={selectedBun.image}
+        text={`${selectedBun?.name} (${placeRu})`}
+        price={selectedBun?.price}
+        thumbnail={selectedBun?.image}
       />
     )) || <div className={styles.containerBun} />;
 
@@ -126,10 +131,6 @@ function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
 }
 
 BurgerConstructor.propTypes = {
-  selectedIngredients: PropTypes.arrayOf(
-    PropTypes.shape(ingredientType).isRequired
-  ).isRequired,
-  selectedBun: PropTypes.shape(ingredientType).isRequired,
   totalPrice: PropTypes.shape({ state: PropTypes.number.isRequired })
     .isRequired,
 };

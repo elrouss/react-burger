@@ -1,4 +1,4 @@
-import { ingredientsTypes } from '../../utils/types/ingredients';
+import ingredientsTypes from '../../utils/types/ingredients';
 
 import styles from './IngredientDetails.module.scss';
 

@@ -1,26 +1,24 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import IngredientsContext from '../../contexts/IngredientsContext';
+import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
+
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
-import { ingredientType } from '../../utils/types/ingredients';
-
 import styles from './BurgerIngredients.module.scss';
 
-function BurgerIngredients({
-  selectedIngredients,
-  selectedBun,
-  onSelectedIngredients,
-  onSelectedBun,
-  onTotalPriceDispatcher,
-}) {
+function BurgerIngredients({ onTotalPriceDispatcher }) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
   const data = useContext(IngredientsContext);
+  const {
+    selectedIngredientsState: { selectedBun, selectedIngredients },
+    selectedIngredientsDispatcher: onSelectedIngredientsDispatcher,
+  } = useContext(SelectedIngredientsContext);
 
   const [current, setCurrent] = useState('one');
   const [currentIngredient, setCurrentIngredient] = useState({});
@@ -33,52 +31,41 @@ function BurgerIngredients({
     { typeRus: 'Начинки', typeEng: 'main', value: 'three' },
   ];
 
-  const addIngredient = useCallback(
-    (_id, name, type, image, price) => {
-      const ingredientNew = {
-        _id,
-        name,
-        type,
-        image,
-        price,
-      };
+  const addIngredient = (_id, name, type, image, price) => {
+    if (selectedIngredients.find((ingredient) => ingredient._id === _id))
+      return undefined;
 
-      if (type === 'bun') {
-        onSelectedBun(ingredientNew);
+    onSelectedIngredientsDispatcher({
+      action: 'add',
+      _id,
+      name,
+      type,
+      image,
+      price,
+    });
 
-        if (Object.keys(selectedBun).length) {
-          onTotalPriceDispatcher({
-            type: 'decrement',
-            ingredientType: type,
-            price: selectedBun.price,
-          });
-        }
-
+    if (type === 'bun') {
+      if (selectedBun) {
         onTotalPriceDispatcher({
-          type: 'increment',
+          type: 'decrement',
           ingredientType: type,
-          price,
+          price: selectedBun.price,
         });
-
-        return undefined;
       }
 
-      const isSelected = selectedIngredients.find(
-        (ingredient) => ingredient._id === _id
-      );
-
-      if (isSelected) return undefined;
-
-      onSelectedIngredients((prevState) => [...prevState, ingredientNew]);
       return onTotalPriceDispatcher({
         type: 'increment',
         ingredientType: type,
         price,
       });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedIngredients, selectedBun]
-  );
+    }
+
+    return onTotalPriceDispatcher({
+      type: 'increment',
+      ingredientType: type,
+      price,
+    });
+  };
 
   const handleModalOpen = useCallback(
     (evt, id) => {
@@ -163,13 +150,6 @@ function BurgerIngredients({
 }
 
 BurgerIngredients.propTypes = {
-  selectedIngredients: PropTypes.arrayOf(
-    PropTypes.shape(ingredientType).isRequired
-  ).isRequired,
-  selectedBun: PropTypes.shape(ingredientType).isRequired,
-
-  onSelectedIngredients: PropTypes.func.isRequired,
-  onSelectedBun: PropTypes.func.isRequired,
   onTotalPriceDispatcher: PropTypes.func.isRequired,
 };
 
