@@ -47,7 +47,7 @@ function App() {
   return (
     <>
       <AppHeader />
-      <IngredientsContext.Provider value={ingredients}>
+      <IngredientsContext.Provider value={{ ingredients }}>
         <SelectedIngredientsContext.Provider
           value={{ selectedIngredientsState, selectedIngredientsDispatcher }}
         >

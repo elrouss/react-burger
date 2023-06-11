@@ -1,0 +1,17 @@
+@import '../../index.scss';
+
+.heading {
+  @include showFont(
+    $weight: 700,
+    $size: $font-size-s,
+    $line-height: $font-line-height-l
+  );
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(272px, auto));
+  justify-items: center;
+  gap: 57px 14px;
+  padding: 24px 0 70px 11px;
+}
