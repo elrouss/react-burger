@@ -32,25 +32,33 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
     { typeRus: 'Начинки', typeEng: 'main', value: 'three' },
   ];
 
-  const addIngredient = (_id, name, type, image, price) => {
-    if (selectedIngredients.find((ingredient) => ingredient._id === _id))
-      return undefined;
+  const addIngredient = useCallback(
+    (_id, name, type, image, price) => {
+      if (selectedIngredients.find((ingredient) => ingredient._id === _id))
+        return undefined;
 
-    onSelectedIngredientsDispatcher({
-      action: 'add',
-      _id,
-      name,
-      type,
-      image,
-      price,
-    });
+      onSelectedIngredientsDispatcher({
+        action: 'add',
+        _id,
+        name,
+        type,
+        image,
+        price,
+      });
 
-    if (type === 'bun') {
-      if (selectedBun) {
-        onTotalPriceDispatcher({
-          type: 'decrement',
+      if (type === 'bun') {
+        if (selectedBun) {
+          onTotalPriceDispatcher({
+            type: 'decrement',
+            ingredientType: type,
+            price: selectedBun.price,
+          });
+        }
+
+        return onTotalPriceDispatcher({
+          type: 'increment',
           ingredientType: type,
-          price: selectedBun.price,
+          price,
         });
       }
 
@@ -59,14 +67,10 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
         ingredientType: type,
         price,
       });
-    }
-
-    return onTotalPriceDispatcher({
-      type: 'increment',
-      ingredientType: type,
-      price,
-    });
-  };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedIngredients, selectedBun]
+  );
 
   const handleModalOpen = useCallback(
     (evt, id) => {

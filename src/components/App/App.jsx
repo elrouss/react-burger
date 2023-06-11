@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useState } from 'react';
+import { useReducer, useMemo, useEffect, useState } from 'react';
 
 import IngredientsContext from '../../contexts/IngredientsContext';
 import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
@@ -20,6 +20,15 @@ function App() {
   );
 
   const [ingredients, setIngredients] = useState([]);
+
+  const contextIngredients = useMemo(() => ({ ingredients }), [ingredients]);
+  const contextSelectedIngredients = useMemo(
+    () => ({
+      selectedIngredientsState,
+      selectedIngredientsDispatcher,
+    }),
+    [selectedIngredientsState]
+  );
 
   useEffect(() => {
     // eslint-disable-next-line consistent-return
@@ -47,10 +56,8 @@ function App() {
   return (
     <>
       <AppHeader />
-      <IngredientsContext.Provider value={{ ingredients }}>
-        <SelectedIngredientsContext.Provider
-          value={{ selectedIngredientsState, selectedIngredientsDispatcher }}
-        >
+      <IngredientsContext.Provider value={contextIngredients}>
+        <SelectedIngredientsContext.Provider value={contextSelectedIngredients}>
           <Shop />
         </SelectedIngredientsContext.Provider>
       </IngredientsContext.Provider>
