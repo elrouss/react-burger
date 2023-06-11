@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import {
   ConstructorElement,
@@ -7,7 +8,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import IngredientsContext from '../../contexts/IngredientsContext';
+import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
 
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
@@ -35,31 +36,30 @@ async function sendOrder(order, saveOrderNum) {
 
     return Promise.reject(new Error(`Ошибка ${res.status}`));
   } catch (err) {
-    console.error(`Ошибка в процессе отправки данных заказа на сервер: ${err}`);
+    console.error(`Error while sending order data to the server: ${err}`);
   }
 }
 
-function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
-  const ingredients = useContext(IngredientsContext);
+function BurgerConstructor({ totalPrice }) {
+  const {
+    selectedIngredientsState: { selectedBun, selectedIngredients },
+  } = useContext(SelectedIngredientsContext);
 
-  const [currentOrder, setCurrentOrder] = useState({});
+  const [currentOrder, setCurrentOrder] = useState(null);
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
     useState(false);
 
-  const renderBun = (placeRu, placeEng) => {
-    return (
-      (Object.keys(selectedBun).length && (
-        <ConstructorElement
-          extraClass={styles.bun}
-          type={placeEng}
-          isLocked
-          text={`${selectedBun.name} (${placeRu})`}
-          price={selectedBun.price}
-          thumbnail={selectedBun.image}
-        />
-      )) || <div className={styles.containerBun} />
-    );
-  };
+  const renderBun = (placeRu, placeEng) =>
+    (selectedBun && (
+      <ConstructorElement
+        extraClass={styles.bun}
+        type={placeEng}
+        isLocked
+        text={`${selectedBun?.name} (${placeRu})`}
+        price={selectedBun?.price}
+        thumbnail={selectedBun?.image}
+      />
+    )) || <div className={styles.containerBun} />;
 
   const handleOrder = (evt) => {
     evt.preventDefault();
@@ -129,5 +129,10 @@ function BurgerConstructor({ selectedIngredients, selectedBun, totalPrice }) {
     </>
   );
 }
+
+BurgerConstructor.propTypes = {
+  totalPrice: PropTypes.shape({ state: PropTypes.number.isRequired })
+    .isRequired,
+};
 
 export default BurgerConstructor;
