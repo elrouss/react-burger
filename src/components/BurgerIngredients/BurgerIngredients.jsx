@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDispatch } from 'react-redux';
+import { useGetIngredientsQuery } from '../../services/features/ingredients/ingredientsApi';
 import { ADD_INGREDIENT } from '../../services/features/selectedIngredients/selectedIngredientsReducer';
 
-import IngredientsContext from '../../contexts/IngredientsContext';
 import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
 
 import BurgerIngredientsSection from '../BurgerIngredientsSection/BurgerIngredientsSection';
@@ -17,8 +17,9 @@ import Modal from '../Modal/Modal';
 import styles from './BurgerIngredients.module.scss';
 
 function BurgerIngredients({ onTotalPriceDispatcher }) {
+  const { ingredients } = useGetIngredientsQuery;
+
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
-  const { ingredients } = useContext(IngredientsContext);
   const {
     selectedIngredientsState: { selectedBun, selectedIngredients },
   } = useContext(SelectedIngredientsContext);
@@ -38,8 +39,8 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
 
   const addIngredient = useCallback(
     (_id, name, type, image, price) => {
-      if (selectedIngredients.find((ingredient) => ingredient._id === _id))
-        return undefined;
+      // if (selectedIngredients.find((ingredient) => ingredient._id === _id))
+      //   return undefined;
 
       dispatch(
         ADD_INGREDIENT({

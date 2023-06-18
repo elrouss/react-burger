@@ -1,11 +1,11 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 
-const upload = createAction('ingredients/upload');
+const UPLOAD = createAction('ingredients/upload');
 
 const initialState = { ingredients: [] };
 
 const ingredientsReducer = createReducer(initialState, (builder) => {
-  builder.addCase(upload, (state, action) => {
+  builder.addCase(UPLOAD, (state, action) => {
     state.ingredients = action.ingredients;
   });
 });
