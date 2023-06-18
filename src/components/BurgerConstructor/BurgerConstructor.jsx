@@ -1,5 +1,7 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   ConstructorElement,
@@ -8,7 +10,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
+import { REMOVE_INGREDIENT } from '../../services/features/selectedIngredients/selectedIngredientsReducer';
 
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
@@ -41,13 +43,16 @@ async function sendOrder(order, saveOrderNum) {
 }
 
 function BurgerConstructor({ totalPrice }) {
-  const {
-    selectedIngredientsState: { selectedBun, selectedIngredients },
-  } = useContext(SelectedIngredientsContext);
-
   const [currentOrder, setCurrentOrder] = useState(null);
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
     useState(false);
+
+  const dispatch = useDispatch();
+
+  const selectedBun = useSelector((state) => state.selectedIngredients.bun);
+  const selectedIngredients = useSelector(
+    (state) => state.selectedIngredients.ingredients
+  );
 
   const renderBun = (placeRu, placeEng) =>
     (selectedBun && (
@@ -60,6 +65,10 @@ function BurgerConstructor({ totalPrice }) {
         thumbnail={selectedBun?.image}
       />
     )) || <div className={styles.containerBun} />;
+
+  const handleIngredientRemove = (_id) => {
+    dispatch(REMOVE_INGREDIENT({ _id }));
+  };
 
   const handleOrder = (evt) => {
     evt.preventDefault();
@@ -94,6 +103,7 @@ function BurgerConstructor({ totalPrice }) {
                     text={name}
                     price={price}
                     thumbnail={image}
+                    handleClose={() => handleIngredientRemove(_id)}
                   />
                 </div>
               ))}

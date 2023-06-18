@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { useDispatch } from 'react-redux';
+import { ADD_INGREDIENT } from '../../services/features/selectedIngredients/selectedIngredientsReducer';
+
 import IngredientsContext from '../../contexts/IngredientsContext';
 import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
 
@@ -18,13 +21,14 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
   const { ingredients } = useContext(IngredientsContext);
   const {
     selectedIngredientsState: { selectedBun, selectedIngredients },
-    selectedIngredientsDispatcher: onSelectedIngredientsDispatcher,
   } = useContext(SelectedIngredientsContext);
 
   const [current, setCurrent] = useState('one');
   const [currentIngredient, setCurrentIngredient] = useState({});
   const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
     useState(false);
+
+  const dispatch = useDispatch();
 
   const data = [
     { typeRus: 'Булки', typeEng: 'bun', value: 'one' },
@@ -37,14 +41,15 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
       if (selectedIngredients.find((ingredient) => ingredient._id === _id))
         return undefined;
 
-      onSelectedIngredientsDispatcher({
-        action: 'add',
-        _id,
-        name,
-        type,
-        image,
-        price,
-      });
+      dispatch(
+        ADD_INGREDIENT({
+          _id,
+          name,
+          type,
+          image,
+          price,
+        })
+      );
 
       if (type === 'bun') {
         if (selectedBun) {
