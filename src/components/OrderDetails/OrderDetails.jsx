@@ -1,13 +1,17 @@
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import orderAccepted from '../../assets/icons/order-accepted.svg';
 
 import styles from './OrderDetails.module.scss';
 
-function OrderDetails({ currentOrder }) {
+function OrderDetails() {
+  const currentOrderNumber = useSelector(
+    (state) => state.orderDetails.order?.order.number
+  );
+
   return (
     <div className={styles.wrapper}>
-      <span className={styles.order}>{currentOrder?.order?.number}</span>
+      <span className={styles.order}>{currentOrderNumber}</span>
       <h3 className={styles.heading}>идентификатор заказа</h3>
       <img
         className={styles.image}
@@ -21,19 +25,5 @@ function OrderDetails({ currentOrder }) {
     </div>
   );
 }
-
-OrderDetails.propTypes = {
-  currentOrder: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    order: PropTypes.shape({
-      number: PropTypes.number.isRequired,
-    }).isRequired,
-    success: PropTypes.bool.isRequired,
-  }),
-};
-
-OrderDetails.defaultProps = {
-  currentOrder: null,
-};
 
 export default OrderDetails;

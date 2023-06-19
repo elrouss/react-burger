@@ -11,6 +11,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { REMOVE_INGREDIENT } from '../../services/features/selectedIngredients/selectedIngredientsReducer';
+import { SAVE_ORDER_DETAILS } from '../../services/features/orderDetails/orderDetailsReducer';
 
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
@@ -19,31 +20,7 @@ import API from '../../utils/constants';
 
 import styles from './BurgerConstructor.module.scss';
 
-// eslint-disable-next-line consistent-return
-async function sendOrder(order, saveOrderNum) {
-  try {
-    const res = await fetch(API.order, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ingredients: order }),
-    });
-
-    if (res.ok) {
-      const success = await res.json();
-
-      return saveOrderNum(success);
-    }
-
-    return Promise.reject(new Error(`Ошибка ${res.status}`));
-  } catch (err) {
-    console.error(`Error while sending order data to the server: ${err}`);
-  }
-}
-
 function BurgerConstructor({ totalPrice }) {
-  const [currentOrder, setCurrentOrder] = useState(null);
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
     useState(false);
 
@@ -53,6 +30,29 @@ function BurgerConstructor({ totalPrice }) {
   const selectedIngredients = useSelector(
     (state) => state.selectedIngredients.ingredients
   );
+
+  // eslint-disable-next-line consistent-return
+  async function sendOrder(order) {
+    try {
+      const res = await fetch(`${API.baseUrl}${API.endpoints.orders}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ingredients: order }),
+      });
+
+      if (res.ok) {
+        const success = await res.json();
+
+        return dispatch(SAVE_ORDER_DETAILS(success));
+      }
+
+      return Promise.reject(new Error(`Ошибка ${res.status}`));
+    } catch (err) {
+      console.error(`Error while sending order data to the server: ${err}`);
+    }
+  }
 
   const renderBun = (placeRu, placeEng) =>
     (selectedBun && (
@@ -78,7 +78,7 @@ function BurgerConstructor({ totalPrice }) {
         (selectedIngredient) => selectedIngredient._id
       );
 
-      sendOrder(order, setCurrentOrder);
+      sendOrder(order);
       setIsOrderDetailsModalOpened(true);
     }
   };
@@ -134,7 +134,7 @@ function BurgerConstructor({ totalPrice }) {
         isModalOpened={isOrderDetailsModalOpened}
         onModalClose={handleModalClose}
       >
-        <OrderDetails currentOrder={currentOrder} />
+        <OrderDetails />
       </Modal>
     </>
   );

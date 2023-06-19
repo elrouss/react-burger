@@ -1,4 +1,4 @@
-import { useContext, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,8 +10,6 @@ import {
   RESET_INGREDIENT_DETAILS,
 } from '../../services/features/currentIngredient/currentIngredientReducer';
 
-import SelectedIngredientsContext from '../../contexts/SelectedIngredientsContext';
-
 import BurgerIngredientsSection from '../BurgerIngredientsSection/BurgerIngredientsSection';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
@@ -21,10 +19,6 @@ import styles from './BurgerIngredients.module.scss';
 
 function BurgerIngredients({ onTotalPriceDispatcher }) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
-  const {
-    selectedIngredientsState: { selectedBun, selectedIngredients },
-  } = useContext(SelectedIngredientsContext);
-
   const [current, setCurrent] = useState('one');
   // const [currentIngredient, setCurrentIngredient] = useState({});
   const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
@@ -42,30 +36,30 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
     (ingredient) => {
       dispatch(ADD_INGREDIENT(ingredient));
 
-      if (ingredient.type === 'bun') {
-        if (selectedBun) {
-          onTotalPriceDispatcher({
-            type: 'decrement',
-            ingredientType: ingredient.type,
-            price: selectedBun.price,
-          });
-        }
+      // if (ingredient.type === 'bun') {
+      //   if (selectedBun) {
+      //     onTotalPriceDispatcher({
+      //       type: 'decrement',
+      //       ingredientType: ingredient.type,
+      //       price: selectedBun.price,
+      //     });
+      //   }
 
-        return onTotalPriceDispatcher({
-          type: 'increment',
-          ingredientType: ingredient.type,
-          price: ingredient.price,
-        });
-      }
+      //   return onTotalPriceDispatcher({
+      //     type: 'increment',
+      //     ingredientType: ingredient.type,
+      //     price: ingredient.price,
+      //   });
+      // }
 
-      return onTotalPriceDispatcher({
-        type: 'increment',
-        ingredientType: ingredient.type,
-        price: ingredient.price,
-      });
+      // return onTotalPriceDispatcher({
+      //   type: 'increment',
+      //   ingredientType: ingredient.type,
+      //   price: ingredient.price,
+      // });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedIngredients, selectedBun]
+    [] // TODO
   );
 
   const handleModalOpen = useCallback(

@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { ingredientsApi } from '../features/ingredients/ingredientsApi';
+import { ingredientsApiReducer } from '../features/ingredients/ingredientsApiReducer';
 import currentIngredientReducer from '../features/currentIngredient/currentIngredientReducer';
 import selectedIngredientsReducer from '../features/selectedIngredients/selectedIngredientsReducer';
+import orderDetailsReducer from '../features/orderDetails/orderDetailsReducer';
 
 export default configureStore({
   reducer: {
-    [ingredientsApi.reducerPath]: ingredientsApi.reducer,
+    [ingredientsApiReducer.reducerPath]: ingredientsApiReducer.reducer,
     currentIngredient: currentIngredientReducer,
     selectedIngredients: selectedIngredientsReducer,
+    orderDetails: orderDetailsReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(ingredientsApi.middleware),
+    getDefaultMiddleware().concat(ingredientsApiReducer.middleware),
 });
