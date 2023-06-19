@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { ingredientsApiReducer } from '../features/ingredients/ingredientsApiReducer';
-import currentIngredientReducer from '../features/currentIngredient/currentIngredientReducer';
-import selectedIngredientsReducer from '../features/selectedIngredients/selectedIngredientsReducer';
-import orderDetailsReducer from '../features/orderDetails/orderDetailsReducer';
+import { ingredientsApiReducer } from '../features/ingredients/reducer';
+import currentIngredientReducer from '../features/current-ingredient/reducer';
+import selectedIngredientsReducer from '../features/selected-ingredients/reducer';
+import orderDetailsReducer from '../features/order-details/reducer';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     [ingredientsApiReducer.reducerPath]: ingredientsApiReducer.reducer,
     currentIngredient: currentIngredientReducer,
@@ -16,3 +16,5 @@ export default configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(ingredientsApiReducer.middleware),
 });
+
+export default store;

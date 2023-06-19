@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { useGetIngredientsQuery } from '../../services/features/ingredients/ingredientsApiReducer';
+import { useGetIngredientsQuery } from '../../services/features/ingredients/reducer';
 
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 

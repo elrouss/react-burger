@@ -2,13 +2,14 @@ import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { v4 as uuidv4 } from 'uuid';
 
 import { useDispatch } from 'react-redux';
-import { ADD_INGREDIENT } from '../../services/features/selectedIngredients/selectedIngredientsReducer';
+import { ADD_INGREDIENT } from '../../services/features/selected-ingredients/reducer';
 import {
   SHOW_INGREDIENT_DETAILS,
   RESET_INGREDIENT_DETAILS,
-} from '../../services/features/currentIngredient/currentIngredientReducer';
+} from '../../services/features/current-ingredient/reducer';
 
 import BurgerIngredientsSection from '../BurgerIngredientsSection/BurgerIngredientsSection';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
@@ -34,7 +35,7 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
 
   const addIngredient = useCallback(
     (ingredient) => {
-      dispatch(ADD_INGREDIENT(ingredient));
+      dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
 
       // if (ingredient.type === 'bun') {
       //   if (selectedBun) {

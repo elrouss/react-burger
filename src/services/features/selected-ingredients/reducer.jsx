@@ -13,9 +13,12 @@ const initialState = { bun: null, ingredients: [] };
 const selectedIngredientsReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(ADD_INGREDIENT, (state, { payload }) => {
-      const { _id, name, type, image, price } = payload;
+      const { _id, name, type, image, price } = payload.ingredient;
+      const { key } = payload;
+
       const ingredientNew = {
         _id,
+        key,
         name,
         type,
         image,
@@ -31,7 +34,7 @@ const selectedIngredientsReducer = createReducer(initialState, (builder) => {
 
     .addCase(REMOVE_INGREDIENT, (state, { payload }) => {
       state.ingredients = state.ingredients.filter(
-        (ingredient) => ingredient._id !== payload._id
+        (ingredient) => ingredient.key !== payload.key
       );
     })
 

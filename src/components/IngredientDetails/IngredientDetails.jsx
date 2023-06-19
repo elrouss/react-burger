@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 
+import getCurrentIngredient from '../../services/features/current-ingredient/selectors';
+
 import styles from './IngredientDetails.module.scss';
 
 function IngredientDetails() {
-  const currentIngredient = useSelector(
-    (state) => state.currentIngredient.ingredient
-  );
+  const currentIngredient = useSelector(getCurrentIngredient);
 
   const list = [
     {

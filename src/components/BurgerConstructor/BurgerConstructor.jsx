@@ -10,8 +10,13 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { REMOVE_INGREDIENT } from '../../services/features/selectedIngredients/selectedIngredientsReducer';
-import { SAVE_ORDER_DETAILS } from '../../services/features/orderDetails/orderDetailsReducer';
+import { REMOVE_INGREDIENT } from '../../services/features/selected-ingredients/reducer';
+import { SAVE_ORDER_DETAILS } from '../../services/features/order-details/reducer';
+
+import {
+  getSelectedBun,
+  getSelectedIngredients,
+} from '../../services/features/selected-ingredients/selectors';
 
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
@@ -26,10 +31,8 @@ function BurgerConstructor({ totalPrice }) {
 
   const dispatch = useDispatch();
 
-  const selectedBun = useSelector((state) => state.selectedIngredients.bun);
-  const selectedIngredients = useSelector(
-    (state) => state.selectedIngredients.ingredients
-  );
+  const selectedBun = useSelector(getSelectedBun);
+  const selectedIngredients = useSelector(getSelectedIngredients);
 
   // eslint-disable-next-line consistent-return
   async function sendOrder(order) {
@@ -66,10 +69,6 @@ function BurgerConstructor({ totalPrice }) {
       />
     )) || <div className={styles.containerBun} />;
 
-  const handleIngredientRemove = (_id) => {
-    dispatch(REMOVE_INGREDIENT({ _id }));
-  };
-
   const handleOrder = (evt) => {
     evt.preventDefault();
 
@@ -95,15 +94,15 @@ function BurgerConstructor({ totalPrice }) {
 
           {(selectedIngredients.length && (
             <div className={styles.components}>
-              {selectedIngredients.map(({ _id, name, price, image }) => (
-                <div key={`container-${_id}`} className={styles.item}>
-                  <DragIcon key={`icon-${_id}`} type="primary" />
+              {selectedIngredients.map(({ key, name, price, image }) => (
+                <div key={`container-${key}`} className={styles.item}>
+                  <DragIcon key={`icon-${key}`} type="primary" />
                   <ConstructorElement
-                    key={_id}
+                    key={key}
                     text={name}
                     price={price}
                     thumbnail={image}
-                    handleClose={() => handleIngredientRemove(_id)}
+                    handleClose={() => dispatch(REMOVE_INGREDIENT({ key }))}
                   />
                 </div>
               ))}
