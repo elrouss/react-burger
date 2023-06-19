@@ -1,28 +1,30 @@
-import ingredientsTypes from '../../utils/types/ingredients';
+import { useSelector } from 'react-redux';
 
 import styles from './IngredientDetails.module.scss';
 
-function IngredientDetails({
-  currentIngredient: { image, name, calories, proteins, fat, carbohydrates },
-}) {
+function IngredientDetails() {
+  const currentIngredient = useSelector(
+    (state) => state.currentIngredient.ingredient
+  );
+
   const list = [
     {
-      param: calories,
+      param: currentIngredient.calories,
       nameEng: 'calories',
       nameRus: 'Калории,ккал',
     },
     {
-      param: proteins,
+      param: currentIngredient.proteins,
       nameEng: 'proteins',
       nameRus: 'Белки, г',
     },
     {
-      param: fat,
+      param: currentIngredient.fat,
       nameEng: 'fat',
       nameRus: 'Жиры, г',
     },
     {
-      param: carbohydrates,
+      param: currentIngredient.carbohydrates,
       nameEng: 'carbohydrates',
       nameRus: 'Углеводы, г',
     },
@@ -32,8 +34,12 @@ function IngredientDetails({
     <div className={styles.wrapper}>
       <h3 className={styles.heading}>Детали ингредиента</h3>
       <div className={styles.item}>
-        <img className={styles.image} src={image} alt={`Блюдо дня: ${name}`} />
-        <h4 className={styles.headingItem}>{name}</h4>
+        <img
+          className={styles.image}
+          src={currentIngredient.image}
+          alt={`Блюдо дня: ${currentIngredient.name}`}
+        />
+        <h4 className={styles.headingItem}>{currentIngredient.name}</h4>
         <ul className={styles.list}>
           {list.map(({ param, nameEng, nameRus }) => (
             <li key={`key-${nameEng}`} className={styles.listItem}>
@@ -46,7 +52,5 @@ function IngredientDetails({
     </div>
   );
 }
-
-IngredientDetails.propTypes = ingredientsTypes;
 
 export default IngredientDetails;
