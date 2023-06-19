@@ -1,14 +1,14 @@
-import { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import IngredientsContext from '../../contexts/IngredientsContext';
+import { useGetIngredientsQuery } from '../../services/features/ingredients/ingredientsApi';
 
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 
 import styles from './BurgerIngredientsSection.module.scss';
 
 function BurgerIngredientsSection({ typeRus, typeEng, value, ...rest }) {
-  const { ingredients } = useContext(IngredientsContext);
+  const { data } = useGetIngredientsQuery();
+  const ingredients = data?.data || [];
 
   return (
     <section aria-label={typeRus}>
@@ -18,14 +18,10 @@ function BurgerIngredientsSection({ typeRus, typeEng, value, ...rest }) {
       <div className={styles.content}>
         {ingredients
           .filter(({ type }) => type === typeEng)
-          .map(({ _id, name, type, image, price }) => (
+          .map((ingredient) => (
             <BurgerIngredient
-              key={_id}
-              _id={_id}
-              name={name}
-              type={type}
-              link={image}
-              price={price}
+              key={ingredient?._id}
+              ingredient={ingredient}
               {...rest}
             />
           ))}
