@@ -24,6 +24,7 @@ import {
   getSelectedIngredients,
 } from '../../services/features/selected-ingredients/selectors';
 
+import BurgerBun from './burger-bun/burger-bun';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
@@ -75,32 +76,6 @@ function BurgerConstructor({ totalPrice }) {
     }
   }
 
-  const renderBun = (placeRu, placeEng) =>
-    (selectedBun && (
-      <ConstructorElement
-        extraClass={styles.bun}
-        type={placeEng}
-        isLocked
-        text={`${selectedBun?.name} (${placeRu})`}
-        price={selectedBun?.price}
-        thumbnail={selectedBun?.image}
-      />
-    )) || (
-      <div
-        className={`${styles.containerBun} ${
-          (placeEng === 'top' && styles.containerBunTop) ||
-          styles.containerBunBottom
-        }${
-          (isOver &&
-            ingredientTypeDrop === 'bun' &&
-            ` ${styles.containerEmptyDrop}`) ||
-          ''
-        }`}
-      >
-        <span>Перетащите булку</span>
-      </div>
-    );
-
   const handleOrder = (evt) => {
     evt.preventDefault();
 
@@ -122,7 +97,13 @@ function BurgerConstructor({ totalPrice }) {
     <>
       <section aria-label="Оформление заказа">
         <form className={styles.order} ref={drop}>
-          {renderBun('верх', 'top')}
+          <BurgerBun
+            selectedBun={selectedBun}
+            isOver={isOver}
+            ingredientTypeDrop={ingredientTypeDrop}
+            positionRu="верх"
+            positionEng="top"
+          />
 
           {(selectedIngredients.length && (
             <div className={styles.components}>
@@ -152,7 +133,13 @@ function BurgerConstructor({ totalPrice }) {
             </div>
           )}
 
-          {renderBun('низ', 'bottom')}
+          <BurgerBun
+            selectedBun={selectedBun}
+            isOver={isOver}
+            ingredientTypeDrop={ingredientTypeDrop}
+            positionRu="низ"
+            positionEng="bottom"
+          />
 
           <div className={styles.info}>
             <div className={styles.price}>

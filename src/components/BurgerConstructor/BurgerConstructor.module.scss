@@ -1,27 +1,5 @@
 @import '../../index.scss';
 
-%constructor-element {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  max-width: 536px;
-  width: 100%;
-  min-height: 80px;
-  margin-left: 48px;
-  padding: 16px 24px;
-  box-sizing: border-box;
-
-  @include show-font(
-    $size: $font-size-xs,
-    $line-height: 150%,
-    $color: $color-text-primary
-  );
-
-  border-radius: var(--common-border-radius-s);
-  background: var(--background-element);
-}
-
 .order {
   display: flex;
   flex-direction: column;
@@ -41,30 +19,14 @@
 }
 
 .componentsEmpty {
-  @extend %constructor-element;
+  @extend %constructor-ingredient-element;
 
   width: 100%;
   margin: 16px 0 16px 48px;
 }
 
-.containerBun {
-  @extend %constructor-element;
-
-  &Top {
-    border-radius: var(--top-constructor-item-border-radius);
-  }
-
-  &Bottom {
-    border-radius: var(--bottom-constructor-item-border-radius);
-  }
-}
-
 .containerEmptyDrop {
-  border: 1.2px solid $colors-interface-accent;
-}
-
-.bun {
-  margin-left: 48px;
+  @extend %constructor-ingredient-empty-drop;
 }
 
 .item {

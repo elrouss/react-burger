@@ -1,0 +1,21 @@
+@import '../../../index.scss';
+
+.containerBun {
+  @extend %constructor-ingredient-element;
+
+  &Top {
+    border-radius: var(--top-constructor-item-border-radius);
+  }
+
+  &Bottom {
+    border-radius: var(--bottom-constructor-item-border-radius);
+  }
+}
+
+.bun {
+  margin-left: 48px;
+}
+
+.containerEmptyDrop {
+  @extend %constructor-ingredient-empty-drop;
+}
