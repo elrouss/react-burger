@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
 
 import {
   ConstructorElement,
@@ -10,7 +11,12 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { REMOVE_INGREDIENT } from '../../services/features/selected-ingredients/reducer';
+import { v4 as uuidv4 } from 'uuid';
+
+import {
+  ADD_INGREDIENT,
+  REMOVE_INGREDIENT,
+} from '../../services/features/selected-ingredients/reducer';
 import { SAVE_ORDER_DETAILS } from '../../services/features/order-details/reducer';
 
 import {
@@ -22,6 +28,7 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
 import API from '../../utils/constants';
+import DRAG_TYPES from '../../utils/drag-types';
 
 import styles from './BurgerConstructor.module.scss';
 
@@ -33,6 +40,17 @@ function BurgerConstructor({ totalPrice }) {
 
   const selectedBun = useSelector(getSelectedBun);
   const selectedIngredients = useSelector(getSelectedIngredients);
+
+  const [{ isOver, ingredientTypeDrop }, drop] = useDrop(() => ({
+    accept: DRAG_TYPES.INGREDIENT,
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      ingredientTypeDrop: monitor.getItem()?.type,
+    }),
+    drop: (ingredient) => {
+      dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
+    },
+  }));
 
   // eslint-disable-next-line consistent-return
   async function sendOrder(order) {
@@ -67,7 +85,21 @@ function BurgerConstructor({ totalPrice }) {
         price={selectedBun?.price}
         thumbnail={selectedBun?.image}
       />
-    )) || <div className={styles.containerBun} />;
+    )) || (
+      <div
+        className={`${styles.containerBun} ${
+          (placeEng === 'top' && styles.containerBunTop) ||
+          styles.containerBunBottom
+        }${
+          (isOver &&
+            ingredientTypeDrop === 'bun' &&
+            ` ${styles.containerEmptyDrop}`) ||
+          ''
+        }`}
+      >
+        <span>Перетащите булку</span>
+      </div>
+    );
 
   const handleOrder = (evt) => {
     evt.preventDefault();
@@ -89,7 +121,7 @@ function BurgerConstructor({ totalPrice }) {
   return (
     <>
       <section aria-label="Оформление заказа">
-        <form className={styles.order}>
+        <form className={styles.order} ref={drop}>
           {renderBun('верх', 'top')}
 
           {(selectedIngredients.length && (
@@ -107,7 +139,18 @@ function BurgerConstructor({ totalPrice }) {
                 </div>
               ))}
             </div>
-          )) || <div className={styles.componentsEmpty} />}
+          )) || (
+            <div
+              className={`${styles.componentsEmpty}${
+                (isOver &&
+                  ingredientTypeDrop !== 'bun' &&
+                  ` ${styles.containerEmptyDrop}`) ||
+                ''
+              }`}
+            >
+              <span>Перетащите начинку</span>
+            </div>
+          )}
 
           {renderBun('низ', 'bottom')}
 

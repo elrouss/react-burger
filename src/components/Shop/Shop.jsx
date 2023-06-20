@@ -1,5 +1,8 @@
 import { useReducer } from 'react';
 
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import {
   initialTotalPrice,
   reducerTotalPrice,
@@ -21,8 +24,10 @@ function Shop() {
       <div className={styles.wrapper}>
         <h1 className={styles.heading}>Соберите бургер</h1>
         <div className={styles.shop}>
-          <BurgerIngredients onTotalPriceDispatcher={totalPriceDispatcher} />
-          <BurgerConstructor totalPrice={totalPriceState} />
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients onTotalPriceDispatcher={totalPriceDispatcher} />
+            <BurgerConstructor totalPrice={totalPriceState} />
+          </DndProvider>
         </div>
       </div>
     </main>

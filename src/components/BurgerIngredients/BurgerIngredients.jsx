@@ -109,7 +109,7 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
                 typeRus={typeRus}
                 typeEng={typeEng}
                 value={value}
-                onAddIngredient={addIngredient}
+                // onAddIngredient={addIngredient}
                 onModalOpen={handleModalOpen}
               />
             ))}
