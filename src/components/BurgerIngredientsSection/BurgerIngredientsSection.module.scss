@@ -1,7 +1,7 @@
 @import '../../index.scss';
 
 .heading {
-  @include showFont(
+  @include show-font(
     $weight: 700,
     $size: $font-size-s,
     $line-height: $font-line-height-l

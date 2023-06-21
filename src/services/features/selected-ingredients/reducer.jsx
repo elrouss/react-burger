@@ -3,6 +3,9 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 export const ADD_INGREDIENT = createAction(
   'selectedIngredients/add_ingredient'
 );
+export const CHANGE_POSITION_INGREDIENT = createAction(
+  'selectedIngredients/change_position_ingredient'
+);
 export const REMOVE_INGREDIENT = createAction(
   'selectedIngredients/remove_ingredient'
 );
@@ -13,25 +16,34 @@ const initialState = { bun: null, ingredients: [] };
 const selectedIngredientsReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(ADD_INGREDIENT, (state, { payload }) => {
-      const { _id, name, type, image, price } = payload;
-      const ingredientNew = {
-        _id,
-        name,
-        type,
-        image,
-        price,
+      const { key, ingredient } = payload;
+      const data = {
+        ...ingredient,
+        key,
       };
 
-      if (type === 'bun') {
-        state.bun = ingredientNew;
+      if (ingredient.type === 'bun') {
+        state.bun = data;
       } else {
-        state.ingredients.push(ingredientNew);
+        state.ingredients.push(data);
       }
     })
 
+    .addCase(
+      CHANGE_POSITION_INGREDIENT,
+      (state, { payload: { dragIndex, hoverIndex } }) => {
+        const { ingredients } = state;
+
+        [ingredients[dragIndex], ingredients[hoverIndex]] = [
+          ingredients[hoverIndex],
+          ingredients[dragIndex],
+        ];
+      }
+    )
+
     .addCase(REMOVE_INGREDIENT, (state, { payload }) => {
       state.ingredients = state.ingredients.filter(
-        (ingredient) => ingredient._id !== payload._id
+        (ingredient) => ingredient.key !== payload.key
       );
     })
 

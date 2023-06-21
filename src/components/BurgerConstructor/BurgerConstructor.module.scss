@@ -11,31 +11,22 @@
   flex-direction: column;
   row-gap: 16px;
   width: 100%;
-  height: 464px;
+  max-height: 464px;
   margin: 16px 0 16px 17px;
 
-  overflow-y: scroll;
+  overflow-y: auto;
   composes: custom-scroll;
 }
 
 .componentsEmpty {
+  @extend %constructor-ingredient-element;
+
   width: 100%;
-  height: 464px;
-  margin: 16px 0 16px 17px;
+  margin: 16px 0 16px 48px;
 }
 
-.containerBun {
-  height: 80px;
-}
-
-.bun {
-  margin-left: 48px;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  column-gap: 9.5px;
+.containerEmptyDrop {
+  @extend %constructor-ingredient-empty-drop;
 }
 
 .info {
@@ -51,7 +42,7 @@
   align-items: center;
   column-gap: 9.5px;
 
-  @include showFont(
+  @include show-font(
     $family: 'Iceland',
     $size: $font-size-xl,
     $line-height: $font-line-height-xxs

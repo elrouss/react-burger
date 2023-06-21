@@ -11,10 +11,15 @@
   width: 272px;
 
   cursor: pointer;
+  transition: $transition-draggable;
+
+  &Dragging {
+    opacity: 0.4;
+  }
 }
 
 .heading {
-  @include showFont($size: $font-size-xs, $line-height: $font-line-height-xxl);
+  @include show-font($size: $font-size-xs, $line-height: $font-line-height-xxl);
 }
 
 .image {
@@ -28,7 +33,7 @@
   align-items: center;
   column-gap: 8px;
 
-  @include showFont(
+  @include show-font(
     $family: 'Iceland',
     $size: $font-size-m,
     $line-height: $font-line-height-s

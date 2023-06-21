@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 
+import getCurrentOrderNumber from '../../services/features/order-details/selectors';
+
 import orderAccepted from '../../assets/icons/order-accepted.svg';
 
 import styles from './OrderDetails.module.scss';
 
 function OrderDetails() {
-  const currentOrderNumber = useSelector(
-    (state) => state.orderDetails.order?.order.number
-  );
+  const currentOrderNumber = useSelector(getCurrentOrderNumber);
 
   return (
     <div className={styles.wrapper}>

@@ -39,7 +39,7 @@
     color: $color-text-primary;
   }
 
-  @include showFont(
+  @include show-font(
     $size: $font-size-xs,
     $line-height: $font-line-height-xxl,
     $color: inherit

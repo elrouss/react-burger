@@ -2,21 +2,33 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
 
 import {
-  ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { REMOVE_INGREDIENT } from '../../services/features/selectedIngredients/selectedIngredientsReducer';
-import { SAVE_ORDER_DETAILS } from '../../services/features/orderDetails/orderDetailsReducer';
+import { v4 as uuidv4 } from 'uuid';
 
+import {
+  ADD_INGREDIENT,
+  REMOVE_INGREDIENT,
+} from '../../services/features/selected-ingredients/reducer';
+import { SAVE_ORDER_DETAILS } from '../../services/features/order-details/reducer';
+
+import {
+  getSelectedBun,
+  getSelectedIngredients,
+} from '../../services/features/selected-ingredients/selectors';
+
+import BurgerBun from './burger-bun/burger-bun';
+import SelectedBurgerIngredient from './selected-burger-ingredient/selected-burger-ingredient';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
 import API from '../../utils/constants';
+import DRAG_TYPES from '../../utils/drag-types';
 
 import styles from './BurgerConstructor.module.scss';
 
@@ -26,10 +38,21 @@ function BurgerConstructor({ totalPrice }) {
 
   const dispatch = useDispatch();
 
-  const selectedBun = useSelector((state) => state.selectedIngredients.bun);
-  const selectedIngredients = useSelector(
-    (state) => state.selectedIngredients.ingredients
-  );
+  const selectedBun = useSelector(getSelectedBun);
+  const selectedIngredients = useSelector(getSelectedIngredients);
+
+  // Selecting ingredients from left container
+  // and putting them inside constructor
+  const [{ isOver, ingredientTypeDrop }, drop] = useDrop(() => ({
+    accept: DRAG_TYPES.INGREDIENT,
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      ingredientTypeDrop: monitor.getItem()?.type,
+    }),
+    drop: (ingredient) => {
+      dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
+    },
+  }));
 
   // eslint-disable-next-line consistent-return
   async function sendOrder(order) {
@@ -54,22 +77,6 @@ function BurgerConstructor({ totalPrice }) {
     }
   }
 
-  const renderBun = (placeRu, placeEng) =>
-    (selectedBun && (
-      <ConstructorElement
-        extraClass={styles.bun}
-        type={placeEng}
-        isLocked
-        text={`${selectedBun?.name} (${placeRu})`}
-        price={selectedBun?.price}
-        thumbnail={selectedBun?.image}
-      />
-    )) || <div className={styles.containerBun} />;
-
-  const handleIngredientRemove = (_id) => {
-    dispatch(REMOVE_INGREDIENT({ _id }));
-  };
-
   const handleOrder = (evt) => {
     evt.preventDefault();
 
@@ -90,27 +97,46 @@ function BurgerConstructor({ totalPrice }) {
   return (
     <>
       <section aria-label="Оформление заказа">
-        <form className={styles.order}>
-          {renderBun('верх', 'top')}
+        <form className={styles.order} ref={drop}>
+          <BurgerBun
+            selectedBun={selectedBun}
+            isOver={isOver}
+            ingredientTypeDrop={ingredientTypeDrop}
+            positionRu="верх"
+            positionEng="top"
+          />
 
           {(selectedIngredients.length && (
             <div className={styles.components}>
-              {selectedIngredients.map(({ _id, name, price, image }) => (
-                <div key={`container-${_id}`} className={styles.item}>
-                  <DragIcon key={`icon-${_id}`} type="primary" />
-                  <ConstructorElement
-                    key={_id}
-                    text={name}
-                    price={price}
-                    thumbnail={image}
-                    handleClose={() => handleIngredientRemove(_id)}
-                  />
-                </div>
+              {selectedIngredients.map(({ key, ...rest }, index) => (
+                <SelectedBurgerIngredient
+                  key={`component-${key}`}
+                  ingredient={{ ...rest, key }}
+                  index={index}
+                  removeIngredient={() => dispatch(REMOVE_INGREDIENT({ key }))}
+                />
               ))}
             </div>
-          )) || <div className={styles.componentsEmpty} />}
+          )) || (
+            <div
+              className={`${styles.componentsEmpty}${
+                (isOver &&
+                  ingredientTypeDrop !== 'bun' &&
+                  ` ${styles.containerEmptyDrop}`) ||
+                ''
+              }`}
+            >
+              <span>Перетащите начинку</span>
+            </div>
+          )}
 
-          {renderBun('низ', 'bottom')}
+          <BurgerBun
+            selectedBun={selectedBun}
+            isOver={isOver}
+            ingredientTypeDrop={ingredientTypeDrop}
+            positionRu="низ"
+            positionEng="bottom"
+          />
 
           <div className={styles.info}>
             <div className={styles.price}>
