@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 
 import {
-  ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -25,6 +23,7 @@ import {
 } from '../../services/features/selected-ingredients/selectors';
 
 import BurgerBun from './burger-bun/burger-bun';
+import SelectedBurgerIngredient from './selected-burger-ingredient/selected-burger-ingredient';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
@@ -42,6 +41,8 @@ function BurgerConstructor({ totalPrice }) {
   const selectedBun = useSelector(getSelectedBun);
   const selectedIngredients = useSelector(getSelectedIngredients);
 
+  // Selecting ingredients from left container
+  // and putting them inside constructor
   const [{ isOver, ingredientTypeDrop }, drop] = useDrop(() => ({
     accept: DRAG_TYPES.INGREDIENT,
     collect: (monitor) => ({
@@ -107,17 +108,13 @@ function BurgerConstructor({ totalPrice }) {
 
           {(selectedIngredients.length && (
             <div className={styles.components}>
-              {selectedIngredients.map(({ key, name, price, image }) => (
-                <div key={`container-${key}`} className={styles.item}>
-                  <DragIcon key={`icon-${key}`} type="primary" />
-                  <ConstructorElement
-                    key={key}
-                    text={name}
-                    price={price}
-                    thumbnail={image}
-                    handleClose={() => dispatch(REMOVE_INGREDIENT({ key }))}
-                  />
-                </div>
+              {selectedIngredients.map(({ key, ...rest }, index) => (
+                <SelectedBurgerIngredient
+                  key={`component-${key}`}
+                  ingredient={{ ...rest, key }}
+                  index={index}
+                  removeIngredient={() => dispatch(REMOVE_INGREDIENT({ key }))}
+                />
               ))}
             </div>
           )) || (

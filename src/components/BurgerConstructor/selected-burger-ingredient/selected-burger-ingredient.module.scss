@@ -1,0 +1,10 @@
+.item {
+  display: flex;
+  align-items: center;
+  column-gap: 9.5px;
+  cursor: move;
+
+  &Dragging {
+    opacity: 0;
+  }
+}

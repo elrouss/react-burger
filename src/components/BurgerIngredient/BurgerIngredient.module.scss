@@ -11,6 +11,11 @@
   width: 272px;
 
   cursor: pointer;
+  transition: $transition-draggable;
+
+  &Dragging {
+    opacity: 0.4;
+  }
 }
 
 .heading {

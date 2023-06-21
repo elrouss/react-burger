@@ -29,12 +29,6 @@
   @extend %constructor-ingredient-empty-drop;
 }
 
-.item {
-  display: flex;
-  align-items: center;
-  column-gap: 9.5px;
-}
-
 .info {
   display: flex;
   justify-content: flex-end;
