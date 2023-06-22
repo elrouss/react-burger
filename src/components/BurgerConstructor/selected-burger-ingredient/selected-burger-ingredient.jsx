@@ -17,6 +17,7 @@ import styles from './selected-burger-ingredient.module.scss';
 function SelectedBurgerIngredient({ ingredient, index, removeIngredient }) {
   const ref = useRef(null);
   const dispatch = useDispatch();
+
   const { _id } = ingredient;
 
   const [{ handlerId }, drop] = useDrop({
