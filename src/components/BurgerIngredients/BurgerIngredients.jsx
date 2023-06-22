@@ -18,7 +18,13 @@ import Modal from '../Modal/Modal';
 
 import styles from './BurgerIngredients.module.scss';
 
-function BurgerIngredients({ onTotalPriceDispatcher }) {
+const table = [
+  { typeRus: 'Булки', typeEng: 'bun', value: 'one' },
+  { typeRus: 'Соусы', typeEng: 'sauce', value: 'two' },
+  { typeRus: 'Начинки', typeEng: 'main', value: 'three' },
+];
+
+function BurgerIngredients({ onTotalPriceDispatcher, ...rest }) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
   const [current, setCurrent] = useState('one');
   // const [currentIngredient, setCurrentIngredient] = useState({});
@@ -27,15 +33,10 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
 
   const dispatch = useDispatch();
 
-  const data = [
-    { typeRus: 'Булки', typeEng: 'bun', value: 'one' },
-    { typeRus: 'Соусы', typeEng: 'sauce', value: 'two' },
-    { typeRus: 'Начинки', typeEng: 'main', value: 'three' },
-  ];
-
   const addIngredient = useCallback(
     (ingredient) => {
       dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
+      // setCounter(counter.set(ingredient._id, counter))
 
       // if (ingredient.type === 'bun') {
       //   if (selectedBun) {
@@ -70,7 +71,7 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
         setIsIngredientDetailsModalOpened(true);
       }
     },
-    [data] // TODO
+    [table] // TODO
   );
 
   const handleModalClose = () => {
@@ -89,7 +90,7 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
       <section aria-label="Ингредиенты бургера">
         <div className={styles.wrapper}>
           <div className={styles.tabs}>
-            {data.map(({ typeRus, typeEng, value }) => (
+            {table.map(({ typeRus, typeEng, value }) => (
               <a key={`link-${typeEng}`} href={`#${value}`}>
                 <Tab
                   key={`tab-${typeEng}`}
@@ -103,7 +104,7 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
             ))}
           </div>
           <div className={styles.ingredients}>
-            {data.map(({ typeRus, typeEng, value }) => (
+            {table.map(({ typeRus, typeEng, value }) => (
               <BurgerIngredientsSection
                 key={typeEng}
                 typeRus={typeRus}
@@ -111,6 +112,7 @@ function BurgerIngredients({ onTotalPriceDispatcher }) {
                 value={value}
                 // onAddIngredient={addIngredient}
                 onModalOpen={handleModalOpen}
+                {...rest}
               />
             ))}
           </div>

@@ -32,7 +32,13 @@ import DRAG_TYPES from '../../utils/drag-types';
 
 import styles from './BurgerConstructor.module.scss';
 
-function BurgerConstructor({ totalPrice }) {
+let prevBunId = '';
+
+function BurgerConstructor({
+  totalPrice,
+  ingredientsCounter,
+  onIngredientsCounter,
+}) {
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
     useState(false);
 
@@ -41,18 +47,53 @@ function BurgerConstructor({ totalPrice }) {
   const selectedBun = useSelector(getSelectedBun);
   const selectedIngredients = useSelector(getSelectedIngredients);
 
+  const incrementIngredientCounter = ({ _id, type }) => {
+    let value = ingredientsCounter.get(_id);
+
+    if (type === 'bun' && value) return 2;
+
+    if (type === 'bun') {
+      ingredientsCounter.set(prevBunId, 0);
+      prevBunId = _id;
+
+      return 2;
+    }
+
+    value = value ? (value += 1) : 1;
+    return value;
+  };
+
   // Selecting ingredients from left container
   // and putting them inside constructor
-  const [{ isOver, ingredientTypeDrop }, drop] = useDrop(() => ({
-    accept: DRAG_TYPES.INGREDIENT,
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      ingredientTypeDrop: monitor.getItem()?.type,
+  const [{ isOver, ingredientTypeDrop }, drop] = useDrop(
+    () => ({
+      accept: DRAG_TYPES.INGREDIENT,
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+        ingredientTypeDrop: monitor.getItem()?.type,
+      }),
+      drop: (ingredient) => {
+        dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
+
+        onIngredientsCounter(
+          new Map(
+            ingredientsCounter.set(
+              ingredient._id,
+              incrementIngredientCounter(ingredient)
+            )
+          )
+        );
+      },
     }),
-    drop: (ingredient) => {
-      dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
-    },
-  }));
+    [ingredientsCounter]
+  );
+
+  const removeIngredient = ({ key, _id }) => {
+    dispatch(REMOVE_INGREDIENT({ key }));
+
+    const value = ingredientsCounter.get(_id) - 1;
+    onIngredientsCounter(new Map(ingredientsCounter.set(_id, value)));
+  };
 
   // eslint-disable-next-line consistent-return
   async function sendOrder(order) {
@@ -108,12 +149,12 @@ function BurgerConstructor({ totalPrice }) {
 
           {(selectedIngredients.length && (
             <div className={styles.components}>
-              {selectedIngredients.map(({ key, ...rest }, index) => (
+              {selectedIngredients.map((ingredient, index) => (
                 <SelectedBurgerIngredient
-                  key={`component-${key}`}
-                  ingredient={{ ...rest, key }}
+                  key={`component-${ingredient.key}`}
+                  ingredient={ingredient}
                   index={index}
-                  removeIngredient={() => dispatch(REMOVE_INGREDIENT({ key }))}
+                  removeIngredient={() => removeIngredient(ingredient)}
                 />
               ))}
             </div>
@@ -169,6 +210,8 @@ function BurgerConstructor({ totalPrice }) {
 BurgerConstructor.propTypes = {
   totalPrice: PropTypes.shape({ state: PropTypes.number.isRequired })
     .isRequired,
+  ingredientsCounter: PropTypes.instanceOf(Map).isRequired,
+  onIngredientsCounter: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

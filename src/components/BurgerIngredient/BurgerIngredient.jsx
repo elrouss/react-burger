@@ -12,9 +12,13 @@ import DRAG_TYPES from '../../utils/drag-types';
 
 import styles from './BurgerIngredient.module.scss';
 
-function BurgerIngredient({ ingredient, onAddIngredient, onModalOpen }) {
+function BurgerIngredient({
+  ingredient,
+  ingredientsCounter,
+  onAddIngredient,
+  onModalOpen,
+}) {
   // TODO: PROPTYPES
-
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: DRAG_TYPES.INGREDIENT,
     item: ingredient,
@@ -22,6 +26,8 @@ function BurgerIngredient({ ingredient, onAddIngredient, onModalOpen }) {
       isDragging: monitor.isDragging(),
     }),
   }));
+
+  const counterValue = ingredientsCounter.get(ingredient._id);
 
   return (
     <div
@@ -38,7 +44,8 @@ function BurgerIngredient({ ingredient, onAddIngredient, onModalOpen }) {
         className={`${styles.card} ${isDragging && styles.cardDragging}`}
         ref={drag}
       >
-        <Counter count={1} size="default" />
+        {(counterValue && <Counter count={counterValue} size="default" />) ||
+          null}
         <img
           className={styles.image}
           src={ingredient?.image}
