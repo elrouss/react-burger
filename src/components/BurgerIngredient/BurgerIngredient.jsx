@@ -12,12 +12,7 @@ import DRAG_TYPES from '../../utils/drag-types';
 
 import styles from './BurgerIngredient.module.scss';
 
-function BurgerIngredient({
-  ingredient,
-  ingredientsCounter,
-  onAddIngredient,
-  onModalOpen,
-}) {
+function BurgerIngredient({ ingredient, ingredientsCounter, onModalOpen }) {
   // TODO: PROPTYPES
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: DRAG_TYPES.INGREDIENT,
@@ -35,7 +30,6 @@ function BurgerIngredient({
       role="button"
       tabIndex={0}
       onClick={(evt) => {
-        // onAddIngredient(ingredient);
         onModalOpen(evt, ingredient);
       }}
       onKeyDown={(evt) => onModalOpen(evt, ingredient)}

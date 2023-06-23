@@ -34,11 +34,9 @@ import styles from './BurgerConstructor.module.scss';
 
 let prevBunId = '';
 
-function BurgerConstructor({
-  totalPrice,
-  ingredientsCounter,
-  onIngredientsCounter,
-}) {
+function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [prevBunPrice, setPrevBunPrice] = useState(0);
   const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
     useState(false);
 
@@ -63,6 +61,26 @@ function BurgerConstructor({
     return value;
   };
 
+  const onIncrementTotalPrice = ({ type, price }) => {
+    if (type === 'bun') {
+      const bunPrice = price * 2;
+
+      if (prevBunPrice) {
+        setTotalPrice(totalPrice - prevBunPrice + bunPrice);
+        setPrevBunPrice(bunPrice);
+      } else {
+        setTotalPrice(totalPrice + bunPrice);
+        setPrevBunPrice(bunPrice);
+      }
+    } else {
+      setTotalPrice(totalPrice + price);
+    }
+  };
+
+  const onDecrementTotalPrice = (price) => {
+    setTotalPrice(totalPrice - price);
+  };
+
   // Selecting ingredients from left container
   // and putting them inside constructor
   const [{ isOver, ingredientTypeDrop }, drop] = useDrop(
@@ -83,16 +101,20 @@ function BurgerConstructor({
             )
           )
         );
+
+        onIncrementTotalPrice(ingredient);
       },
     }),
     [ingredientsCounter]
   );
 
-  const removeIngredient = ({ key, _id }) => {
+  const removeIngredient = ({ key, _id, price }) => {
     dispatch(REMOVE_INGREDIENT({ key }));
 
     const value = ingredientsCounter.get(_id) - 1;
     onIngredientsCounter(new Map(ingredientsCounter.set(_id, value)));
+
+    onDecrementTotalPrice(price);
   };
 
   // eslint-disable-next-line consistent-return
@@ -181,7 +203,7 @@ function BurgerConstructor({
 
           <div className={styles.info}>
             <div className={styles.price}>
-              <span>{totalPrice.state}</span>
+              <span>{totalPrice}</span>
               <CurrencyIcon />
             </div>
             <Button
@@ -208,8 +230,6 @@ function BurgerConstructor({
 }
 
 BurgerConstructor.propTypes = {
-  totalPrice: PropTypes.shape({ state: PropTypes.number.isRequired })
-    .isRequired,
   ingredientsCounter: PropTypes.instanceOf(Map).isRequired,
   onIngredientsCounter: PropTypes.func.isRequired,
 };
