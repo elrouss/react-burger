@@ -2,10 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { v4 as uuidv4 } from 'uuid';
 
 import { useDispatch } from 'react-redux';
-import { ADD_INGREDIENT } from '../../services/features/selected-ingredients/reducer';
 import {
   SHOW_INGREDIENT_DETAILS,
   RESET_INGREDIENT_DETAILS,
@@ -24,45 +22,13 @@ const table = [
   { typeRus: 'Начинки', typeEng: 'main', value: 'three' },
 ];
 
-function BurgerIngredients({ onTotalPriceDispatcher, ...rest }) {
+function BurgerIngredients({ ingredientsCounter }) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
   const [current, setCurrent] = useState('one');
-  // const [currentIngredient, setCurrentIngredient] = useState({});
   const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
     useState(false);
 
   const dispatch = useDispatch();
-
-  const addIngredient = useCallback(
-    (ingredient) => {
-      dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
-      // setCounter(counter.set(ingredient._id, counter))
-
-      // if (ingredient.type === 'bun') {
-      //   if (selectedBun) {
-      //     onTotalPriceDispatcher({
-      //       type: 'decrement',
-      //       ingredientType: ingredient.type,
-      //       price: selectedBun.price,
-      //     });
-      //   }
-
-      //   return onTotalPriceDispatcher({
-      //     type: 'increment',
-      //     ingredientType: ingredient.type,
-      //     price: ingredient.price,
-      //   });
-      // }
-
-      // return onTotalPriceDispatcher({
-      //   type: 'increment',
-      //   ingredientType: ingredient.type,
-      //   price: ingredient.price,
-      // });
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [] // TODO
-  );
 
   const handleModalOpen = useCallback(
     (evt, ingredient) => {
@@ -110,9 +76,8 @@ function BurgerIngredients({ onTotalPriceDispatcher, ...rest }) {
                 typeRus={typeRus}
                 typeEng={typeEng}
                 value={value}
-                // onAddIngredient={addIngredient}
                 onModalOpen={handleModalOpen}
-                {...rest}
+                ingredientsCounter={ingredientsCounter}
               />
             ))}
           </div>
@@ -131,7 +96,7 @@ function BurgerIngredients({ onTotalPriceDispatcher, ...rest }) {
 }
 
 BurgerIngredients.propTypes = {
-  onTotalPriceDispatcher: PropTypes.func.isRequired,
+  ingredientsCounter: PropTypes.instanceOf(Map).isRequired,
 };
 
 export default BurgerIngredients;
