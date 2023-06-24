@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './burger-bun.module.scss';
+import styles from './selected-burger-bun.module.scss';
 
 function BurgerBun({
   selectedBun,

@@ -9,12 +9,12 @@ import {
   RESET_INGREDIENT_DETAILS,
 } from '../../services/features/current-ingredient/reducer';
 
-import BurgerIngredientsSection from '../BurgerIngredientsSection/BurgerIngredientsSection';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import BurgerIngredientsSection from './burger-ingredients-section/burger-ingredients-section';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import Modal from '../Modal/Modal';
+import Modal from '../modal/modal';
 
-import styles from './BurgerIngredients.module.scss';
+import styles from './burger-ingredients.module.scss';
 
 function BurgerIngredients({ ingredientsCounter }) {
   const [currentTab, setCurrentTab] = useState('one');
@@ -66,15 +66,12 @@ function BurgerIngredients({ ingredientsCounter }) {
     setTabValue(MAIN_TOP_EDGE_VALUE, main.value);
   };
 
-  const handleModalOpen = useCallback(
-    (evt, ingredient) => {
-      if (evt.type === 'click' || evt?.key === 'Enter') {
-        dispatch(SHOW_INGREDIENT_DETAILS(ingredient));
-        setIsIngredientDetailsModalOpened(true);
-      }
-    },
-    [table] // TODO
-  );
+  const handleModalOpen = useCallback((evt, ingredient) => {
+    if (evt.type === 'click' || evt?.key === 'Enter') {
+      dispatch(SHOW_INGREDIENT_DETAILS(ingredient));
+      setIsIngredientDetailsModalOpened(true);
+    }
+  }, []);
 
   const handleModalClose = () => {
     setIsIngredientDetailsModalOpened(false);

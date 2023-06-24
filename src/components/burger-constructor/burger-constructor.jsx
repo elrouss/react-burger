@@ -22,17 +22,40 @@ import {
   getSelectedIngredients,
 } from '../../services/features/selected-ingredients/selectors';
 
-import BurgerBun from './burger-bun/burger-bun';
+import BurgerBun from './selected-burger-bun/selected-burger-bun';
 import SelectedBurgerIngredient from './selected-burger-ingredient/selected-burger-ingredient';
-import Modal from '../Modal/Modal';
-import OrderDetails from '../OrderDetails/OrderDetails';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 
 import API from '../../utils/constants';
 import DRAG_TYPES from '../../utils/drag-types';
 
-import styles from './BurgerConstructor.module.scss';
+import styles from './burger-constructor.module.scss';
 
 let prevBunId = '';
+
+// eslint-disable-next-line consistent-return
+async function sendOrder(order, dispatch) {
+  try {
+    const res = await fetch(`${API.baseUrl}${API.endpoints.orders}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ingredients: order }),
+    });
+
+    if (res.ok) {
+      const success = await res.json();
+
+      return dispatch(SAVE_ORDER_DETAILS(success));
+    }
+
+    return Promise.reject(new Error(`Ошибка ${res.status}`));
+  } catch (err) {
+    console.error(`Error while sending order data to the server: ${err}`);
+  }
+}
 
 function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -82,7 +105,7 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
   };
 
   // Selecting ingredients from left container
-  // and putting them inside constructor
+  // and putting them inside the constructor
   const [{ isOver, ingredientTypeDrop }, drop] = useDrop(
     () => ({
       accept: DRAG_TYPES.INGREDIENT,
@@ -112,33 +135,10 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
     dispatch(REMOVE_INGREDIENT({ key }));
 
     const value = ingredientsCounter.get(_id) - 1;
-    onIngredientsCounter(new Map(ingredientsCounter.set(_id, value)));
 
+    onIngredientsCounter(new Map(ingredientsCounter.set(_id, value)));
     onDecrementTotalPrice(price);
   };
-
-  // eslint-disable-next-line consistent-return
-  async function sendOrder(order) {
-    try {
-      const res = await fetch(`${API.baseUrl}${API.endpoints.orders}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ingredients: order }),
-      });
-
-      if (res.ok) {
-        const success = await res.json();
-
-        return dispatch(SAVE_ORDER_DETAILS(success));
-      }
-
-      return Promise.reject(new Error(`Ошибка ${res.status}`));
-    } catch (err) {
-      console.error(`Error while sending order data to the server: ${err}`);
-    }
-  }
 
   const handleOrder = (evt) => {
     evt.preventDefault();
@@ -148,7 +148,7 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
         (selectedIngredient) => selectedIngredient._id
       );
 
-      sendOrder(order);
+      sendOrder(order, dispatch);
       setIsOrderDetailsModalOpened(true);
     }
   };

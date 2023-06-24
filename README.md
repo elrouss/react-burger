@@ -10,7 +10,7 @@
     <ol>
       <li><a href="#project-description">Описание проекта</a></li>
       <li><a href="#technologies">Стек технологий</a></li>
-      <li><a href="#installation">Установка и запуск приложения в локальном репозитории, эксплуатация</a></li>
+      <li><a href="#installation">Установка и запуск приложения в локальном репозитории</a></li>
       <li><a href="#establishing">Процесс создания</a></li>
       <li><a href="#functionality">Функционал</a></li>
       <li><a href="#enhancement">Статус</a></li>
@@ -35,6 +35,7 @@
 <a name="technologies"><h2>2. Стек технологий</h2></a>
 <span>
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="Иконка React">
+  <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" alt="Иконка Redux">
   <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="Иконка 'JavaScript'">
   <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" alt="Иконка 'Sass (SCSS)'">
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="Иконка HTML5">
@@ -42,9 +43,9 @@
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
-<a name="installation"><h2>3. Установка и запуск приложения в локальном репозитории, эксплуатация</h2></a>
+<a name="installation"><h2>3. Установка и запуск приложения в локальном репозитории</h2></a>
 1. `git clone https://github.com/elrouss/react-burger.git` - клонировать репозиторий на свое устройство (HTTPS)
-2. `npm i` - установить зависимости
+2. `npm i` - установить зависимости (предварительно проверить наличие Node.js командой `node -v`, а также - NPM командой `npm -v`; в случае необходимости скачать и установить Node.js по этой <a href="https://nodejs.org/en/download">ссылке</a>)
 3. `npm run start` - запустить приложение
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
@@ -52,11 +53,15 @@
 <a name="establishing"><h2>4. Процесс создания</h2></a>
 Работа разделена на <b>6 этапов</b>. Выполнены следующие:
 <br>
-1. Верстка на десктоп (`1920px`) и написание логики с открытием и закрытием модальных окон
+1. Верстка на десктоп (`1920px`);
+2. Перенос проекта на Redux Toolkit и написание бизнес-логики (см. функционал)
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
 <a name="functionality"><h2>5. Функционал</h2></a>
+- Drag and Drop (перенос ингредиентов в конструктор с возможностью внутренней сортировки и удаления ненужных)
+- Счетчики ингредиентов и цены
+- Подсветка активных табов в списке ингредиентов при скролле
 - Открытие и закрытие модальных окон по кнопке, оверлею и клавише `Escape`
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>

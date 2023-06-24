@@ -7,7 +7,7 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './AppHeader.module.scss';
+import styles from './app-header.module.scss';
 
 function AppHeader() {
   return (

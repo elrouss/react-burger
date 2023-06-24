@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { useGetIngredientsQuery } from '../../services/features/ingredients/reducer';
+import { useGetIngredientsQuery } from '../../../services/features/ingredients/reducer';
 
-import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
+import BurgerIngredient from './burger-ingredient/burger-ingredient';
 
-import styles from './BurgerIngredientsSection.module.scss';
+import styles from './burger-ingredients-section.module.scss';
 
 const BurgerIngredientsSection = forwardRef(
   ({ typeRus, typeEng, ...rest }, ref) => {
