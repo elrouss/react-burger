@@ -8,15 +8,13 @@ import BurgerIngredient from '../BurgerIngredient/BurgerIngredient';
 import styles from './BurgerIngredientsSection.module.scss';
 
 const BurgerIngredientsSection = forwardRef(
-  ({ typeRus, typeEng, value, ...rest }, ref) => {
+  ({ typeRus, typeEng, ...rest }, ref) => {
     const { data } = useGetIngredientsQuery();
     const ingredients = data?.data || [];
 
     return (
       <section aria-label={typeRus} ref={ref}>
-        <h2 className={styles.heading} id={value}>
-          {typeRus}
-        </h2>
+        <h2 className={styles.heading}>{typeRus}</h2>
         <div className={styles.content}>
           {ingredients
             .filter(({ type }) => type === typeEng)
@@ -36,7 +34,6 @@ const BurgerIngredientsSection = forwardRef(
 BurgerIngredientsSection.propTypes = {
   typeRus: PropTypes.string.isRequired,
   typeEng: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
 };
 
 export default BurgerIngredientsSection;

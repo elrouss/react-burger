@@ -17,7 +17,6 @@ import Modal from '../Modal/Modal';
 import styles from './BurgerIngredients.module.scss';
 
 function BurgerIngredients({ ingredientsCounter }) {
-  // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
   const [currentTab, setCurrentTab] = useState('one');
   const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
     useState(false);
@@ -35,8 +34,15 @@ function BurgerIngredients({ ingredientsCounter }) {
     { typeRus: 'Начинки', typeEng: 'main', value: 'three', ref: mainRef },
   ];
 
+  const scrollTabIntoView = (ref) => {
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+  };
+
   const handleTabsScroll = () => {
-    const DESIRED_SPACE_DIFFERENCE_START = 40;
+    const DESIRED_SPACE_DIFFERENCE_START = 112;
 
     const TABS_BOTTOM_EDGE_VALUE =
       tabsRef.current.getBoundingClientRect().bottom;
@@ -86,29 +92,25 @@ function BurgerIngredients({ ingredientsCounter }) {
       <section aria-label="Ингредиенты бургера">
         <div className={styles.wrapper}>
           <div className={styles.tabs} ref={tabsRef}>
-            {table.map(({ typeRus, typeEng, value }) => (
-              <a key={`link-${typeEng}`} href={`#${value}`}>
-                <Tab
-                  key={`tab-${typeEng}`}
-                  value={value}
-                  active={currentTab === value}
-                  // onClick={setCurrentTab}
-                >
-                  {typeRus}
-                </Tab>
-              </a>
+            {table.map(({ typeRus, typeEng, value, ref }) => (
+              <Tab
+                key={`tab-${typeEng}`}
+                active={currentTab === value}
+                onClick={() => scrollTabIntoView(ref)}
+              >
+                {typeRus}
+              </Tab>
             ))}
           </div>
           <div className={styles.ingredients} onScroll={handleTabsScroll}>
-            {table.map(({ typeRus, typeEng, value, ref }) => (
+            {table.map(({ typeRus, typeEng, ref }) => (
               <BurgerIngredientsSection
                 key={typeEng}
                 ref={ref}
                 typeRus={typeRus}
                 typeEng={typeEng}
-                value={value}
-                onModalOpen={handleModalOpen}
                 ingredientsCounter={ingredientsCounter}
+                onModalOpen={handleModalOpen}
               />
             ))}
           </div>
