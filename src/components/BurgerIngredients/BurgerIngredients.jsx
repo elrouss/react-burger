@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,19 +16,49 @@ import Modal from '../Modal/Modal';
 
 import styles from './BurgerIngredients.module.scss';
 
-const table = [
-  { typeRus: 'Булки', typeEng: 'bun', value: 'one' },
-  { typeRus: 'Соусы', typeEng: 'sauce', value: 'two' },
-  { typeRus: 'Начинки', typeEng: 'main', value: 'three' },
-];
-
 function BurgerIngredients({ ingredientsCounter }) {
   // TODO: плавная перемотка внутри контейнера к группе ингредиентов кликом по табу
-  const [current, setCurrent] = useState('one');
+  const [currentTab, setCurrentTab] = useState('one');
   const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
     useState(false);
 
+  const tabsRef = useRef(null);
+  const bunsRef = useRef(null);
+  const saucesRef = useRef(null);
+  const mainRef = useRef(null);
+
   const dispatch = useDispatch();
+
+  const table = [
+    { typeRus: 'Булки', typeEng: 'bun', value: 'one', ref: bunsRef },
+    { typeRus: 'Соусы', typeEng: 'sauce', value: 'two', ref: saucesRef },
+    { typeRus: 'Начинки', typeEng: 'main', value: 'three', ref: mainRef },
+  ];
+
+  const handleTabsScroll = () => {
+    const DESIRED_SPACE_DIFFERENCE_START = 40;
+
+    const TABS_BOTTOM_EDGE_VALUE =
+      tabsRef.current.getBoundingClientRect().bottom;
+    const BUNS_TOP_EDGE_VALUE = bunsRef.current.getBoundingClientRect().top;
+    const SAUCES_TOP_EDGE_VALUE = saucesRef.current.getBoundingClientRect().top;
+    const MAIN_TOP_EDGE_VALUE = mainRef.current.getBoundingClientRect().top;
+
+    const [buns, sauces, main] = table;
+
+    const setTabValue = (sectionValue, selectedTab) => {
+      if (
+        sectionValue - TABS_BOTTOM_EDGE_VALUE <=
+        DESIRED_SPACE_DIFFERENCE_START
+      ) {
+        setCurrentTab(selectedTab);
+      }
+    };
+
+    setTabValue(BUNS_TOP_EDGE_VALUE, buns.value);
+    setTabValue(SAUCES_TOP_EDGE_VALUE, sauces.value);
+    setTabValue(MAIN_TOP_EDGE_VALUE, main.value);
+  };
 
   const handleModalOpen = useCallback(
     (evt, ingredient) => {
@@ -55,24 +85,25 @@ function BurgerIngredients({ ingredientsCounter }) {
     <>
       <section aria-label="Ингредиенты бургера">
         <div className={styles.wrapper}>
-          <div className={styles.tabs}>
+          <div className={styles.tabs} ref={tabsRef}>
             {table.map(({ typeRus, typeEng, value }) => (
               <a key={`link-${typeEng}`} href={`#${value}`}>
                 <Tab
                   key={`tab-${typeEng}`}
                   value={value}
-                  active={current === value}
-                  onClick={setCurrent}
+                  active={currentTab === value}
+                  // onClick={setCurrentTab}
                 >
                   {typeRus}
                 </Tab>
               </a>
             ))}
           </div>
-          <div className={styles.ingredients}>
-            {table.map(({ typeRus, typeEng, value }) => (
+          <div className={styles.ingredients} onScroll={handleTabsScroll}>
+            {table.map(({ typeRus, typeEng, value, ref }) => (
               <BurgerIngredientsSection
                 key={typeEng}
+                ref={ref}
                 typeRus={typeRus}
                 typeEng={typeEng}
                 value={value}
