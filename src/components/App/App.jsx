@@ -5,6 +5,7 @@ import Shop from '../shop/shop';
 import { useGetIngredientsQuery } from '../../services/features/ingredients/reducer';
 
 function App() {
+  
   const { isLoading, error } = useGetIngredientsQuery();
 
   if (error) {

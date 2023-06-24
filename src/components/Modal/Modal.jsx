@@ -10,6 +10,7 @@ import useCloseModal from '../../hooks/useCloseModal';
 import styles from './modal.module.scss';
 
 function Modal({ children, id, isModalOpened, onModalClose }) {
+  
   useCloseModal(id, isModalOpened, onModalClose);
 
   return createPortal(
