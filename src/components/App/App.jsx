@@ -1,6 +1,6 @@
-import Preloader from '../Preloader/Preloader';
-import AppHeader from '../AppHeader/AppHeader';
-import Shop from '../Shop/Shop';
+import Preloader from '../preloader/preloader';
+import AppHeader from '../app-header/app-header';
+import Shop from '../shop/shop';
 
 import { useGetIngredientsQuery } from '../../services/features/ingredients/reducer';
 

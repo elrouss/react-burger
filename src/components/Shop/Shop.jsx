@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-import styles from './Shop.module.scss';
+import styles from './shop.module.scss';
 
 function Shop() {
   const [ingredientsCounter, setIngredientsCounter] = useState(new Map());

@@ -4,7 +4,7 @@ import getCurrentOrderNumber from '../../services/features/order-details/selecto
 
 import orderAccepted from '../../assets/icons/order-accepted.svg';
 
-import styles from './OrderDetails.module.scss';
+import styles from './order-details.module.scss';
 
 function OrderDetails() {
   const currentOrderNumber = useSelector(getCurrentOrderNumber);

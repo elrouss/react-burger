@@ -6,7 +6,7 @@ import store from './services/app/store';
 import 'normalize.css';
 import './index.scss';
 
-import App from './components/App/App';
+import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

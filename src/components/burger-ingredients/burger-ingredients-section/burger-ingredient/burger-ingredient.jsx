@@ -8,10 +8,10 @@ import {
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientType } from '../../utils/types/ingredients';
-import DRAG_TYPES from '../../utils/drag-types';
+import { ingredientType } from '../../../../utils/types/ingredients';
+import DRAG_TYPES from '../../../../utils/drag-types';
 
-import styles from './BurgerIngredient.module.scss';
+import styles from './burger-ingredient.module.scss';
 
 function BurgerIngredient({ ingredient, ingredientsCounter, onModalOpen }) {
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({

@@ -9,12 +9,12 @@ import {
   RESET_INGREDIENT_DETAILS,
 } from '../../services/features/current-ingredient/reducer';
 
-import BurgerIngredientsSection from '../BurgerIngredientsSection/BurgerIngredientsSection';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import BurgerIngredientsSection from './burger-ingredients-section/burger-ingredients-section';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import Modal from '../Modal/Modal';
+import Modal from '../modal/modal';
 
-import styles from './BurgerIngredients.module.scss';
+import styles from './burger-ingredients.module.scss';
 
 function BurgerIngredients({ ingredientsCounter }) {
   const [currentTab, setCurrentTab] = useState('one');

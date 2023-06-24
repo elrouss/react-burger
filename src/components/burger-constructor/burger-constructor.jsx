@@ -22,15 +22,15 @@ import {
   getSelectedIngredients,
 } from '../../services/features/selected-ingredients/selectors';
 
-import BurgerBun from './burger-bun/burger-bun';
+import BurgerBun from './selected-burger-bun/selected-burger-bun';
 import SelectedBurgerIngredient from './selected-burger-ingredient/selected-burger-ingredient';
-import Modal from '../Modal/Modal';
-import OrderDetails from '../OrderDetails/OrderDetails';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 
 import API from '../../utils/constants';
 import DRAG_TYPES from '../../utils/drag-types';
 
-import styles from './BurgerConstructor.module.scss';
+import styles from './burger-constructor.module.scss';
 
 let prevBunId = '';
 

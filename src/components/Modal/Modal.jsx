@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import useCloseModal from '../../hooks/useCloseModal';
 
-import styles from './Modal.module.scss';
+import styles from './modal.module.scss';
 
 function Modal({ children, id, isModalOpened, onModalClose }) {
   useCloseModal(id, isModalOpened, onModalClose);
