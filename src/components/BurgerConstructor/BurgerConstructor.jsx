@@ -112,8 +112,8 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
     dispatch(REMOVE_INGREDIENT({ key }));
 
     const value = ingredientsCounter.get(_id) - 1;
-    onIngredientsCounter(new Map(ingredientsCounter.set(_id, value)));
 
+    onIngredientsCounter(new Map(ingredientsCounter.set(_id, value)));
     onDecrementTotalPrice(price);
   };
 

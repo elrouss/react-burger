@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import PropTypes from 'prop-types';
 
 import { useDrag } from 'react-dnd';
 
@@ -7,13 +8,12 @@ import {
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientsTypes } from '../../utils/types/ingredients';
+import { ingredientType } from '../../utils/types/ingredients';
 import DRAG_TYPES from '../../utils/drag-types';
 
 import styles from './BurgerIngredient.module.scss';
 
 function BurgerIngredient({ ingredient, ingredientsCounter, onModalOpen }) {
-  // TODO: PROPTYPES
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: DRAG_TYPES.INGREDIENT,
     item: ingredient,
@@ -55,6 +55,10 @@ function BurgerIngredient({ ingredient, ingredientsCounter, onModalOpen }) {
   );
 }
 
-BurgerIngredient.propTypes = ingredientsTypes;
+BurgerIngredient.propTypes = {
+  ingredient: ingredientType.isRequired,
+  ingredientsCounter: PropTypes.instanceOf(Map).isRequired,
+  onModalOpen: PropTypes.func.isRequired,
+};
 
 export default memo(BurgerIngredient);
