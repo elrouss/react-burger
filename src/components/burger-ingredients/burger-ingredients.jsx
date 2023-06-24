@@ -66,15 +66,12 @@ function BurgerIngredients({ ingredientsCounter }) {
     setTabValue(MAIN_TOP_EDGE_VALUE, main.value);
   };
 
-  const handleModalOpen = useCallback(
-    (evt, ingredient) => {
-      if (evt.type === 'click' || evt?.key === 'Enter') {
-        dispatch(SHOW_INGREDIENT_DETAILS(ingredient));
-        setIsIngredientDetailsModalOpened(true);
-      }
-    },
-    [table] // TODO
-  );
+  const handleModalOpen = useCallback((evt, ingredient) => {
+    if (evt.type === 'click' || evt?.key === 'Enter') {
+      dispatch(SHOW_INGREDIENT_DETAILS(ingredient));
+      setIsIngredientDetailsModalOpened(true);
+    }
+  }, []);
 
   const handleModalClose = () => {
     setIsIngredientDetailsModalOpened(false);

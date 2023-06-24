@@ -1,7 +1,6 @@
 import styles from './preloader.module.scss';
 
 function Preloader() {
-  
   return (
     <div className={styles.section}>
       <div className={styles.wrapper}>

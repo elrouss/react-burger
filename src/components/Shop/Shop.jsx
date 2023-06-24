@@ -9,7 +9,6 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import styles from './shop.module.scss';
 
 function Shop() {
-  
   const [ingredientsCounter, setIngredientsCounter] = useState(new Map());
 
   return (
