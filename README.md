@@ -21,11 +21,14 @@
 <a name="project-description"><h2>1. Описание проекта</h2></a>
 "Stellar Burgers" - приложение (SPA) с регистрацией и авторизацией пользователей, в котором можно собрать и заказать свой личный бургер (без доставки на дом). Выполнен в рамках углубленной образовательной программы по библиотеке "React" <a href="https://practicum.yandex.ru/">Яндекс Практикума</a>.
 
-<b>Ссылки на проект:</b>
+<b>Ссылки на проект</b>
 <br>
-<b>Макет:</b> https://www.figma.com/file/zFGN2O5xktHl9VmoOieq5E/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link?node-id=0%3A1
+<b>Макет:</b>
+<br>https://www.figma.com/file/zFGN2O5xktHl9VmoOieq5E/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link?node-id=0%3A1
 <br>
-<b>Чек-листы</b>: https://code.s3.yandex.net/react/checklists-pdf/checklist-1.pdf
+<b>Чек-листы</b>:
+<br>https://code.s3.yandex.net/react/checklists-pdf/checklist-1.pdf
+<br>https://code.s3.yandex.net/react/checklists-pdf/checklist-2.pdf
 <br>
 
 <i>* - проект прошел код-ревью</i>
