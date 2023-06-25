@@ -9,11 +9,11 @@ import useCloseModal from '../../hooks/useCloseModal';
 
 import styles from './modal.module.scss';
 
-function Modal({ children, id, isModalOpened, onModalClose }) {
+function Modal({ children, id, isModalOpened, onModalClose, ...rest }) {
   useCloseModal(id, isModalOpened, onModalClose);
 
   return createPortal(
-    <ModalOverlay id={id} isModalOpened={isModalOpened}>
+    <ModalOverlay id={id} isModalOpened={isModalOpened} {...rest}>
       <div className={styles.modal}>
         <CloseIcon type="primary" onClick={onModalClose} />
         {children}

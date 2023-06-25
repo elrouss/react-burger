@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import getCurrentOrderNumber from '../../services/features/order-details/selectors';
+import { getCurrentOrderNumber } from '../../services/features/order-details/selectors';
 
 import orderAccepted from '../../assets/icons/order-accepted.svg';
 

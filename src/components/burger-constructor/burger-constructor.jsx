@@ -11,11 +11,12 @@ import {
 
 import { v4 as uuidv4 } from 'uuid';
 
+import { sendOrder } from '../../services/features/order-details/reducer';
+import { isLoading } from '../../services/features/order-details/selectors';
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
 } from '../../services/features/selected-ingredients/reducer';
-import { SAVE_ORDER_DETAILS } from '../../services/features/order-details/reducer';
 
 import {
   getSelectedBun,
@@ -27,44 +28,20 @@ import SelectedBurgerIngredient from './selected-burger-ingredient/selected-burg
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
-import API from '../../utils/constants';
 import DRAG_TYPES from '../../utils/drag-types';
 
 import styles from './burger-constructor.module.scss';
 
 let prevBunId = '';
 
-// eslint-disable-next-line consistent-return
-async function sendOrder(order, dispatch) {
-  try {
-    const res = await fetch(`${API.baseUrl}${API.endpoints.orders}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ingredients: order }),
-    });
-
-    if (res.ok) {
-      const success = await res.json();
-
-      return dispatch(SAVE_ORDER_DETAILS(success));
-    }
-
-    return Promise.reject(new Error(`Ошибка ${res.status}`));
-  } catch (err) {
-    console.error(`Error while sending order data to the server: ${err}`);
-  }
-}
-
 function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [prevBunPrice, setPrevBunPrice] = useState(0);
-  const [isOrderDetailsModalOpened, setIsOrderDetailsModalOpened] =
-    useState(false);
+  const [issModalOpened, setIsModalOpened] = useState(false);
 
   const dispatch = useDispatch();
 
+  const status = useSelector(isLoading);
   const selectedBun = useSelector(getSelectedBun);
   const selectedIngredients = useSelector(getSelectedIngredients);
 
@@ -143,24 +120,22 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
   const handleOrder = (evt) => {
     evt.preventDefault();
 
-    if (evt.type === 'click' || evt?.key === 'Enter') {
-      const order = [selectedBun, ...selectedIngredients].map(
-        (selectedIngredient) => selectedIngredient._id
-      );
+    const order = [selectedBun, ...selectedIngredients].map(
+      (selectedIngredient) => selectedIngredient._id
+    );
 
-      sendOrder(order, dispatch);
-      setIsOrderDetailsModalOpened(true);
-    }
+    dispatch(sendOrder(order));
+    setIsModalOpened(true);
   };
 
   const handleModalClose = () => {
-    setIsOrderDetailsModalOpened(false);
+    setIsModalOpened(false);
   };
 
   return (
     <>
       <section aria-label="Оформление заказа">
-        <form className={styles.order} ref={drop}>
+        <form className={styles.order} ref={drop} onSubmit={handleOrder}>
           <BurgerBun
             selectedBun={selectedBun}
             isOver={isOver}
@@ -206,13 +181,8 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
               <span>{totalPrice}</span>
               <CurrencyIcon />
             </div>
-            <Button
-              htmlType="submit"
-              type="primary"
-              size="large"
-              onClick={handleOrder}
-            >
-              Оформить заказ
+            <Button htmlType="submit" type="primary" size="large">
+              {status ? 'Подождите...' : 'Оформить заказ'}
             </Button>
           </div>
         </form>
@@ -220,7 +190,8 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
 
       <Modal
         id="order-details"
-        isModalOpened={isOrderDetailsModalOpened}
+        onLoading={status}
+        isModalOpened={issModalOpened}
         onModalClose={handleModalClose}
       >
         <OrderDetails />

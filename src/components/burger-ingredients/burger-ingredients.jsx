@@ -1,4 +1,4 @@
-import { useCallback, useRef, useEffect, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -18,8 +18,7 @@ import styles from './burger-ingredients.module.scss';
 
 function BurgerIngredients({ ingredientsCounter }) {
   const [currentTab, setCurrentTab] = useState('one');
-  const [isIngredientDetailsModalOpened, setIsIngredientDetailsModalOpened] =
-    useState(false);
+  const [isModalOpened, setIsModalOpened] = useState(false);
 
   const tabsRef = useRef(null);
   const bunsRef = useRef(null);
@@ -69,20 +68,19 @@ function BurgerIngredients({ ingredientsCounter }) {
   const handleModalOpen = useCallback((evt, ingredient) => {
     if (evt.type === 'click' || evt?.key === 'Enter') {
       dispatch(SHOW_INGREDIENT_DETAILS(ingredient));
-      setIsIngredientDetailsModalOpened(true);
+      setIsModalOpened(true);
     }
   }, []);
 
   const handleModalClose = () => {
-    setIsIngredientDetailsModalOpened(false);
+    setIsModalOpened(false);
   };
 
-  useEffect(() => {
-    if (isIngredientDetailsModalOpened) return;
+  const resetModalData = () => {
+    if (isModalOpened) return;
 
-    // Time is the same as the animation of modals' appearing
-    setTimeout(() => dispatch(RESET_INGREDIENT_DETAILS()), 300);
-  }, [isIngredientDetailsModalOpened]);
+    dispatch(RESET_INGREDIENT_DETAILS());
+  };
 
   return (
     <>
@@ -116,8 +114,9 @@ function BurgerIngredients({ ingredientsCounter }) {
 
       <Modal
         id="ingredient-details"
-        isModalOpened={isIngredientDetailsModalOpened}
+        isModalOpened={isModalOpened}
         onModalClose={handleModalClose}
+        onResetData={resetModalData}
       >
         <IngredientDetails />
       </Modal>
