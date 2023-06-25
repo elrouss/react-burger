@@ -1,0 +1,41 @@
+@import '../../../../index.scss';
+
+.card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  row-gap: 9px;
+  width: 272px;
+
+  cursor: pointer;
+  transition: $transition-draggable;
+
+  &Dragging {
+    opacity: 0.4;
+  }
+}
+
+.heading {
+  @include show-font($size: $font-size-xs, $line-height: $font-line-height-xxl);
+}
+
+.image {
+  max-width: 240px;
+
+  object-fit: cover;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+
+  @include show-font(
+    $family: 'Iceland',
+    $size: $font-size-m,
+    $line-height: $font-line-height-s
+  );
+}

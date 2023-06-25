@@ -1,0 +1,13 @@
+@import '../../index.scss';
+
+.tabs {
+  display: flex;
+}
+
+.ingredients {
+  height: 686px;
+  margin-top: 40px;
+
+  overflow-y: auto;
+  composes: custom-scroll;
+}

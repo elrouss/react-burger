@@ -1,0 +1,47 @@
+@import '../../index.scss';
+
+.header {
+  color: $color-text-inactive;
+
+  background-color: $color-background;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: $wrapper-desktop-xl;
+  margin: 0 auto;
+  padding: 19px 0;
+}
+
+.twoColumns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 132px;
+}
+
+.navLinks {
+  display: flex;
+  column-gap: 49px;
+}
+
+.navLink,
+.account {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+
+  transition: $common-transition;
+
+  &:hover {
+    color: $color-text-primary;
+  }
+
+  @include show-font(
+    $size: $font-size-xs,
+    $line-height: $font-line-height-xxl,
+    $color: inherit
+  );
+}

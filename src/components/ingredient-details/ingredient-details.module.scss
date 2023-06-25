@@ -1,0 +1,66 @@
+@import '../../index.scss';
+
+.wrapper {
+  padding: 53px 40px 60px;
+}
+
+.heading {
+  @include show-font(
+    $weight: 700,
+    $size: $font-size-l,
+    $line-height: $font-line-height-m
+  );
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 12px;
+}
+
+.headingItem {
+  padding-top: 16px;
+
+  @include show-font(
+    $weight: 700,
+    $size: $font-size-s,
+    $line-height: $font-line-height-l
+  );
+}
+
+.image {
+  width: 75%;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  padding-top: 36px;
+
+  color: $color-text-inactive;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 8px;
+
+  @include show-font(
+    $family: 'Iceland',
+    $size: $font-size-m,
+    $line-height: $font-line-height-s,
+    $color: inherit
+  );
+}
+
+.listHeading {
+  @include show-font(
+    $size: $font-size-xs,
+    $line-height: $font-line-height-xxl,
+    $color: inherit
+  );
+}

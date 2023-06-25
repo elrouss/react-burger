@@ -1,0 +1,55 @@
+@import '../../index.scss';
+
+.order {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 0 0;
+}
+
+.components {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  width: 100%;
+  max-height: 464px;
+  margin: 16px 0 16px 17px;
+
+  overflow-y: auto;
+  composes: custom-scroll;
+}
+
+.componentsEmpty {
+  @extend %constructor-ingredient-element;
+
+  width: 100%;
+  margin: 16px 0 16px 48px;
+}
+
+.containerEmptyDrop {
+  @extend %constructor-ingredient-empty-drop;
+}
+
+.info {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 40px;
+  margin-top: 40px;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  column-gap: 9.5px;
+
+  @include show-font(
+    $family: 'Iceland',
+    $size: $font-size-xl,
+    $line-height: $font-line-height-xxs
+  );
+
+  > svg {
+    width: 33px;
+    height: 33px;
+  }
+}
