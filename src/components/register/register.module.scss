@@ -1,0 +1,16 @@
+@import '../../index.scss';
+
+.text {
+  display: flex;
+  column-gap: 8px;
+
+  @include show-font(
+    $size: $font-size-xs,
+    $line-height: $font-line-height-xxxl,
+    $color: $color-text-inactive
+  );
+}
+
+.link {
+  padding: 0;
+}
