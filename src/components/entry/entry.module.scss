@@ -31,4 +31,10 @@
   display: flex;
   flex-direction: column;
   row-gap: 16px;
+
+  @include show-font(
+    $size: $font-size-xs,
+    $line-height: $font-line-height-xxxl,
+    $color: $color-text-inactive
+  );
 }
