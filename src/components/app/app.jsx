@@ -1,23 +1,14 @@
-import Preloader from '../preloader/preloader';
-import AppHeader from '../app-header/app-header';
-import Shop from '../shop/shop';
+import { Routes, Route } from 'react-router-dom';
 
-import { useGetIngredientsQuery } from '../../services/features/ingredients/reducer';
+import HomePage from '../../pages/home';
+
+import { ROUTES } from '../../utils/constants';
 
 function App() {
-  const { isLoading, error } = useGetIngredientsQuery();
-
-  if (error) {
-    throw new Error(
-      `An unexpected error occurred while loading the page: ${error.error} (${error.status} - ${error.originalStatus})`
-    );
-  }
-
   return (
-    <>
-      <AppHeader />
-      {(isLoading && <Preloader />) || <Shop />}
-    </>
+    <Routes>
+      <Route path={ROUTES.home} element={<HomePage />} />
+    </Routes>
   );
 }
 
