@@ -1,8 +1,9 @@
+@import '../../index.scss';
+
 .text {
-  display: flex;
-  column-gap: 8px;
+  @extend %entry-links-wrapper;
 }
 
 .link {
-  padding: 0;
+  @extend %indents-reset;
 }

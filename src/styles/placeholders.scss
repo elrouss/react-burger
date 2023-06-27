@@ -34,3 +34,9 @@
 %constructor-ingredient-empty-drop {
   border: 1.2px solid $colors-interface-accent;
 }
+
+%entry-links-wrapper {
+  display: flex;
+  justify-content: center;
+  column-gap: 8px;
+}
