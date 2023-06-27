@@ -1,0 +1,45 @@
+@import '../../../index.scss';
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  row-gap: 80px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+
+  @include show-font(
+    $weight: 700,
+    $size: $font-size-s,
+    $line-height: $font-line-height-l,
+    $color: $color-text-inactive
+  );
+
+  &Item {
+    margin: 17px 0;
+  }
+}
+
+.link {
+  color: inherit;
+  transition: $common-transition;
+
+  &:hover {
+    color: $color-text-primary;
+  }
+
+  &Active {
+    color: $color-text-primary;
+  }
+}
+
+.description {
+  @include show-font(
+    $size: $font-size-xs,
+    $line-height: $font-line-height-xxxl,
+    $color: $color-text-inactive
+  );
+  opacity: 40%;
+}

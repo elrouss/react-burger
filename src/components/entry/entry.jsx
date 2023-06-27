@@ -7,7 +7,7 @@ function Entry({ children, heading, links }) {
   return (
     <>
       <AppHeader />
-      <div>
+      <main>
         <div className={styles.wrapper}>
           <form className={styles.form}>
             <h1 className={styles.heading}>{heading}</h1>
@@ -15,7 +15,7 @@ function Entry({ children, heading, links }) {
           </form>
           <div className={styles.links}>{links}</div>
         </div>
-      </div>
+      </main>
     </>
   );
 }
