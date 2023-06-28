@@ -1,12 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Entry from '../entry/entry';
+import { ROUTES } from '../../utils/constants';
 import styles from './login.module.scss';
 
 function Login() {
+  const navigate = useNavigate();
+
   const links = (
     <>
       <div className={styles.text}>
@@ -16,6 +20,7 @@ function Login() {
           htmlType="button"
           type="secondary"
           size="medium"
+          onClick={() => navigate(ROUTES.sign.up)}
         >
           Зарегистрироваться
         </Button>
@@ -28,6 +33,7 @@ function Login() {
           htmlType="button"
           type="secondary"
           size="medium"
+          onClick={() => navigate(ROUTES.password.forgot)}
         >
           Восстановить пароль
         </Button>

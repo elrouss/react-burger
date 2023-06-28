@@ -1,11 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import {
   EmailInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Entry from '../entry/entry';
+import { ROUTES } from '../../utils/constants';
 import styles from './forgot-password.module.scss';
 
 function ForgotPassword() {
+  const navigate = useNavigate();
+
   const links = (
     <div className={styles.text}>
       <span>Вспомнили пароль?</span>
@@ -14,6 +18,7 @@ function ForgotPassword() {
         htmlType="button"
         type="secondary"
         size="medium"
+        onClick={() => navigate(ROUTES.sign.in)}
       >
         Войти
       </Button>

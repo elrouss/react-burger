@@ -3,7 +3,6 @@ import AppHeader from '../app-header/app-header';
 import styles from './entry.module.scss';
 
 function Entry({ children, heading, links }) {
-
   return (
     <>
       <AppHeader />
@@ -23,7 +22,7 @@ function Entry({ children, heading, links }) {
 Entry.propTypes = {
   children: PropTypes.node.isRequired,
   heading: PropTypes.string.isRequired,
-  links: PropTypes.func.isRequired,
+  links: PropTypes.node.isRequired,
 };
 
 export default Entry;
