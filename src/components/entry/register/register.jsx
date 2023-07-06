@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   Input,
   EmailInput,
@@ -8,6 +9,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Entry from '../entry';
 import { ROUTES } from '../../../utils/constants';
+import { registerUser } from '../../../services/features/user/api';
+import { isLoading } from '../../../services/features/user/selectors';
 import styles from './register.module.scss';
 
 function Register() {
@@ -18,6 +21,7 @@ function Register() {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const links = (
     <div className={styles.text}>
@@ -40,7 +44,7 @@ function Register() {
   const onSubmit = (evt) => {
     evt.preventDefault();
 
-    console.log(data);
+    dispatch(registerUser(data));
   };
 
   return (
@@ -58,7 +62,12 @@ function Register() {
         value={data.password || ''}
         onChange={handleData}
       />
-      <Button htmlType="submit" type="primary" size="medium">
+      <Button
+        htmlType="submit"
+        type="primary"
+        size="medium"
+        disabled={isLoading}
+      >
         Зарегистрироваться
       </Button>
     </Entry>
