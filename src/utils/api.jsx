@@ -19,6 +19,29 @@ export const rememberPassword = async (email) => {
 
     return await res.json();
   } catch (err) {
-    console.error(`User remembering password error: ${err}`);
+    console.error(`Remember password error: ${err}`);
+  }
+};
+
+export const resetPassword = async (data) => {
+  try {
+    const res = await fetch(
+      `${API.baseUrl}${API.endpoints.user.password.reset}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (!res.ok) {
+      return Promise.reject(new Error(`Error ${res.status}`));
+    }
+
+    return await res.json();
+  } catch (err) {
+    console.error(`Reset password error: ${err}`);
   }
 };

@@ -1,4 +1,4 @@
-import ResetPassword from '../components/reset-password/reset-password';
+import ResetPassword from '../components/entry/reset-password/reset-password';
 
 function ResetPasswordPage() {
   return <ResetPassword />;
