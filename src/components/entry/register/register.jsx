@@ -10,7 +10,7 @@ import {
 import Entry from '../entry';
 import { ROUTES } from '../../../utils/constants';
 import { registerUser } from '../../../services/features/user/api';
-import { isLoading } from '../../../services/features/user/selectors';
+// import { isLoading } from '../../../services/features/user/selectors';
 import styles from './register.module.scss';
 
 function Register() {
@@ -59,6 +59,7 @@ function Register() {
       <EmailInput name="email" value={data.email || ''} onChange={handleData} />
       <PasswordInput
         name="password"
+        autoComplete="on"
         value={data.password || ''}
         onChange={handleData}
       />
@@ -66,7 +67,7 @@ function Register() {
         htmlType="submit"
         type="primary"
         size="medium"
-        disabled={isLoading}
+        // disabled={isLoading} TODO
       >
         Зарегистрироваться
       </Button>

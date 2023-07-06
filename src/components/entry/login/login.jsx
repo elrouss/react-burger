@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   EmailInput,
   PasswordInput,
@@ -7,6 +8,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Entry from '../entry';
 import { ROUTES } from '../../../utils/constants';
+import { loginUser } from '../../../services/features/user/api';
+// import { isLoading } from '../../../services/features/user/selectors';
 import styles from './login.module.scss';
 
 function Login() {
@@ -16,6 +19,7 @@ function Login() {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const links = (
     <>
@@ -53,8 +57,7 @@ function Login() {
   const onSubmit = (evt) => {
     evt.preventDefault();
 
-    console.log(data);
-    // dispatch(registerUser(data));
+    dispatch(loginUser(data));
   };
 
   return (
@@ -62,6 +65,7 @@ function Login() {
       <EmailInput name="email" value={data.email || ''} onChange={handleData} />
       <PasswordInput
         name="password"
+        autoComplete="on"
         value={data.password || ''}
         onChange={handleData}
       />
@@ -69,7 +73,7 @@ function Login() {
         htmlType="submit"
         type="primary"
         size="medium"
-        // disabled={isLoading}
+        // disabled={isLoading} TODO
       >
         Войти
       </Button>

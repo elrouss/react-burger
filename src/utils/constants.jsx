@@ -30,3 +30,7 @@ export const ROUTES = Object.freeze({
   profile: '/profile',
   ingredientDetails: '/ingredients/:id',
 });
+
+// USER DATA (TEST)
+// email: angelina-jolie@google.com
+// password: angelina-jolie@google.com
