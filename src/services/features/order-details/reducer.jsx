@@ -14,7 +14,7 @@ export const sendOrder = createAsyncThunk(
       });
 
       if (!res.ok) {
-        return Promise.reject(new Error(`Ошибка ${res.status}`));
+        return Promise.reject(new Error(`Error ${res.status}`));
       }
 
       return await res.json();
