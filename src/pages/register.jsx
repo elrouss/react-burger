@@ -1,4 +1,4 @@
-import Register from '../components/register/register';
+import Register from '../components/entry/register/register';
 
 function RegisterPage() {
   return <Register />;
