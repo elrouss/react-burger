@@ -2,6 +2,7 @@ export const API = Object.freeze({
   baseUrl: 'https://norma.nomoreparties.space/api',
   endpoints: {
     user: {
+      data: '/auth/user',
       register: '/auth/register',
       login: '/auth/login',
       logout: '/auth/logout',

@@ -17,7 +17,7 @@ export const rememberPassword = async (email) => {
       return Promise.reject(new Error(`Error ${res.status}`));
     }
 
-    return await res.json();
+    return res.json();
   } catch (err) {
     console.error(`Remember password error: ${err}`);
   }

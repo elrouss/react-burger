@@ -3,8 +3,8 @@ import { registerUser, loginUser } from './api';
 
 const initialState = {
   user: null,
+  isAuthenticated: false,
   accessToken: '',
-  refreshToken: '',
 
   process: {
     isLoading: false,
@@ -24,7 +24,7 @@ const userSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.accessToken = payload.accessToken;
-        state.refreshToken = payload.refreshToken;
+        state.isAuthenticated = true;
 
         state.process.isLoading = false;
         state.process.error = null;
@@ -41,7 +41,7 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.accessToken = payload.accessToken;
-        state.refreshToken = payload.refreshToken;
+        state.isAuthenticated = true;
 
         state.process.isLoading = false;
         state.process.error = null;
