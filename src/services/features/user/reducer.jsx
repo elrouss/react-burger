@@ -4,7 +4,6 @@ import { registerUser, loginUser, logoutUser } from './api';
 const initialState = {
   user: null,
   isAuthenticated: false,
-  accessToken: '',
 
   process: {
     isLoading: false,
@@ -23,7 +22,6 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
-        state.accessToken = payload.accessToken;
         state.isAuthenticated = true;
 
         state.process.isLoading = false;
@@ -40,7 +38,6 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
-        state.accessToken = payload.accessToken;
         state.isAuthenticated = true;
 
         state.process.isLoading = false;
@@ -57,7 +54,6 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
-        state.accessToken = '';
         state.isAuthenticated = false;
 
         state.process.isLoading = false;

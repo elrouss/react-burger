@@ -32,8 +32,8 @@ function ForgotPassword() {
   const onSubmit = (evt) => {
     evt.preventDefault();
 
-    rememberPassword(email)
-  }
+    rememberPassword(email);
+  };
 
   return (
     <Entry heading="Восстановление пароля" links={links} onSubmit={onSubmit}>

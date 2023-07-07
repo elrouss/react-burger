@@ -1,12 +1,16 @@
 const authMiddleware = () => (next) => (action) => {
   if (
-    action.type.startsWith('user/register') ||
-    action.type.startsWith('user/login')
+    ['user/register/fulfilled', 'user/login/fulfilled'].includes(action.type)
   ) {
-    localStorage.setItem('refreshToken', action.payload?.refreshToken);
+    localStorage.setItem(
+      'accessToken',
+      action.payload.accessToken.split(' ')[1]
+    );
+    localStorage.setItem('refreshToken', action.payload.refreshToken);
   }
 
   if (action.type === 'user/logout/fulfilled') {
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
   }
 
