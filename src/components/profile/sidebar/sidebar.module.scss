@@ -35,6 +35,13 @@
   }
 }
 
+.button {
+  font-weight: 700;
+
+  background-color: transparent;
+  border: none;
+}
+
 .description {
   @include show-font(
     $size: $font-size-xs,

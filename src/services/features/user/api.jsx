@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from '../../../utils/constants';
 
 export const registerUser = createAsyncThunk(
-  'user/registerUser',
+  'user/register',
   async (data, { rejectWithValue }) => {
     try {
       const res = await fetch(`${API.baseUrl}${API.endpoints.user.register}`, {
@@ -25,7 +25,7 @@ export const registerUser = createAsyncThunk(
 );
 
 export const loginUser = createAsyncThunk(
-  'user/loginUser',
+  'user/login',
   async (data, { rejectWithValue }) => {
     try {
       const res = await fetch(`${API.baseUrl}${API.endpoints.user.login}`, {
@@ -43,6 +43,29 @@ export const loginUser = createAsyncThunk(
       return await res.json();
     } catch (err) {
       return rejectWithValue(`User login error: ${err}`);
+    }
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  'user/logout',
+  async (token, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`${API.baseUrl}${API.endpoints.user.logout}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token }),
+      });
+
+      if (!res.ok) {
+        return Promise.reject(new Error(`Error ${res.status}`));
+      }
+
+      return await res.json();
+    } catch (err) {
+      return rejectWithValue(`User logout error: ${err}`);
     }
   }
 );
