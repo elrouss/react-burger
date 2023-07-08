@@ -9,6 +9,7 @@ import RegisterPage from '../../pages/register';
 import LoginPage from '../../pages/login';
 import ForgotPasswordPage from '../../pages/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password';
+import NotFoundPage from '../../pages/not-found';
 
 import UserInfo from '../profile/user-info/user-info';
 
@@ -33,6 +34,7 @@ function App() {
       <Route path={ROUTES.sign.in} element={<LoginPage />} />
       <Route path={ROUTES.password.forgot} element={<ForgotPasswordPage />} />
       <Route path={ROUTES.password.reset} element={<ResetPasswordPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

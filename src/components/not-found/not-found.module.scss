@@ -1,0 +1,40 @@
+@import '../../index.scss';
+
+.wrapper,
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapper {
+  padding-top: 90px;
+  row-gap: 20px;
+}
+
+.text {
+  row-gap: 5px;
+}
+
+.heading {
+  @include show-font(
+    $weight: 700,
+    $size: $font-size-l,
+    $line-height: $font-line-height-m
+  );
+}
+
+.paragraph {
+  @include show-font(
+    $weight: 700,
+    $size: $font-size-s,
+    $line-height: $font-line-height-l
+  );
+}
+
+.image {
+  background: url(../../assets/images/404-background.gif) center no-repeat;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
