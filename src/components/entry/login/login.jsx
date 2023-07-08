@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
@@ -6,6 +5,7 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import useFormData from '../../../hooks/useFormData';
 import Entry from '../entry';
 import { ROUTES } from '../../../utils/constants';
 import { loginUser } from '../../../services/features/user/api';
@@ -13,13 +13,9 @@ import { loginUser } from '../../../services/features/user/api';
 import styles from './login.module.scss';
 
 function Login() {
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-  });
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { data, handleData } = useFormData();
 
   const links = (
     <>
@@ -51,9 +47,6 @@ function Login() {
     </>
   );
 
-  const handleData = (evt) =>
-    setData({ ...data, [evt.target.name]: evt.target.value });
-
   const onSubmit = (evt) => {
     evt.preventDefault();
 
@@ -62,11 +55,15 @@ function Login() {
 
   return (
     <Entry heading="Вход" links={links} onSubmit={onSubmit}>
-      <EmailInput name="email" value={data.email || ''} onChange={handleData} />
+      <EmailInput
+        name="email"
+        value={data?.email || ''}
+        onChange={handleData}
+      />
       <PasswordInput
         name="password"
         autoComplete="on"
-        value={data.password || ''}
+        value={data?.password || ''}
         onChange={handleData}
       />
       <Button

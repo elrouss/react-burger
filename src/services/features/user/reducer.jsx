@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { registerUser, loginUser, logoutUser } from './api';
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  getUserData,
+  editUserData,
+} from './api';
 
 const initialState = {
   user: null,
-  isAuthenticated: false,
+  isAuthChecked: false,
 
   process: {
     isLoading: false,
@@ -22,7 +28,7 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
-        state.isAuthenticated = true;
+        state.isAuthChecked = true;
 
         state.process.isLoading = false;
         state.process.error = null;
@@ -38,7 +44,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
-        state.isAuthenticated = true;
+        state.isAuthChecked = true;
 
         state.process.isLoading = false;
         state.process.error = null;
@@ -54,7 +60,7 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
-        state.isAuthenticated = false;
+        state.isAuthChecked = false;
 
         state.process.isLoading = false;
         state.process.error = null;
@@ -64,8 +70,39 @@ const userSlice = createSlice({
         state.process.error = payload;
       })
 
+      .addCase(getUserData.pending, (state) => {
+        state.process.isLoading = true;
+        state.process.error = null;
+      })
+      .addCase(getUserData.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+
+        state.process.isLoading = false;
+        state.process.error = null;
+      })
+      .addCase(getUserData.rejected, (state, { payload }) => {
+        state.process.isLoading = false;
+        state.process.error = payload;
+      })
+
+      .addCase(editUserData.pending, (state) => {
+        state.process.isLoading = true;
+        state.process.error = null;
+      })
+      .addCase(editUserData.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+
+        state.process.isLoading = false;
+        state.process.error = null;
+      })
+      .addCase(editUserData.rejected, (state, { payload }) => {
+        state.process.isLoading = false;
+        state.process.error = payload;
+      })
+
       .addDefaultCase((state) => state);
   },
 });
 
+export const { setUserInfo } = userSlice.actions;
 export default userSlice.reducer;

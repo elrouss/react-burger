@@ -9,7 +9,7 @@ export const rememberPassword = async (email) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify(email),
       }
     );
 
@@ -19,7 +19,7 @@ export const rememberPassword = async (email) => {
 
     return res.json();
   } catch (err) {
-    console.error(`Remember password error: ${err}`);
+    throw new Error(`Remember password error: ${err}`);
   }
 };
 
@@ -42,6 +42,6 @@ export const resetPassword = async (data) => {
 
     return await res.json();
   } catch (err) {
-    console.error(`Reset password error: ${err}`);
+    throw new Error(`Reset password error: ${err}`);
   }
 };

@@ -1,5 +1,39 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import jwtDecode from 'jwt-decode';
+import dayjs from 'dayjs';
 import { API } from '../../../utils/constants';
+
+const checkIsAccessTokenExpired = (token) => {
+  const MILLISECOND = 1;
+  const expirationData = jwtDecode(token).exp;
+
+  return dayjs.unix(expirationData).diff(dayjs()) < MILLISECOND;
+};
+
+const refreshAccessToken = async () => {
+  try {
+    const res = await fetch(
+      `${API.baseUrl}${API.endpoints.user.tokenRefresh}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
+      }
+    );
+
+    if (!res.ok) {
+      return Promise.reject(new Error(`Error ${res.status}`));
+    }
+
+    const tokens = await res.json();
+
+    return tokens;
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
+};
 
 export const registerUser = createAsyncThunk(
   'user/register',
@@ -49,14 +83,14 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
   'user/logout',
-  async (token, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const res = await fetch(`${API.baseUrl}${API.endpoints.user.logout}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
       });
 
       if (!res.ok) {
@@ -66,6 +100,62 @@ export const logoutUser = createAsyncThunk(
       return await res.json();
     } catch (err) {
       return rejectWithValue(`User logout error: ${err}`);
+    }
+  }
+);
+
+export const getUserData = createAsyncThunk(
+  'user/getData',
+  async (_, { rejectWithValue }) => {
+    let token = localStorage.getItem('accessToken');
+
+    if (checkIsAccessTokenExpired(token)) {
+      const { accessToken, refreshToken } = refreshAccessToken();
+
+      localStorage.setItem('accessToken', accessToken.split(' ')[1]);
+      localStorage.setItem('refreshToken', refreshToken);
+
+      token = localStorage.getItem('accessToken');
+    }
+
+    try {
+      const res = await fetch(`${API.baseUrl}${API.endpoints.user.data}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        return Promise.reject(new Error(`Error ${res.status}`));
+      }
+
+      return await res.json();
+    } catch (err) {
+      return rejectWithValue(`User get data error: ${err}`);
+    }
+  }
+);
+
+export const editUserData = createAsyncThunk(
+  'user/editData',
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`${API.baseUrl}${API.endpoints.user.data}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        return Promise.reject(new Error(`Error ${res.status}`));
+      }
+
+      return await res.json();
+    } catch (err) {
+      return rejectWithValue(`User edit error: ${err}`);
     }
   }
 );

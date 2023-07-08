@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
@@ -7,21 +6,16 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import useFormData from '../../../hooks/useFormData';
 import Entry from '../entry';
 import { ROUTES } from '../../../utils/constants';
 import { registerUser } from '../../../services/features/user/api';
-// import { isLoading } from '../../../services/features/user/selectors';
 import styles from './register.module.scss';
 
 function Register() {
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-    name: '',
-  });
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { data, handleData } = useFormData();
 
   const links = (
     <div className={styles.text}>
@@ -38,9 +32,6 @@ function Register() {
     </div>
   );
 
-  const handleData = (evt) =>
-    setData({ ...data, [evt.target.name]: evt.target.value });
-
   const onSubmit = (evt) => {
     evt.preventDefault();
 
@@ -53,14 +44,18 @@ function Register() {
         type="text"
         name="name"
         placeholder="Имя"
-        value={data.name || ''}
+        value={data?.name || ''}
         onChange={handleData}
       />
-      <EmailInput name="email" value={data.email || ''} onChange={handleData} />
+      <EmailInput
+        name="email"
+        value={data?.email || ''}
+        onChange={handleData}
+      />
       <PasswordInput
         name="password"
         autoComplete="on"
-        value={data.password || ''}
+        value={data?.password || ''}
         onChange={handleData}
       />
       <Button

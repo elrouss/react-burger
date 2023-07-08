@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import HomePage from '../../pages/home';
 import ProfilePage from '../../pages/profile';
@@ -8,8 +10,15 @@ import ForgotPasswordPage from '../../pages/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password';
 
 import { ROUTES } from '../../utils/constants';
+import { getUserData } from '../../services/features/user/api';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, []);
+
   return (
     <Routes>
       <Route path={ROUTES.home} element={<HomePage />} />

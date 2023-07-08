@@ -21,7 +21,7 @@ function Sidebar({ description }) {
   const dispatch = useDispatch();
 
   const onLogoutUser = () => {
-    dispatch(logoutUser(localStorage.getItem('refreshToken')));
+    dispatch(logoutUser());
   };
 
   return (

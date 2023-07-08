@@ -1,18 +1,17 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   EmailInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import useFormData from '../../../hooks/useFormData';
 import Entry from '../entry';
 import { ROUTES } from '../../../utils/constants';
 import { rememberPassword } from '../../../utils/api';
 import styles from './forgot-password.module.scss';
 
 function ForgotPassword() {
-  const [email, setEmail] = useState('');
-
   const navigate = useNavigate();
+  const { data, handleData } = useFormData();
 
   const links = (
     <div className={styles.text}>
@@ -32,7 +31,7 @@ function ForgotPassword() {
   const onSubmit = (evt) => {
     evt.preventDefault();
 
-    rememberPassword(email);
+    rememberPassword(data);
   };
 
   return (
@@ -40,8 +39,8 @@ function ForgotPassword() {
       <EmailInput
         name="email"
         placeholder="Укажите e-mail"
-        value={email || ''}
-        onChange={(evt) => setEmail(evt.target.value)}
+        value={data?.email || ''}
+        onChange={handleData}
       />
       <Button htmlType="submit" type="primary" size="medium">
         Восстановить
