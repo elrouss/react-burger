@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
 import Sidebar from './sidebar/sidebar';
-import UserInfo from './user-info/user-info';
 import styles from './profile.module.scss';
 
 function Profile() {

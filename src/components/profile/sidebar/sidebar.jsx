@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { ROUTES } from '../../../utils/constants';
@@ -22,6 +22,11 @@ function Sidebar({ description }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // TODO: Navlinks' active props doesn't work correctly,
+  // because of the children url (?).
+  // Made this temporary solution, need to think
+  const location = useLocation();
+
   const onLogoutUser = () => {
     dispatch(logoutUser())
       .then(() => navigate(`${ROUTES.sign.in}`))
@@ -34,9 +39,10 @@ function Sidebar({ description }) {
         {links.map(({ name, url }) => (
           <li className={styles.linksItem} key={uuidv4()}>
             <NavLink
-              className={({ isActive }) =>
-                `${styles.link}${(isActive && ` ${styles.linkActive}`) || ''}`
-              }
+              className={`${styles.link}${
+                (location.pathname.endsWith(url) && ` ${styles.linkActive}`) ||
+                ''
+              }`}
               key={uuidv4()}
               to={url}
             >
