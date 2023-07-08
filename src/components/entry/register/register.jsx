@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Input,
   EmailInput,
@@ -10,6 +10,7 @@ import useFormData from '../../../hooks/useFormData';
 import Entry from '../entry';
 import { ROUTES } from '../../../utils/constants';
 import { registerUser } from '../../../services/features/user/api';
+import { isLoading } from '../../../services/features/user/selectors';
 import styles from './register.module.scss';
 
 function Register() {
@@ -62,7 +63,7 @@ function Register() {
         htmlType="submit"
         type="primary"
         size="medium"
-        // disabled={isLoading} TODO
+        disabled={useSelector(isLoading)}
       >
         Зарегистрироваться
       </Button>

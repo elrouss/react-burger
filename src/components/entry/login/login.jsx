@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   EmailInput,
   PasswordInput,
@@ -9,7 +9,7 @@ import useFormData from '../../../hooks/useFormData';
 import Entry from '../entry';
 import { ROUTES } from '../../../utils/constants';
 import { loginUser } from '../../../services/features/user/api';
-// import { isLoading } from '../../../services/features/user/selectors';
+import { isLoading } from '../../../services/features/user/selectors';
 import styles from './login.module.scss';
 
 function Login() {
@@ -50,7 +50,9 @@ function Login() {
   const onSubmit = (evt) => {
     evt.preventDefault();
 
-    dispatch(loginUser(data));
+    dispatch(loginUser(data))
+      .then(() => navigate(ROUTES.home))
+      .catch((err) => console.error(`Error: ${err}`));
   };
 
   return (
@@ -70,7 +72,7 @@ function Login() {
         htmlType="submit"
         type="primary"
         size="medium"
-        // disabled={isLoading} TODO
+        disabled={useSelector(isLoading)}
       >
         Войти
       </Button>

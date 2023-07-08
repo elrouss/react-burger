@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { isLoading } from '../../../../services/features/user/selectors';
 import styles from './buttons.module.scss';
 
 function Buttons({ onCancel }) {
@@ -14,7 +16,11 @@ function Buttons({ onCancel }) {
       >
         Отмена
       </Button>
-      <Button htmlType="submit" type="primary">
+      <Button
+        htmlType="submit"
+        type="primary"
+        disabled={useSelector(isLoading)}
+      >
         Сохранить
       </Button>
     </div>

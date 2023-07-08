@@ -1,9 +1,10 @@
-import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { ROUTES } from '../../../utils/constants';
 import { logoutUser } from '../../../services/features/user/api';
+import { isLoading } from '../../../services/features/user/selectors';
 import styles from './sidebar.module.scss';
 
 const links = [
@@ -19,9 +20,12 @@ const links = [
 
 function Sidebar({ description }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onLogoutUser = () => {
-    dispatch(logoutUser());
+    dispatch(logoutUser())
+      .then(() => navigate(`${ROUTES.sign.in}`))
+      .catch((err) => console.error(`Error: ${err}`));
   };
 
   return (
@@ -44,6 +48,7 @@ function Sidebar({ description }) {
           <button
             className={`${styles.link} ${styles.button}`}
             type="button"
+            disabled={useSelector(isLoading)}
             onClick={onLogoutUser}
           >
             Выход

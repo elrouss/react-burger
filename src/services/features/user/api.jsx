@@ -31,7 +31,7 @@ const refreshAccessToken = async () => {
 
     return tokens;
   } catch (err) {
-    throw new Error(`Error: ${err}`);
+    console.error(`Error: ${err}`);
   }
 };
 
@@ -58,51 +58,41 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const loginUser = createAsyncThunk(
-  'user/login',
-  async (data, { rejectWithValue }) => {
-    try {
-      const res = await fetch(`${API.baseUrl}${API.endpoints.user.login}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+export const loginUser = createAsyncThunk('user/login', async (data) => {
+  const res = await fetch(`${API.baseUrl}${API.endpoints.user.login}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
 
-      if (!res.ok) {
-        return Promise.reject(new Error(`Error ${res.status}`));
-      }
-
-      return await res.json();
-    } catch (err) {
-      return rejectWithValue(`User login error: ${err}`);
-    }
+  if (!res.ok) {
+    return Promise.reject(new Error(`Error ${res.status}`));
   }
-);
 
-export const logoutUser = createAsyncThunk(
-  'user/logout',
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await fetch(`${API.baseUrl}${API.endpoints.user.logout}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
-      });
+  const success = await res.json();
 
-      if (!res.ok) {
-        return Promise.reject(new Error(`Error ${res.status}`));
-      }
+  return success;
+});
 
-      return await res.json();
-    } catch (err) {
-      return rejectWithValue(`User logout error: ${err}`);
-    }
+export const logoutUser = createAsyncThunk('user/logout', async () => {
+  const res = await fetch(`${API.baseUrl}${API.endpoints.user.logout}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
+  });
+
+  if (!res.ok) {
+    return Promise.reject(new Error(`Error ${res.status}`));
   }
-);
+
+  const success = await res.json();
+
+  return success;
+});
 
 export const getUserData = createAsyncThunk(
   'user/getData',
