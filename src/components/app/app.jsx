@@ -4,10 +4,13 @@ import { useDispatch } from 'react-redux';
 
 import HomePage from '../../pages/home';
 import ProfilePage from '../../pages/profile';
+import ProfileOrdersPage from '../../pages/profile-orders';
 import RegisterPage from '../../pages/register';
 import LoginPage from '../../pages/login';
 import ForgotPasswordPage from '../../pages/forgot-password';
 import ResetPasswordPage from '../../pages/reset-password';
+
+import UserInfo from '../profile/user-info/user-info';
 
 import { ROUTES } from '../../utils/constants';
 import { getUserData } from '../../services/features/user/api';
@@ -22,7 +25,10 @@ function App() {
   return (
     <Routes>
       <Route path={ROUTES.home} element={<HomePage />} />
-      <Route path={ROUTES.profile} element={<ProfilePage />} />
+      <Route path={ROUTES.user.profile} element={<ProfilePage />}>
+        <Route index element={<UserInfo />} />
+        <Route path={ROUTES.user.orders} element={<ProfileOrdersPage />} />
+      </Route>
       <Route path={ROUTES.sign.up} element={<RegisterPage />} />
       <Route path={ROUTES.sign.in} element={<LoginPage />} />
       <Route path={ROUTES.password.forgot} element={<ForgotPasswordPage />} />

@@ -24,8 +24,6 @@ const links = [
 ];
 
 function AppHeader() {
-  // TODO: with outlet? renders and on main is always new api
-
   const renderNavLinkStyle = (isActive) =>
     `${styles.navLink}${(isActive && ` ${styles.navLinkActive}`) || ''}`;
 
@@ -54,7 +52,7 @@ function AppHeader() {
         </div>
         <NavLink
           className={({ isActive }) => renderNavLinkStyle(isActive)}
-          to={ROUTES.profile}
+          to={ROUTES.user.profile}
         >
           <ProfileIcon type="primary" />
           <span>Личный кабинет</span>

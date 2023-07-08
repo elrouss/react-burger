@@ -14,7 +14,7 @@ export const API = Object.freeze({
     },
 
     ingredients: '/ingredients',
-    orders: '/orders',
+    orders: 'orders',
   },
 });
 
@@ -28,7 +28,10 @@ export const ROUTES = Object.freeze({
     forgot: '/forgot-password',
     reset: '/reset-password',
   },
-  profile: '/profile',
+  user: {
+    profile: '/profile',
+    orders: 'orders',
+  },
   ingredientDetails: '/ingredients/:id',
 });
 

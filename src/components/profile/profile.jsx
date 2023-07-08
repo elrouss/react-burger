@@ -1,3 +1,4 @@
+import { Outlet } from 'react-router-dom';
 import AppHeader from '../app-header/app-header';
 import Sidebar from './sidebar/sidebar';
 import UserInfo from './user-info/user-info';
@@ -10,7 +11,7 @@ function Profile() {
       <main>
         <div className={styles.wrapper}>
           <Sidebar description="В этом разделе вы можете изменить свои персональные данные" />
-          <UserInfo />
+          <Outlet />
         </div>
       </main>
     </>

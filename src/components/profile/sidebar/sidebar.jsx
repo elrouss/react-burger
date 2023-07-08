@@ -9,11 +9,11 @@ import styles from './sidebar.module.scss';
 const links = [
   {
     name: 'Профиль',
-    url: ROUTES.profile,
+    url: ROUTES.user.profile,
   },
   {
     name: 'История заказов',
-    url: '/',
+    url: ROUTES.user.orders,
   },
 ];
 
