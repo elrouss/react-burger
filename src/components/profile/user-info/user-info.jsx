@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Input,
   PasswordInput,
-  Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { editUserData } from '../../../services/features/user/api';
 import {
   getUserLogin,
   getUserName,
 } from '../../../services/features/user/selectors';
+import Buttons from './buttons/buttons';
 import styles from './user-info.module.scss';
 
 function UserInfo() {
@@ -24,14 +24,26 @@ function UserInfo() {
     password: '',
   });
 
+  const [areButtonsVisible, setAreButtonsVisible] = useState(false);
+
   useEffect(() => {
     if (userName && userEmail) {
       setData({ ...data, name: userName, email: userEmail });
     }
   }, [userName, userEmail]);
 
+  useEffect(() => {
+    setAreButtonsVisible(
+      data.name !== userName || data.email !== userEmail || data.password !== ''
+    );
+  }, [data, userName, userEmail]);
+
   const handleData = (evt) =>
     setData({ ...data, [evt.target.name]: evt.target.value });
+
+  const cancelChanges = useCallback(() => {
+    setData({ name: userName, email: userEmail, password: '' });
+  }, [userName, userEmail]);
 
   const onSubmit = (evt) => {
     evt.preventDefault();
@@ -61,19 +73,7 @@ function UserInfo() {
         value={data.password || ''}
         onChange={handleData}
       />
-      <div className={styles.buttons}>
-        <Button
-          htmlType="button"
-          type="secondary"
-          extraClass={styles.buttonCancel}
-          // onClick={() => }
-        >
-          Отмена
-        </Button>
-        <Button htmlType="submit" type="primary">
-          Сохранить
-        </Button>
-      </div>
+      {areButtonsVisible && <Buttons onCancel={cancelChanges} />}
     </form>
   );
 }
