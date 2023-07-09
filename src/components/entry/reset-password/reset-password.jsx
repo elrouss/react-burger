@@ -32,7 +32,13 @@ function ResetPassword() {
   const onSubmit = (evt) => {
     evt.preventDefault();
 
-    resetPassword(data);
+    resetPassword(data)
+      .then((res) => {
+        if (res.success) {
+          navigate(ROUTES.sign.in);
+        }
+      })
+      .catch((err) => console.error(`Error: ${err}`));
   };
 
   return (

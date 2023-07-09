@@ -13,11 +13,21 @@ function WithProtectedRoute({ component, onlyUnAuth = false }) {
   const user = useSelector(checkUserData);
   const location = useLocation();
 
+  const { from } = location.state || { from: { pathname: ROUTES.home } };
+  const isRouteResetPassword = location.pathname.endsWith(
+    ROUTES.password.reset
+  );
+  const hasForgottenPassword = JSON.parse(
+    localStorage.getItem('forgotPassword')
+  );
+
   if (!isAuthChecked) return <Preloader />;
 
   if (onlyUnAuth && user) {
-    const { from } = location.state || { from: { pathname: ROUTES.home } };
+    return <Navigate to={from} />;
+  }
 
+  if (onlyUnAuth && !user && isRouteResetPassword && !hasForgottenPassword) {
     return <Navigate to={from} />;
   }
 

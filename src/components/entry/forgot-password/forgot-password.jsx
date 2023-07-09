@@ -31,7 +31,14 @@ function ForgotPassword() {
   const onSubmit = (evt) => {
     evt.preventDefault();
 
-    rememberPassword(data);
+    rememberPassword(data)
+      .then((res) => {
+        if (res.success) {
+          localStorage.setItem('forgotPassword', JSON.stringify(true));
+          navigate(ROUTES.password.reset);
+        }
+      })
+      .catch((err) => console.error(`Error: ${err}`));
   };
 
   return (
