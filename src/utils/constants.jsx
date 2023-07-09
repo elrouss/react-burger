@@ -14,7 +14,7 @@ export const API = Object.freeze({
     },
 
     ingredients: '/ingredients',
-    orders: 'orders',
+    orders: '/orders',
   },
 });
 
