@@ -32,6 +32,7 @@ export const ROUTES = Object.freeze({
     profile: '/profile',
     orders: 'orders',
   },
+  orders: '/feed',
   ingredientDetails: '/ingredients/:id',
 });
 

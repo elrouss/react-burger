@@ -3,7 +3,7 @@ import {
   registerUser,
   loginUser,
   logoutUser,
-  getUserData,
+  checkUserAuth,
   editUserData,
 } from './api';
 
@@ -70,18 +70,20 @@ const userSlice = createSlice({
         state.process.error = payload;
       })
 
-      .addCase(getUserData.pending, (state) => {
+      .addCase(checkUserAuth.pending, (state) => {
         state.process.isLoading = true;
         state.process.error = null;
       })
-      .addCase(getUserData.fulfilled, (state, { payload }) => {
+      .addCase(checkUserAuth.fulfilled, (state, { payload }) => {
+        state.isAuthChecked = true;
         state.user = payload.user;
 
         state.process.isLoading = false;
         state.process.error = null;
       })
-      .addCase(getUserData.rejected, (state, { payload }) => {
+      .addCase(checkUserAuth.rejected, (state, { payload }) => {
         state.process.isLoading = false;
+        state.isAuthChecked = true;
         state.process.error = payload;
       })
 

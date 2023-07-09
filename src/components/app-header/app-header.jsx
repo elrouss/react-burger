@@ -18,7 +18,7 @@ const links = [
   },
   {
     name: 'Лента заказов',
-    url: '/no-more-tests',
+    url: ROUTES.orders,
     icon: <ListIcon type="primary" />,
   },
 ];

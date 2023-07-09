@@ -94,8 +94,8 @@ export const logoutUser = createAsyncThunk('user/logout', async () => {
   return success;
 });
 
-export const getUserData = createAsyncThunk(
-  'user/getData',
+export const checkUserAuth = createAsyncThunk(
+  'user/auth',
   async (_, { rejectWithValue }) => {
     let token = localStorage.getItem('accessToken');
 

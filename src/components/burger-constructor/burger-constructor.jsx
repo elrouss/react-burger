@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,13 +37,18 @@ let prevBunId = '';
 function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [prevBunPrice, setPrevBunPrice] = useState(0);
-  const [issModalOpened, setIsModalOpened] = useState(false);
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const dispatch = useDispatch();
 
   const status = useSelector(isLoading);
   const selectedBun = useSelector(getSelectedBun);
   const selectedIngredients = useSelector(getSelectedIngredients);
+
+  useEffect(() => {
+    setIsDisabled(!selectedBun || !selectedIngredients.length);
+  }, [selectedBun, selectedIngredients]);
 
   const incrementIngredientCounter = ({ _id, type }) => {
     let value = ingredientsCounter.get(_id);
@@ -181,7 +186,12 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
               <span>{totalPrice}</span>
               <CurrencyIcon />
             </div>
-            <Button htmlType="submit" type="primary" size="large">
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              disabled={isDisabled}
+            >
               {status ? 'Подождите...' : 'Оформить заказ'}
             </Button>
           </div>
@@ -191,7 +201,7 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
       <Modal
         id="order-details"
         onLoading={status}
-        isModalOpened={issModalOpened}
+        isModalOpened={isModalOpened}
         onModalClose={handleModalClose}
       >
         <OrderDetails />
