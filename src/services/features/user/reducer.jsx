@@ -28,7 +28,6 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
-        state.isAuthChecked = true;
 
         state.process.isLoading = false;
         state.process.error = null;
@@ -44,7 +43,6 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
-        state.isAuthChecked = true;
 
         state.process.isLoading = false;
         state.process.error = null;
@@ -60,7 +58,6 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
-        state.isAuthChecked = false;
 
         state.process.isLoading = false;
         state.process.error = null;

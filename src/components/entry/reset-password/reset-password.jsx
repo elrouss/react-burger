@@ -36,6 +36,7 @@ function ResetPassword() {
       .then((res) => {
         if (res.success) {
           navigate(ROUTES.sign.in);
+          localStorage.removeItem('forgotPassword');
         }
       })
       .catch((err) => console.error(`Error: ${err}`));
