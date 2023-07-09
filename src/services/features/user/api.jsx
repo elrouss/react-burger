@@ -100,7 +100,7 @@ export const checkUserAuth = createAsyncThunk(
     let token = localStorage.getItem('accessToken');
 
     if (checkIsAccessTokenExpired(token)) {
-      const { accessToken, refreshToken } = refreshAccessToken();
+      const { accessToken, refreshToken } = await refreshAccessToken();
 
       localStorage.setItem('accessToken', accessToken.split(' ')[1]);
       localStorage.setItem('refreshToken', refreshToken);
