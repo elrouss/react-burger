@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
@@ -18,6 +19,7 @@ import {
   REMOVE_INGREDIENT,
 } from '../../services/features/selected-ingredients/reducer';
 
+import { checkUserData } from '../../services/features/user/selectors';
 import {
   getSelectedBun,
   getSelectedIngredients,
@@ -28,6 +30,7 @@ import SelectedBurgerIngredient from './selected-burger-ingredient/selected-burg
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
+import { ROUTES } from '../../utils/constants';
 import DRAG_TYPES from '../../utils/drag-types';
 
 import styles from './burger-constructor.module.scss';
@@ -40,11 +43,14 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const status = useSelector(isLoading);
   const selectedBun = useSelector(getSelectedBun);
   const selectedIngredients = useSelector(getSelectedIngredients);
+
+  const user = useSelector(checkUserData);
 
   useEffect(() => {
     setIsDisabled(!selectedBun || !selectedIngredients.length);
@@ -125,12 +131,16 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
   const handleOrder = (evt) => {
     evt.preventDefault();
 
-    const order = [selectedBun, ...selectedIngredients].map(
-      (selectedIngredient) => selectedIngredient._id
-    );
+    if (!user) {
+      navigate(ROUTES.sign.in);
+    } else {
+      const order = [selectedBun, ...selectedIngredients].map(
+        (selectedIngredient) => selectedIngredient._id
+      );
 
-    dispatch(sendOrder(order));
-    setIsModalOpened(true);
+      dispatch(sendOrder(order));
+      setIsModalOpened(true);
+    }
   };
 
   const handleModalClose = () => {
