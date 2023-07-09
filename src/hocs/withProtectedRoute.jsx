@@ -34,8 +34,12 @@ export function OnlyUnAuth({ component }) {
 export const OnlyAuth = WithProtectedRoute;
 
 WithProtectedRoute.propTypes = {
-  onlyUnAuth: PropTypes.bool.isRequired,
   component: PropTypes.node.isRequired,
+  onlyUnAuth: PropTypes.bool,
+};
+
+WithProtectedRoute.defaultProps = {
+  onlyUnAuth: false,
 };
 
 OnlyUnAuth.propTypes = {
