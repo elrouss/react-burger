@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import {
   checkUserAuthStatus,
   checkUserData,
-} from '../../services/features/user/selectors';
-import Preloader from '../preloader/preloader';
-import { ROUTES } from '../../utils/constants';
+} from '../services/features/user/selectors';
+import Preloader from '../components/preloader/preloader';
+import { ROUTES } from '../utils/constants';
 
 function WithProtectedRoute({ component, onlyUnAuth = false }) {
   const isAuthChecked = useSelector(checkUserAuthStatus);

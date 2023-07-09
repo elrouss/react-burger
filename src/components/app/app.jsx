@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { OnlyAuth, OnlyUnAuth } from '../hocs/withProtectedRoute';
+import { OnlyAuth, OnlyUnAuth } from '../../hocs/withProtectedRoute';
 
 import HomePage from '../../pages/home';
 import FeedPage from '../../pages/feed';
