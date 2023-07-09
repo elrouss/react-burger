@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,14 +32,13 @@ import OrderDetails from '../order-details/order-details';
 
 import { ROUTES } from '../../utils/constants';
 import DRAG_TYPES from '../../utils/drag-types';
+import countTotalPrice from '../../utils/calculations/total-price-counter';
 
 import styles from './burger-constructor.module.scss';
 
 let prevBunId = '';
 
 function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [prevBunPrice, setPrevBunPrice] = useState(0);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -51,6 +50,13 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
   const selectedIngredients = useSelector(getSelectedIngredients);
 
   const user = useSelector(checkUserData);
+
+  const totalPrice = useMemo(
+    () =>
+      countTotalPrice('bun', selectedBun) +
+      countTotalPrice('ingredients', selectedIngredients),
+    [selectedBun, selectedIngredients]
+  );
 
   useEffect(() => {
     setIsDisabled(!selectedBun || !selectedIngredients.length);
@@ -70,26 +76,6 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
 
     value = value ? (value += 1) : 1;
     return value;
-  };
-
-  const onIncrementTotalPrice = ({ type, price }) => {
-    if (type === 'bun') {
-      const bunPrice = price * 2;
-
-      if (prevBunPrice) {
-        setTotalPrice(totalPrice - prevBunPrice + bunPrice);
-        setPrevBunPrice(bunPrice);
-      } else {
-        setTotalPrice(totalPrice + bunPrice);
-        setPrevBunPrice(bunPrice);
-      }
-    } else {
-      setTotalPrice(totalPrice + price);
-    }
-  };
-
-  const onDecrementTotalPrice = (price) => {
-    setTotalPrice(totalPrice - price);
   };
 
   // Selecting ingredients from left container
@@ -112,20 +98,17 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
             )
           )
         );
-
-        onIncrementTotalPrice(ingredient);
       },
     }),
     [ingredientsCounter]
   );
 
-  const removeIngredient = ({ key, _id, price }) => {
+  const removeIngredient = ({ key, _id }) => {
     dispatch(REMOVE_INGREDIENT({ key }));
 
     const value = ingredientsCounter.get(_id) - 1;
 
     onIngredientsCounter(new Map(ingredientsCounter.set(_id, value)));
-    onDecrementTotalPrice(price);
   };
 
   const handleOrder = (evt) => {
