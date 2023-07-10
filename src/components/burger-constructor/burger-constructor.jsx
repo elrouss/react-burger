@@ -16,6 +16,7 @@ import { isLoading } from '../../services/features/order-details/selectors';
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
+  RESET,
 } from '../../services/features/selected-ingredients/reducer';
 
 import { checkUserData } from '../../services/features/user/selectors';
@@ -89,7 +90,12 @@ function BurgerConstructor() {
         (selectedIngredient) => selectedIngredient._id
       );
 
-      dispatch(sendOrder(order));
+      dispatch(sendOrder(order))
+        .then((res) => {
+          if (res.payload.success) dispatch(RESET());
+        })
+        .catch((err) => console.error(`Error: ${err}`));
+
       setIsModalOpened(true);
     }
   };
