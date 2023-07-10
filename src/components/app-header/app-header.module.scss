@@ -27,8 +27,7 @@
   column-gap: 49px;
 }
 
-.navLink,
-.account {
+.navLink {
   display: flex;
   align-items: center;
   column-gap: 8px;
@@ -44,4 +43,8 @@
     $line-height: $font-line-height-xxl,
     $color: inherit
   );
+
+  &Active {
+    color: $color-text-primary;
+  }
 }

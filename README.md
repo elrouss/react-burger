@@ -38,6 +38,7 @@
 <a name="technologies"><h2>2. Стек технологий</h2></a>
 <span>
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="Иконка React">
+  <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" alt="Иконка React Router">
   <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" alt="Иконка Redux">
   <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="Иконка 'JavaScript'">
   <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" alt="Иконка 'Sass (SCSS)'">
@@ -58,18 +59,25 @@
 <br>
 1. Верстка на десктоп (`1920px`);
 2. Перенос проекта на Redux Toolkit и написание бизнес-логики (см. функционал)
+3. Добавление роутов
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
 <a name="functionality"><h2>5. Функционал</h2></a>
+- Регистрация и авторизация пользователей, восстановление пароля
+- Редактирование личных данных
 - Drag and Drop (перенос ингредиентов в конструктор с возможностью внутренней сортировки и удаления ненужных)
 - Счетчики ингредиентов и цены
 - Подсветка активных табов в списке ингредиентов при скролле
-- Открытие и закрытие модальных окон по кнопке, оверлею и клавише `Escape`
+- Открытие и закрытие модальных окон по кнопке, оверлею и клавише `Escape` с сохранением открытого состояния после обновления страницы (также открытие информации об ингредиенте на отдельной странице при копировании ссылки в адресную строку новой вкладки/нового окна браузера)
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
 <a name="enhancement"><h2>6. Статус</h2></a>
 На этапе разработки
+
+Требуется улучшить:
+- Выведение ошибок с сервера под инпутами в формах
+- Оптимизация ререндеров (на данном этапе функционал компонентов постоянно меняется, поэтому логично выполнить задачу на финальном этапе проекта)
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>

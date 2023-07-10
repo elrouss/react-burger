@@ -1,0 +1,10 @@
+@import '../../index.scss';
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 25.8% 69.4%;
+  column-gap: 60px;
+  max-width: $wrapper-desktop-xl;
+  margin: 0 auto;
+  padding: 120px 0 512px;
+}

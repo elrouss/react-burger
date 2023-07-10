@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useMemo, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
@@ -16,8 +16,10 @@ import { isLoading } from '../../services/features/order-details/selectors';
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
+  RESET,
 } from '../../services/features/selected-ingredients/reducer';
 
+import { checkUserData } from '../../services/features/user/selectors';
 import {
   getSelectedBun,
   getSelectedIngredients,
@@ -28,58 +30,35 @@ import SelectedBurgerIngredient from './selected-burger-ingredient/selected-burg
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
+import { ROUTES } from '../../utils/constants';
 import DRAG_TYPES from '../../utils/drag-types';
+import countTotalPrice from '../../utils/calculations/total-price-counter';
 
 import styles from './burger-constructor.module.scss';
 
-let prevBunId = '';
+function BurgerConstructor() {
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
-function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [prevBunPrice, setPrevBunPrice] = useState(0);
-  const [issModalOpened, setIsModalOpened] = useState(false);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const status = useSelector(isLoading);
   const selectedBun = useSelector(getSelectedBun);
   const selectedIngredients = useSelector(getSelectedIngredients);
 
-  const incrementIngredientCounter = ({ _id, type }) => {
-    let value = ingredientsCounter.get(_id);
+  const user = useSelector(checkUserData);
 
-    if (type === 'bun' && value) return 2;
+  const totalPrice = useMemo(
+    () =>
+      countTotalPrice('bun', selectedBun) +
+      countTotalPrice('ingredients', selectedIngredients),
+    [selectedBun, selectedIngredients]
+  );
 
-    if (type === 'bun') {
-      ingredientsCounter.set(prevBunId, 0);
-      prevBunId = _id;
-
-      return 2;
-    }
-
-    value = value ? (value += 1) : 1;
-    return value;
-  };
-
-  const onIncrementTotalPrice = ({ type, price }) => {
-    if (type === 'bun') {
-      const bunPrice = price * 2;
-
-      if (prevBunPrice) {
-        setTotalPrice(totalPrice - prevBunPrice + bunPrice);
-        setPrevBunPrice(bunPrice);
-      } else {
-        setTotalPrice(totalPrice + bunPrice);
-        setPrevBunPrice(bunPrice);
-      }
-    } else {
-      setTotalPrice(totalPrice + price);
-    }
-  };
-
-  const onDecrementTotalPrice = (price) => {
-    setTotalPrice(totalPrice - price);
-  };
+  useEffect(() => {
+    setIsDisabled(!selectedBun || !selectedIngredients.length);
+  }, [selectedBun, selectedIngredients]);
 
   // Selecting ingredients from left container
   // and putting them inside the constructor
@@ -92,40 +71,33 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
       }),
       drop: (ingredient) => {
         dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
-
-        onIngredientsCounter(
-          new Map(
-            ingredientsCounter.set(
-              ingredient._id,
-              incrementIngredientCounter(ingredient)
-            )
-          )
-        );
-
-        onIncrementTotalPrice(ingredient);
       },
     }),
-    [ingredientsCounter]
+    []
   );
 
-  const removeIngredient = ({ key, _id, price }) => {
+  const removeIngredient = ({ key }) => {
     dispatch(REMOVE_INGREDIENT({ key }));
-
-    const value = ingredientsCounter.get(_id) - 1;
-
-    onIngredientsCounter(new Map(ingredientsCounter.set(_id, value)));
-    onDecrementTotalPrice(price);
   };
 
   const handleOrder = (evt) => {
     evt.preventDefault();
 
-    const order = [selectedBun, ...selectedIngredients].map(
-      (selectedIngredient) => selectedIngredient._id
-    );
+    if (!user) {
+      navigate(ROUTES.sign.in);
+    } else {
+      const order = [selectedBun, ...selectedIngredients].map(
+        (selectedIngredient) => selectedIngredient._id
+      );
 
-    dispatch(sendOrder(order));
-    setIsModalOpened(true);
+      dispatch(sendOrder(order))
+        .then((res) => {
+          if (res.payload.success) dispatch(RESET());
+        })
+        .catch((err) => console.error(`Error: ${err}`));
+
+      setIsModalOpened(true);
+    }
   };
 
   const handleModalClose = () => {
@@ -181,7 +153,12 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
               <span>{totalPrice}</span>
               <CurrencyIcon />
             </div>
-            <Button htmlType="submit" type="primary" size="large">
+            <Button
+              htmlType="submit"
+              type="primary"
+              size="large"
+              disabled={isDisabled}
+            >
               {status ? 'Подождите...' : 'Оформить заказ'}
             </Button>
           </div>
@@ -191,7 +168,7 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
       <Modal
         id="order-details"
         onLoading={status}
-        isModalOpened={issModalOpened}
+        isModalOpened={isModalOpened}
         onModalClose={handleModalClose}
       >
         <OrderDetails />
@@ -199,10 +176,5 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
     </>
   );
 }
-
-BurgerConstructor.propTypes = {
-  ingredientsCounter: PropTypes.instanceOf(Map).isRequired,
-  onIngredientsCounter: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;

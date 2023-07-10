@@ -1,0 +1,40 @@
+@import '../../index.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 80px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 180px 0 314px;
+}
+
+.heading {
+  @include show-font(
+    $weight: 700,
+    $size: $font-size-s,
+    $line-height: $font-line-height-l,
+    $color: $color-text-primary
+  );
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 24px;
+  width: 100%;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+
+  @include show-font(
+    $size: $font-size-xs,
+    $line-height: $font-line-height-xxxl,
+    $color: $color-text-inactive
+  );
+}
