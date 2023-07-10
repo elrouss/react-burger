@@ -1,17 +1,25 @@
-import { memo } from 'react';
+import { useMemo, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import {
   CurrencyIcon,
   Counter,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
+import {
+  getSelectedBun,
+  getSelectedIngredients,
+} from '../../../../services/features/selected-ingredients/selectors';
+import countSelectedIngredients from '../../../../utils/calculations/selected-ingredients-counter';
 import { ingredientType } from '../../../../utils/types/ingredients';
 import DRAG_TYPES from '../../../../utils/drag-types';
 import styles from './burger-ingredient.module.scss';
 
-function BurgerIngredient({ ingredient, ingredientsCounter }) {
+function BurgerIngredient({ ingredient }) {
   const location = useLocation();
+
+  const selectedBun = useSelector(getSelectedBun);
+  const selectedIngredients = useSelector(getSelectedIngredients);
 
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: DRAG_TYPES.INGREDIENT,
@@ -21,7 +29,11 @@ function BurgerIngredient({ ingredient, ingredientsCounter }) {
     }),
   }));
 
-  const counterValue = ingredientsCounter.get(ingredient._id);
+  const counter = useMemo(
+    () =>
+      countSelectedIngredients(ingredient, selectedBun, selectedIngredients),
+    [selectedBun, selectedIngredients]
+  );
 
   return (
     <Link
@@ -33,8 +45,7 @@ function BurgerIngredient({ ingredient, ingredientsCounter }) {
           className={`${styles.card} ${isDragging && styles.cardDragging}`}
           ref={drag}
         >
-          {(counterValue && <Counter count={counterValue} size="default" />) ||
-            null}
+          {(counter && <Counter count={counter} size="default" />) || null}
           <img
             className={styles.image}
             src={ingredient?.image}
@@ -53,7 +64,6 @@ function BurgerIngredient({ ingredient, ingredientsCounter }) {
 
 BurgerIngredient.propTypes = {
   ingredient: ingredientType.isRequired,
-  ingredientsCounter: PropTypes.instanceOf(Map).isRequired,
 };
 
 export default memo(BurgerIngredient);

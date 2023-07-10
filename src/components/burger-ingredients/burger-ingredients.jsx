@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientsSection from './burger-ingredients-section/burger-ingredients-section';
 import styles from './burger-ingredients.module.scss';
 
-function BurgerIngredients({ ingredientsCounter }) {
+function BurgerIngredients() {
   const [currentTab, setCurrentTab] = useState('one');
 
   const tabsRef = useRef(null);
@@ -71,7 +70,6 @@ function BurgerIngredients({ ingredientsCounter }) {
               ref={ref}
               typeRus={typeRus}
               typeEng={typeEng}
-              ingredientsCounter={ingredientsCounter}
             />
           ))}
         </div>
@@ -79,9 +77,5 @@ function BurgerIngredients({ ingredientsCounter }) {
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  ingredientsCounter: PropTypes.instanceOf(Map).isRequired,
-};
 
 export default BurgerIngredients;

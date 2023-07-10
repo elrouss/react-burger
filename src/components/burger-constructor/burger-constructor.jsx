@@ -1,5 +1,4 @@
 import { useMemo, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,9 +35,7 @@ import countTotalPrice from '../../utils/calculations/total-price-counter';
 
 import styles from './burger-constructor.module.scss';
 
-let prevBunId = '';
-
-function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
+function BurgerConstructor() {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -62,22 +59,6 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
     setIsDisabled(!selectedBun || !selectedIngredients.length);
   }, [selectedBun, selectedIngredients]);
 
-  const incrementIngredientCounter = ({ _id, type }) => {
-    let value = ingredientsCounter.get(_id);
-
-    if (type === 'bun' && value) return 2;
-
-    if (type === 'bun') {
-      ingredientsCounter.set(prevBunId, 0);
-      prevBunId = _id;
-
-      return 2;
-    }
-
-    value = value ? (value += 1) : 1;
-    return value;
-  };
-
   // Selecting ingredients from left container
   // and putting them inside the constructor
   const [{ isOver, ingredientTypeDrop }, drop] = useDrop(
@@ -89,26 +70,13 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
       }),
       drop: (ingredient) => {
         dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
-
-        onIngredientsCounter(
-          new Map(
-            ingredientsCounter.set(
-              ingredient._id,
-              incrementIngredientCounter(ingredient)
-            )
-          )
-        );
       },
     }),
-    [ingredientsCounter]
+    [selectedBun, selectedIngredients]
   );
 
-  const removeIngredient = ({ key, _id }) => {
+  const removeIngredient = ({ key }) => {
     dispatch(REMOVE_INGREDIENT({ key }));
-
-    const value = ingredientsCounter.get(_id) - 1;
-
-    onIngredientsCounter(new Map(ingredientsCounter.set(_id, value)));
   };
 
   const handleOrder = (evt) => {
@@ -202,10 +170,5 @@ function BurgerConstructor({ ingredientsCounter, onIngredientsCounter }) {
     </>
   );
 }
-
-BurgerConstructor.propTypes = {
-  ingredientsCounter: PropTypes.instanceOf(Map).isRequired,
-  onIngredientsCounter: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;
