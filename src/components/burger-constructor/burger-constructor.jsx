@@ -72,7 +72,7 @@ function BurgerConstructor() {
         dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
       },
     }),
-    [selectedBun, selectedIngredients]
+    []
   );
 
   const removeIngredient = ({ key }) => {

@@ -21,13 +21,16 @@ function BurgerIngredient({ ingredient }) {
   const selectedBun = useSelector(getSelectedBun);
   const selectedIngredients = useSelector(getSelectedIngredients);
 
-  const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
-    type: DRAG_TYPES.INGREDIENT,
-    item: ingredient,
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+  const [{ isDragging }, drag, dragPreview] = useDrag(
+    () => ({
+      type: DRAG_TYPES.INGREDIENT,
+      item: ingredient,
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     }),
-  }));
+    []
+  );
 
   const counter = useMemo(
     () =>
