@@ -28,7 +28,7 @@ function WithProtectedRoute({ component, onlyUnAuth = false }) {
   }
 
   if (onlyUnAuth && !user && isRouteResetPassword && !hasForgottenPassword) {
-    return <Navigate to={from} />;
+    return <Navigate to={ROUTES.sign.in} />;
   }
 
   if (!onlyUnAuth && !user) {

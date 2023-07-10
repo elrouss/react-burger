@@ -27,9 +27,12 @@ const refreshAccessToken = async () => {
       return Promise.reject(new Error(`Error ${res.status}`));
     }
 
-    const tokens = await res.json();
+    const { accessToken, refreshToken } = await res.json();
 
-    return tokens;
+    localStorage.setItem('accessToken', accessToken.split(' ')[1]);
+    localStorage.setItem('refreshToken', refreshToken);
+
+    return localStorage.getItem('accessToken');
   } catch (err) {
     console.error(`Error: ${err}`);
   }
@@ -100,12 +103,7 @@ export const checkUserAuth = createAsyncThunk(
     let token = localStorage.getItem('accessToken');
 
     if (checkIsAccessTokenExpired(token)) {
-      const { accessToken, refreshToken } = await refreshAccessToken();
-
-      localStorage.setItem('accessToken', accessToken.split(' ')[1]);
-      localStorage.setItem('refreshToken', refreshToken);
-
-      token = localStorage.getItem('accessToken');
+      token = await refreshAccessToken();
     }
 
     try {
@@ -129,12 +127,18 @@ export const checkUserAuth = createAsyncThunk(
 export const editUserData = createAsyncThunk(
   'user/editData',
   async (data, { rejectWithValue }) => {
+    let token = localStorage.getItem('accessToken');
+
+    if (checkIsAccessTokenExpired(token)) {
+      token = await refreshAccessToken();
+    }
+
     try {
       const res = await fetch(`${API.baseUrl}${API.endpoints.user.data}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });
