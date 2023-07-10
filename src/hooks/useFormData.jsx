@@ -10,5 +10,5 @@ export default function useFormData() {
     });
   };
 
-  return { data, handleData };
+  return { data, setData, handleData };
 }

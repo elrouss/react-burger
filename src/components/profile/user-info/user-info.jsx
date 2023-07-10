@@ -4,6 +4,7 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import useFormData from '../../../hooks/useFormData';
 import { editUserData } from '../../../services/features/user/api';
 import {
   getUserLogin,
@@ -18,12 +19,7 @@ function UserInfo() {
   const userName = useSelector(getUserName);
   const userEmail = useSelector(getUserLogin);
 
-  const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-
+  const { data, setData, handleData } = useFormData();
   const [areButtonsVisible, setAreButtonsVisible] = useState(false);
 
   useEffect(() => {
@@ -34,12 +30,9 @@ function UserInfo() {
 
   useEffect(() => {
     setAreButtonsVisible(
-      data.name !== userName || data.email !== userEmail || data.password !== ''
+      data.name !== userName || data.email !== userEmail || data.password
     );
   }, [data, userName, userEmail]);
-
-  const handleData = (evt) =>
-    setData({ ...data, [evt.target.name]: evt.target.value });
 
   const cancelChanges = useCallback(() => {
     setData({ name: userName, email: userEmail, password: '' });
@@ -56,21 +49,21 @@ function UserInfo() {
       <Input
         name="name"
         placeholder="Имя"
-        value={data.name || ''}
+        value={data?.name || ''}
         icon="EditIcon"
         onChange={handleData}
       />
       <Input
         name="email"
         placeholder="Логин"
-        value={data.email || ''}
+        value={data?.email || ''}
         icon="EditIcon"
         onChange={handleData}
       />
       <PasswordInput
         name="password"
         icon="EditIcon"
-        value={data.password || ''}
+        value={data?.password || ''}
         onChange={handleData}
       />
       {areButtonsVisible && <Buttons onCancel={cancelChanges} />}
