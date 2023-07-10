@@ -10,6 +10,7 @@ const checkIsAccessTokenExpired = (token) => {
   return dayjs.unix(expirationData).diff(dayjs()) < MILLISECOND;
 };
 
+// eslint-disable-next-line consistent-return
 const refreshAccessToken = async () => {
   try {
     const res = await fetch(
