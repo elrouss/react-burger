@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   EmailInput,
@@ -13,6 +13,7 @@ import { isLoading } from '../../../services/features/user/selectors';
 import styles from './login.module.scss';
 
 function Login() {
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, handleData } = useFormData();
@@ -51,7 +52,7 @@ function Login() {
     evt.preventDefault();
 
     dispatch(loginUser(data))
-      .then(() => navigate(ROUTES.home))
+      .then(() => navigate(location.state?.from?.pathname || ROUTES.home))
       .catch((err) => console.error(`Error: ${err}`));
   };
 
