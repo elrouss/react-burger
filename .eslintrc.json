@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest": true
   },
   "extends": [
     "eslint:recommended",
@@ -10,27 +11,38 @@
     "plugin:jsx-a11y/recommended",
     "plugin:import/recommended",
     "airbnb",
+    "airbnb-typescript",
     "plugin:react/jsx-runtime",
     "prettier"
   ],
+  "parser": "@typescript-eslint/parser",
   "overrides": [],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
   "plugins": [
-    "react"
+    "react",
+    "@typescript-eslint"
   ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   "rules": {
     "react/jsx-filename-extension": [
       1,
       {
         "extensions": [
           ".js",
-          ".jsx"
+          ".jsx",
+          ".ts",
+          ".tsx"
         ]
       }
     ],
