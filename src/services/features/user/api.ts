@@ -112,7 +112,9 @@ export const checkUserAuth = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     let token: string | null | undefined = localStorage.getItem('accessToken');
 
-    if (token && checkIsAccessTokenExpired(token)) {
+    if (!token) return null;
+
+    if (checkIsAccessTokenExpired(token)) {
       token = await refreshAccessToken();
     }
 
