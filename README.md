@@ -40,7 +40,7 @@
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="Иконка React">
   <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" alt="Иконка React Router">
   <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" alt="Иконка Redux">
-  <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="Иконка 'JavaScript'">
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Иконка 'TypeScript'">
   <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" alt="Иконка 'Sass (SCSS)'">
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="Иконка HTML5">
 </span>
@@ -48,7 +48,7 @@
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
 <a name="installation"><h2>3. Установка и запуск приложения в локальном репозитории</h2></a>
-1. `git clone https://github.com/elrouss/react-burger.git` - клонировать репозиторий на свое устройство (HTTPS)
+1. `git clone https://github.com/elrouss/react-burger.git` - клонировать репозиторий (HTTPS)
 2. `npm i` - установить зависимости (предварительно проверить наличие Node.js командой `node -v`, а также - NPM командой `npm -v`; в случае необходимости скачать и установить Node.js по этой <a href="https://nodejs.org/en/download">ссылке</a>)
 3. `npm run start` - запустить приложение
 
@@ -60,6 +60,7 @@
 1. Верстка на десктоп (`1920px`);
 2. Перенос проекта на Redux Toolkit и написание бизнес-логики (см. функционал)
 3. Добавление роутов
+4. Переписывание проекта на TypeScript
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
