@@ -4,9 +4,9 @@ import { useAppSelector } from 'services/app/hooks';
 import {
   checkUserAuthStatus,
   checkUserData,
-} from '../services/features/user/selectors';
-import Preloader from '../components/preloader/preloader';
-import { ROUTES } from '../utils/constants';
+} from 'services/features/user/selectors';
+import Preloader from 'components/preloader/preloader';
+import { ROUTES } from 'utils/constants';
 
 interface IWithProtectedRouteProps {
   component: React.ReactElement;

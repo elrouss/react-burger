@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'services/app/hooks';
 import { v4 as uuidv4 } from 'uuid';
-import { ROUTES } from '../../utils/constants';
-import { logoutUser } from '../../services/features/user/api';
-import { isLoading } from '../../services/features/user/selectors';
+import { ROUTES } from 'utils/constants';
+import { logoutUser } from 'services/features/user/api';
+import { isLoading } from 'services/features/user/selectors';
 import styles from './sidebar.module.scss';
 
 interface ISidebarProps {

@@ -1,6 +1,6 @@
 import { useAppSelector } from 'services/app/hooks';
-import { getCurrentOrderNumber } from '../../services/features/order-details/selectors';
-import orderAccepted from '../../assets/icons/order-accepted.svg';
+import { getCurrentOrderNumber } from 'services/features/order-details/selectors';
+import orderAccepted from 'assets/icons/order-accepted.svg';
 import styles from './order-details.module.scss';
 
 const OrderDetails = () => {

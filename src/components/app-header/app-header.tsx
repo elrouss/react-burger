@@ -8,7 +8,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ROUTES } from '../../utils/constants';
+import { ROUTES } from 'utils/constants';
 import styles from './app-header.module.scss';
 
 interface ILinks {

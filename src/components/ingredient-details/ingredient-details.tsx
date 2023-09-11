@@ -1,9 +1,9 @@
 import { useEffect, FC, ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'services/app/hooks';
-import { useGetIngredientsQuery } from '../../services/features/ingredients/reducer';
-import { SHOW_INGREDIENT_DETAILS } from '../../services/features/current-ingredient/slice';
-import getCurrentIngredient from '../../services/features/current-ingredient/selectors';
+import { useGetIngredientsQuery } from 'services/features/ingredients/reducer';
+import { SHOW_INGREDIENT_DETAILS } from 'services/features/current-ingredient/slice';
+import getCurrentIngredient from 'services/features/current-ingredient/selectors';
 import styles from './ingredient-details.module.scss';
 
 interface IIngredientDetailsProps {

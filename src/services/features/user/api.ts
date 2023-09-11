@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import jwtDecode from 'jwt-decode';
 import dayjs from 'dayjs';
+import { API } from 'utils/constants';
 import {
   IAccessToken,
   IUserRegistration,
@@ -9,7 +10,6 @@ import {
   IUserAuthResponse,
   IUserEditInfoResponse,
   IUserLogoutResponse} from './types';
-import { API } from '../../../utils/constants';
 
 const checkIsAccessTokenExpired = (token: string): boolean => {
   const MILLISECOND = 1;
