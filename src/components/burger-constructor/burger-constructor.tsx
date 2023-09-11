@@ -92,7 +92,7 @@ const BurgerConstructor = () => {
 
     if (!selectedBun || !selectedIngredients.length) return;
 
-    const order = [selectedBun, ...selectedIngredients].map(
+    const order = [selectedBun, selectedBun, ...selectedIngredients].map(
       (selectedIngredient) => selectedIngredient._id
     );
 
