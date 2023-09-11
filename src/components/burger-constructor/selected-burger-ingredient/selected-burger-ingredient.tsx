@@ -7,12 +7,12 @@ import {
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CHANGE_POSITION_INGREDIENT } from 'services/features/selected-ingredients/slice';
-import { IIngredient } from 'services/features/ingredients/types';
+import { IIngredientWithKey } from 'services/features/ingredients/types';
 import DragTypes from 'utils/types/drag-types';
 import styles from './selected-burger-ingredient.module.scss';
 
 interface ISelectedBurgerIngredientProps {
-  ingredient: IIngredient & { key: string };
+  ingredient: IIngredientWithKey;
   index: number;
   removeIngredient: () => void;
 }
