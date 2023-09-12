@@ -5,7 +5,7 @@ interface IFormEntryData {
 }
 
 export default function useFormData() {
-  const [data, setData] = useState<IFormEntryData>({});
+  const [data, setData] = useState<IFormEntryData | null>(null);
 
   const handleData = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setData({

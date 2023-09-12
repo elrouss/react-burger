@@ -11,7 +11,7 @@ interface IIngredientDetailsProps {
 }
 
 interface IListIngredientParams {
-  param: number;
+  param?: number;
   nameEng: string;
   nameRus: string;
 }
@@ -37,22 +37,22 @@ const IngredientDetails: FC<IIngredientDetailsProps> = ({
 
   const list: IListIngredientParams[] = [
     {
-      param: currentIngredient.calories,
+      param: currentIngredient?.calories,
       nameEng: 'calories',
       nameRus: 'Калории,ккал',
     },
     {
-      param: currentIngredient.proteins,
+      param: currentIngredient?.proteins,
       nameEng: 'proteins',
       nameRus: 'Белки, г',
     },
     {
-      param: currentIngredient.fat,
+      param: currentIngredient?.fat,
       nameEng: 'fat',
       nameRus: 'Жиры, г',
     },
     {
-      param: currentIngredient.carbohydrates,
+      param: currentIngredient?.carbohydrates,
       nameEng: 'carbohydrates',
       nameRus: 'Углеводы, г',
     },
@@ -66,12 +66,12 @@ const IngredientDetails: FC<IIngredientDetailsProps> = ({
       <div className={styles.item}>
         <img
           className={styles.image}
-          src={currentIngredient.image}
-          alt={`Блюдо дня: ${currentIngredient.name}`}
+          src={currentIngredient?.image}
+          alt={`Блюдо дня: ${currentIngredient?.name}`}
         />
         {(isSinglePage && (
-          <h2 className={styles.headingItem}>{currentIngredient.name}</h2>
-        )) || <h4 className={styles.headingItem}>{currentIngredient.name}</h4>}
+          <h2 className={styles.headingItem}>{currentIngredient?.name}</h2>
+        )) || <h4 className={styles.headingItem}>{currentIngredient?.name}</h4>}
         <ul className={styles.list}>
           {list.map(({ param, nameEng, nameRus }) => (
             <li key={`key-${nameEng}`} className={styles.listItem}>

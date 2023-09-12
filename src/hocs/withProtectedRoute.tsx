@@ -23,23 +23,10 @@ const WithProtectedRoute: React.FC<IWithProtectedRouteProps> = ({
 
   const { from } = location.state || { from: { pathname: ROUTES.home } };
 
-  const isRouteResetPassword = location.pathname.endsWith(
-    ROUTES.password.reset
-  );
-
-  let hasForgottenPassword = localStorage.getItem('forgotPassword');
-
-  if (hasForgottenPassword)
-    hasForgottenPassword = JSON.parse(hasForgottenPassword);
-
   if (!isAuthChecked) return <Preloader />;
 
   if (onlyUnAuth && user) {
     return <Navigate to={from} />;
-  }
-
-  if (onlyUnAuth && !user && isRouteResetPassword && !hasForgottenPassword) {
-    return <Navigate to={ROUTES.sign.in} />;
   }
 
   if (!onlyUnAuth && !user) {

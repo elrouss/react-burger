@@ -21,7 +21,7 @@ const HomePage = () => {
   return (
     <>
       <AppHeader />
-      {(isLoading && <Preloader />) || <Shop />}
+      {isLoading ? <Preloader /> : <Shop />}
     </>
   );
 };

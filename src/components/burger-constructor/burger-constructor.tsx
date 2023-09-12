@@ -90,13 +90,15 @@ const BurgerConstructor = () => {
       return;
     }
 
-    const order = [selectedBun, ...selectedIngredients].map(
-      (selectedIngredient) => selectedIngredient!._id
+    if (!selectedBun || !selectedIngredients.length) return;
+
+    const order = [selectedBun, selectedBun, ...selectedIngredients].map(
+      (selectedIngredient) => selectedIngredient._id
     );
 
     dispatch(sendOrder(order))
       .then((res) => {
-        if (res.payload!.success) dispatch(RESET());
+        if (res.payload?.success) dispatch(RESET());
       })
       .catch((err) => console.error(`Error: ${err}`));
 

@@ -29,7 +29,7 @@ const UserInfoPage = () => {
 
   useEffect(() => {
     setAreButtonsVisible(
-      data.name !== userName || data.email !== userEmail || !!data.password
+      data?.name !== userName || data?.email !== userEmail || !!data?.password
     );
   }, [data, userName, userEmail]);
 

@@ -15,6 +15,28 @@ const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const { data, handleData } = useFormData();
 
+  let hasForgottenPassword: string | null | boolean =
+    localStorage.getItem('forgotPassword');
+
+  if (hasForgottenPassword) {
+    hasForgottenPassword = JSON.parse(hasForgottenPassword) as boolean;
+  }
+
+  if (!hasForgottenPassword) navigate(ROUTES.sign.in);
+
+  const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    resetPassword(data as unknown as { password: string; token: string })
+      .then((res) => {
+        if (res.success) {
+          navigate(ROUTES.sign.in);
+          localStorage.removeItem('forgotPassword');
+        }
+      })
+      .catch((err) => console.error(`Error: ${err}`));
+  };
+
   const links = (
     <div className={styles.text}>
       <span>Вспомнили пароль?</span>
@@ -30,20 +52,7 @@ const ResetPasswordPage = () => {
     </div>
   );
 
-  const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    resetPassword(data as unknown as { password: string; token: string })
-      .then((res) => {
-        if (res.success) {
-          navigate(ROUTES.sign.in);
-          localStorage.removeItem('forgotPassword');
-        }
-      })
-      .catch((err) => console.error(`Error: ${err}`));
-  };
-
-  return (
+  return !hasForgottenPassword ? null : (
     <Entry heading="Восстановление пароля" links={links} onSubmit={onSubmit}>
       <PasswordInput
         name="password"
