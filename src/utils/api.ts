@@ -1,7 +1,13 @@
 import { API } from './constants';
 
-const checkResponse = (res: Response) =>
-  res.ok ? res.json() : Promise.reject(new Error(`Error ${res.status}`));
+type TResponse<T> = {
+  success: boolean;
+} & T;
+
+const checkResponse = <T>(res: Response) =>
+  res.ok
+    ? (res.json() as unknown as TResponse<T>)
+    : Promise.reject(new Error(`Error ${res.status}`));
 
 export const rememberPassword = async (email: { email: string }) => {
   const res = await fetch(
