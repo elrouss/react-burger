@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import {
   Input,
   PasswordInput,
@@ -22,7 +22,7 @@ const ResetPasswordPage = () => {
     hasForgottenPassword = JSON.parse(hasForgottenPassword) as boolean;
   }
 
-  if (!hasForgottenPassword) navigate(ROUTES.sign.in);
+  if (!hasForgottenPassword) return <Navigate to={ROUTES.sign.in} />;
 
   const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
