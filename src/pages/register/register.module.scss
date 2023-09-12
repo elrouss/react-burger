@@ -1,0 +1,9 @@
+@import '../../index.scss';
+
+.text {
+  @extend %entry-links-wrapper;
+}
+
+.link {
+  @extend %indents-reset;
+}
