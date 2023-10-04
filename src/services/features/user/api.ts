@@ -9,7 +9,8 @@ import {
   IUserEditInfo,
   IUserAuthResponse,
   IUserEditInfoResponse,
-  IUserLogoutResponse} from './types';
+  IUserLogoutResponse,
+} from './types';
 
 const checkIsAccessTokenExpired = (token: string): boolean => {
   const MILLISECOND = 1;
