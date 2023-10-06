@@ -1,5 +1,6 @@
 import AppHeader from 'components/app-header/app-header';
 import Orders from './components/orders/orders';
+import Statistics from './components/statistics/statistics';
 import styles from './feed.module.scss';
 
 const FeedPage = () => (
@@ -10,7 +11,7 @@ const FeedPage = () => (
         <h1 className={styles.heading}>Лента заказов</h1>
         <div className={styles.gallery}>
           <Orders />
-          <div className={styles.statistics}>will be soon</div>
+          <Statistics />
         </div>
       </div>
     </main>

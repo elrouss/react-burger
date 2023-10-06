@@ -1,4 +1,21 @@
-const mockOrders = {
+type TMockOrder = {
+  _id: string;
+  ingredients: string[];
+  status: 'created' | 'pending' | 'done';
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+};
+
+type TMockOrders = {
+  success: boolean;
+  orders: TMockOrder[];
+  total: number;
+  totalToday: number;
+};
+
+const mockOrders: TMockOrders = {
   success: true,
   orders: [
     {
@@ -69,7 +86,7 @@ const mockOrders = {
         '643d69a5c3f7b9001cfa0944',
         '643d69a5c3f7b9001cfa093c',
       ],
-      status: 'done',
+      status: 'pending',
       name: 'Традиционный-галактический краторный бургер',
       createdAt: '2023-10-04T16:12:44.536Z',
       updatedAt: '2023-10-04T16:12:44.786Z',
