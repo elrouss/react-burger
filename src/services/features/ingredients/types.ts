@@ -1,9 +1,8 @@
 import { RefObject } from 'react';
 
 export interface IIngredient {
-  _id: string;
   name: string;
-  type: string;
+  type: 'bun' | 'main' | 'sauce';
   proteins: number;
   fat: number;
   carbohydrates: number;
@@ -15,7 +14,11 @@ export interface IIngredient {
   __v: number;
 }
 
-export interface IIngredientWithKey extends IIngredient {
+export interface IIngredientWithId extends IIngredient {
+  _id: string;
+}
+
+export interface IIngredientWithKey extends IIngredientWithId {
   key: string;
 }
 

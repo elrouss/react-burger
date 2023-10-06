@@ -28,7 +28,7 @@ import {
 
 import { ROUTES } from 'utils/constants';
 import DragTypes from 'utils/types/drag-types';
-import { IIngredient } from 'services/features/ingredients/types';
+import { IIngredientWithId } from 'services/features/ingredients/types';
 import countTotalPrice from 'utils/calculations/total-price-counter';
 
 import BurgerBun from './selected-burger-bun/selected-burger-bun';
@@ -71,7 +71,7 @@ const BurgerConstructor = () => {
         isOver: monitor.isOver(),
         ingredientTypeDrop: monitor.getItem()?.type,
       }),
-      drop: (ingredient: IIngredient) => {
+      drop: (ingredient: IIngredientWithId) => {
         dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
       },
     }),

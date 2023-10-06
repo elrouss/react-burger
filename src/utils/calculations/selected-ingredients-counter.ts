@@ -1,9 +1,9 @@
-import { IIngredient } from 'services/features/ingredients/types';
+import { IIngredientWithId } from 'services/features/ingredients/types';
 
 const countSelectedIngredients = (
-  ingredient: IIngredient,
-  selectedBun: IIngredient | null,
-  selectedIngredients: IIngredient[]
+  ingredient: IIngredientWithId,
+  selectedBun: IIngredientWithId | null,
+  selectedIngredients: IIngredientWithId[]
 ): number => {
   let value = 0;
 

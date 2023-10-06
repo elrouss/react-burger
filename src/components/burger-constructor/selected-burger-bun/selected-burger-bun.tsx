@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IIngredient } from 'services/features/ingredients/types';
+import { IIngredientWithId } from 'services/features/ingredients/types';
 import styles from './selected-burger-bun.module.scss';
 
 interface IBurgerBunProps {
-  selectedBun: IIngredient | null;
+  selectedBun: IIngredientWithId | null;
   positionRu: 'верх' | 'низ';
   positionEng: 'top' | 'bottom';
   ingredientTypeDrop: string;

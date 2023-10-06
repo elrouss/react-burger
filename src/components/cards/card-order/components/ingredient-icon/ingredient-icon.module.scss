@@ -1,0 +1,35 @@
+@import 'styles/variables.scss';
+@import 'styles/mixins.scss';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  border: 2px solid $color-brand-accent;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-color: $color-background-alt;
+  user-select: none;
+
+  &:not(:first-child) {
+    position: relative;
+  }
+}
+
+.image {
+  width: 182%;
+}
+
+.limit {
+  opacity: 0.6;
+}
+
+.additional {
+  position: absolute;
+  @include show-font(
+    $size: $font-size-xs,
+    $line-height: $font-line-height-xxxl
+  );
+}

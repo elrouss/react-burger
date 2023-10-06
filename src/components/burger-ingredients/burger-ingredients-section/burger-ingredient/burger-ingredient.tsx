@@ -10,13 +10,13 @@ import {
   getSelectedBun,
   getSelectedIngredients,
 } from 'services/features/selected-ingredients/selectors';
-import { IIngredient } from 'services/features/ingredients/types';
+import { IIngredientWithId } from 'services/features/ingredients/types';
 import DragTypes from 'utils/types/drag-types';
 import countSelectedIngredients from 'utils/calculations/selected-ingredients-counter';
 import styles from './burger-ingredient.module.scss';
 
 interface IBurgerIngredient {
-  ingredient: IIngredient;
+  ingredient: IIngredientWithId;
 }
 
 const BurgerIngredient: FC<IBurgerIngredient> = ({
