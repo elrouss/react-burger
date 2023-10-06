@@ -9,7 +9,10 @@ const currentIngredientSlice = createSlice({
   name: 'currentIngredient',
   initialState,
   reducers: {
-    SHOW_INGREDIENT_DETAILS: (state, { payload }: { payload: IIngredientWithId }) => {
+    SHOW_INGREDIENT_DETAILS: (
+      state,
+      { payload }: { payload: IIngredientWithId }
+    ) => {
       state.ingredient = payload;
     },
 

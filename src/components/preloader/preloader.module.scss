@@ -1,4 +1,5 @@
-@import '../../index.scss';
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins.scss' as *;
 
 @keyframes h2 {
   100% {

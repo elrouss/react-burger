@@ -1,4 +1,6 @@
-@import '../../index.scss';
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins.scss' as *;
+@use 'styles/placeholders.scss' as *;
 
 .order {
   display: flex;
@@ -15,7 +17,6 @@
   margin: 16px 0 16px 17px;
 
   overflow-y: auto;
-  composes: custom-scroll;
 }
 
 .componentsEmpty {

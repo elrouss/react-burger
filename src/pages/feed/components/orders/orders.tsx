@@ -22,7 +22,10 @@ const Orders = () => {
   data?.data.forEach(({ _id, ...rest }) => map.set(_id, rest));
 
   return (
-    <section className={styles.section} aria-label="Список сделанных заказов">
+    <section
+      className={`custom-scroll ${styles.section}`}
+      aria-label="Список сделанных заказов"
+    >
       {!!map.size &&
         mockOrders.orders.map((order) => {
           const cardIngredientsDetails: TCardIngredientsDetails = {};

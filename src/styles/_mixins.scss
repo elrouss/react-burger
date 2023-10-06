@@ -1,3 +1,5 @@
+@use 'styles/variables.scss' as *;
+
 @mixin show-font(
   $family: 'Jet Brains Mono',
   $weight: 400,

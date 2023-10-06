@@ -122,7 +122,7 @@ const BurgerConstructor = () => {
           />
 
           {(selectedIngredients.length && (
-            <div className={styles.components}>
+            <div className={`custom-scroll ${styles.components}`}>
               {selectedIngredients.map((ingredient, index: number) => (
                 <SelectedBurgerIngredient
                   key={`component-${ingredient.key}`}

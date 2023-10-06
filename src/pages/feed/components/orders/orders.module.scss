@@ -1,10 +1,7 @@
-@import '../../../../index.scss';
-
 .section {
   height: 100vh;
   padding-right: 7px;
   overflow-y: auto;
-  composes: custom-scroll;
 
   > article:not(:first-child) {
     margin-top: 16px;
