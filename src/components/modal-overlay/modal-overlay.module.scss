@@ -1,8 +1,9 @@
-@use 'styles/variables.scss' as *;
+@use 'assets/styles/variables.scss' as *;
 
 .overlay {
   position: fixed;
   top: 0;
+  z-index: 100;
 
   display: none;
   width: 100%;

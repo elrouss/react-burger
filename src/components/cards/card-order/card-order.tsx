@@ -1,28 +1,28 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  FormattedDate,
-  CurrencyIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import Price from 'components/price/price';
 import IngredientIcon from './components/ingredient-icon/ingredient-icon';
 import styles from './card-order.module.scss';
 
 const iconsLimit = 6;
 
 interface ICardOrderMutual {
-  number: number;
-  name: string;
-  totalPrice: number;
-  images: string[];
-  timestamp: string;
   status?: 'created' | 'pending' | 'done';
 }
 
 interface ICardOrderGeneral extends ICardOrderMutual {
   typeInfo: 'general';
+  images: string[];
+  totalPrice: number;
+  timestamp: string;
+  number: number;
+  name: string;
 }
 
 interface ICardOrderDetails extends ICardOrderMutual {
   typeInfo: 'details';
+  ingredientName: string;
+  ingredientImage: string;
   ingredientPrice: number;
   ingredientNum: number;
 }
@@ -30,10 +30,11 @@ interface ICardOrderDetails extends ICardOrderMutual {
 type TCardOrderProps = ICardOrderGeneral | ICardOrderDetails;
 
 const CardOrder = (props: TCardOrderProps) => {
-  const { typeInfo, number, name, totalPrice, images, timestamp, status } =
-    props;
+  const { typeInfo, status } = props;
 
   if (typeInfo === 'general') {
+    const { number, name, totalPrice, images, timestamp } = props;
+
     const imagesNum = images.length;
     const imagesMore = imagesNum - iconsLimit;
 
@@ -64,19 +65,28 @@ const CardOrder = (props: TCardOrderProps) => {
           {!!status && <span>{status}</span>}
           <div className={styles.info}>
             <div className={styles.ingredients}>{preview}</div>
-            <span className={`text text_type_digits-default ${styles.price}`}>
-              {totalPrice}
-              <CurrencyIcon type="primary" />
-            </span>
+            <Price type="total" totalPrice={totalPrice} size="small" />
           </div>
         </div>
       </article>
     );
   }
 
+  const { ingredientImage, ingredientName, ingredientNum, ingredientPrice } =
+    props;
+
   return (
-    <article className={styles.card}>
-      <div className={styles.wrapper}>тест</div>
+    <article className={`${styles.card} ${styles.cardDetails}`}>
+      <div className={styles.details}>
+        <IngredientIcon image={ingredientImage} />
+        <h4 className="text text_type_main-default">{ingredientName}</h4>
+      </div>
+      <Price
+        type="item"
+        number={ingredientNum}
+        price={ingredientPrice}
+        size="small"
+      />
     </article>
   );
 };

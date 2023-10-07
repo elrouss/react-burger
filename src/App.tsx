@@ -1,5 +1,12 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  useNavigationType,
+  NavigationType,
+} from 'react-router-dom';
 import { useAppDispatch } from 'services/app/hooks';
 
 import WithAuthCheck from 'hocs/withAuthCheck';
@@ -8,6 +15,7 @@ import { OnlyAuth, OnlyUnAuth } from 'hocs/withProtectedRoute';
 import HomePage from 'pages/home/home';
 import IngredientDetailsPage from 'pages/ingredient-details/ingredient-details';
 import FeedPage from 'pages/feed/feed';
+import OrderDetailsPage from 'pages/order-details/order-details';
 import ProfilePage from 'pages/profile/profile';
 import UserInfoPage from 'pages/profile/user-info/user-info';
 import UserOrdersPage from 'pages/profile/user-orders/user-orders';
@@ -19,6 +27,7 @@ import NotFoundPage from 'pages/not-found/not-found';
 
 import Modal from 'components/modal/modal';
 import IngredientDetails from 'components/ingredient-details/ingredient-details';
+import OrderInfo from 'components/order-info/order-info';
 
 import { ROUTES } from 'utils/constants';
 import { checkUserAuth } from 'services/features/user/api';
@@ -28,9 +37,18 @@ import { RESET_INGREDIENT_DETAILS } from 'services/features/current-ingredient/s
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const navigationType = useNavigationType();
   const dispatch = useAppDispatch();
 
-  const background = location.state?.background; //  TODO
+  const background:
+    | {
+        hash: string;
+        key: string;
+        pathname: string;
+        search: string;
+        state: null | unknown;
+      }
+    | undefined = location.state?.background;
 
   const handleModalClose = () => {
     const MILLISECONDS = 100; // clear data in modal after it is closed
@@ -59,6 +77,11 @@ const App = () => {
         <Route
           path={ROUTES.orders}
           element={<WithAuthCheck component={<FeedPage />} />}
+        />
+
+        <Route
+          path={ROUTES.orderDetails}
+          element={<WithAuthCheck component={<OrderDetailsPage />} />}
         />
 
         <Route
@@ -104,6 +127,23 @@ const App = () => {
                     onModalClose={handleModalClose}
                   >
                     <IngredientDetails />
+                  </Modal>
+                }
+              />
+            }
+          />
+        </Routes>
+      )}
+
+      {background && navigationType === NavigationType.Push && (
+        <Routes>
+          <Route
+            path={ROUTES.orderDetails}
+            element={
+              <WithAuthCheck
+                component={
+                  <Modal id="order-info" onModalClose={handleModalClose}>
+                    <OrderInfo hasWrapper />
                   </Modal>
                 }
               />

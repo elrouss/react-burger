@@ -5,9 +5,9 @@ import { Provider } from 'react-redux';
 import store from './services/app/store';
 
 import 'normalize.css';
-import './_index.scss';
+import 'assets/styles/_index.scss';
 
-import App from './components/app/app';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(

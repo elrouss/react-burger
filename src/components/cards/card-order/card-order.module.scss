@@ -1,8 +1,19 @@
-@use 'styles/variables.scss' as *;
-@use 'styles/mixins.scss' as *;
+@use 'assets/styles/variables.scss' as *;
+@use 'assets/styles/mixins.scss' as *;
 
 .card {
   width: 100%;
+}
+
+.cardDetails {
+  composes: card;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:not(:first-child) {
+    margin-top: 16px;
+  }
 }
 
 .wrapper {
@@ -15,6 +26,12 @@
   > *:not(:first-child) {
     margin-top: 24px;
   }
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
 }
 
 .info {
@@ -49,10 +66,4 @@
 
 .ingredients {
   display: flex;
-}
-
-.price {
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
 }

@@ -1,4 +1,4 @@
-type TMockOrder = {
+export type TMockOrder = {
   _id: string;
   ingredients: string[];
   status: 'created' | 'pending' | 'done';

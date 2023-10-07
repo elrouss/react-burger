@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { useGetIngredientsQuery } from 'services/features/ingredients/reducer';
 import { IIngredientsTable } from 'services/features/ingredients/types';
-import BurgerIngredient from './burger-ingredient/burger-ingredient';
+import BurgerIngredient from '../../cards/burger-ingredient/burger-ingredient';
 import styles from './burger-ingredients-section.module.scss';
 
 const BurgerIngredientsSection: ForwardRefExoticComponent<

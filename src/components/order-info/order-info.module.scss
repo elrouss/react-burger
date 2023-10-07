@@ -1,0 +1,37 @@
+@use 'assets/styles/variables' as *;
+
+.wrapper {
+  padding: 60px 40px 40px;
+}
+
+.positionCenter {
+  text-align: center;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  margin: 40px 0 60px;
+}
+
+.ingredients {
+  > *:first-child {
+    margin-bottom: 24px;
+  }
+}
+
+.green {
+  color: $colors-interface-success;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+}
+
+.date {
+  color: $color-text-inactive;
+}

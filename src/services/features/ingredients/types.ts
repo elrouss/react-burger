@@ -27,3 +27,12 @@ export interface IIngredientsTable {
   typeEng: string;
   ref: RefObject<HTMLDivElement>;
 }
+
+export type TCardIngredientsDetails = {
+  [id: string]: {
+    name: string;
+    number: number;
+    price: number;
+    image: string;
+  };
+};

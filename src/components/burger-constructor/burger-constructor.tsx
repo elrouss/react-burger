@@ -4,10 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'services/app/hooks';
 import { useDrop } from 'react-dnd';
 
-import {
-  CurrencyIcon,
-  Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import Price from 'components/price/price';
 
 import classNames from 'classnames';
 import { v4 as uuidv4 } from 'uuid';
@@ -152,10 +150,7 @@ const BurgerConstructor = () => {
           />
 
           <div className={styles.info}>
-            <div className={styles.price}>
-              <span>{totalPrice}</span>
-              <CurrencyIcon type="primary" />
-            </div>
+            <Price type="total" totalPrice={totalPrice} size="big" />
             <Button
               htmlType="submit"
               type="primary"

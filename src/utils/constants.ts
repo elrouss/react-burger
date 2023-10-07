@@ -31,7 +31,10 @@ export const ROUTES = Object.freeze({
   user: {
     profile: '/profile',
     orders: 'orders',
+    orderDetails: 'orders/:id',
   },
   orders: '/feed',
+  orderDetails: '/feed/:id',
+  ingredients: '/ingredients',
   ingredientDetails: '/ingredients/:id',
 });

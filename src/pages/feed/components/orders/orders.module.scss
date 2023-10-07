@@ -3,7 +3,8 @@
   padding-right: 7px;
   overflow-y: auto;
 
-  > article:not(:first-child) {
+  > a:not(:first-child) {
+    display: inherit;
     margin-top: 16px;
   }
 }

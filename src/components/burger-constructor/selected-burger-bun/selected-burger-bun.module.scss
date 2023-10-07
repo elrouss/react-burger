@@ -1,6 +1,6 @@
-@use 'styles/variables.scss' as *;
-@use 'styles/mixins.scss' as *;
-@use 'styles/placeholders.scss' as *;
+@use 'assets/styles/variables.scss' as *;
+@use 'assets/styles/mixins.scss' as *;
+@use 'assets/styles/placeholders.scss' as *;
 
 .containerBun {
   @extend %constructor-ingredient-element;
