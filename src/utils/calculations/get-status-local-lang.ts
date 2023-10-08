@@ -1,11 +1,13 @@
-const getStatusLocalLang = (status: 'created' | 'pending' | 'done') => {
+const getStatusLocalLang = (status?: 'created' | 'pending' | 'done') => {
   switch (status) {
     case 'created':
       return 'Создан';
     case 'pending':
       return 'Готовится';
-    default:
+    case 'done':
       return 'Выполнен';
+    default:
+      return '';
   }
 };
 

@@ -1,6 +1,6 @@
 import mockOrders from 'components/cards/card-order/mock';
-import OrdersStatus from '../status/orders-status';
-import Report from '../report/report';
+import Status from './components/status/status';
+import Report from './components/report/report';
 import styles from './statistics.module.scss';
 
 const maxOrdersNum = 30; // in template there can be maximum 3 columns (with 10 nums in each)
@@ -20,12 +20,12 @@ const Statistics = () => {
   return (
     <section className={styles.section} aria-label="Статистика заказов">
       <div className={styles.statuses}>
-        <OrdersStatus
+        <Status
           heading={<h2 className="text text_type_main-medium">Готовы:</h2>}
           orders={ordersDone}
           listColor="green"
         />
-        <OrdersStatus
+        <Status
           heading={<h2 className="text text_type_main-medium">В работе:</h2>}
           orders={ordersInProgress}
           listColor="white"

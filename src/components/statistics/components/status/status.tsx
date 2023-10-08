@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './orders-status.module.scss';
+import styles from './status.module.scss';
 
 interface IOrdersStatusProps {
   heading: React.ReactElement<
@@ -12,7 +12,7 @@ interface IOrdersStatusProps {
   listColor: 'green' | 'white';
 }
 
-const OrdersStatus = ({ heading, orders, listColor }: IOrdersStatusProps) => {
+const Status = ({ heading, orders, listColor }: IOrdersStatusProps) => {
   const list = orders.map((num) => (
     <li key={num} className={styles.item}>
       {num}
@@ -31,4 +31,4 @@ const OrdersStatus = ({ heading, orders, listColor }: IOrdersStatusProps) => {
   );
 };
 
-export default OrdersStatus;
+export default Status;

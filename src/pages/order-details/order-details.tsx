@@ -6,7 +6,7 @@ const OrderDetailsPage = () => (
   <>
     <AppHeader />
     <main className={styles.main}>
-      <OrderInfo orderNumPosition="center" />
+      <OrderInfo orderNumPosition="center" isSinglePage />
     </main>
   </>
 );

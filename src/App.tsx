@@ -115,7 +115,7 @@ const App = () => {
         />
       </Routes>
 
-      {background && (
+      {background?.pathname === ROUTES.home && (
         <Routes>
           <Route
             path={ROUTES.ingredientDetails}
@@ -135,22 +135,43 @@ const App = () => {
         </Routes>
       )}
 
-      {background && navigationType === NavigationType.Push && (
-        <Routes>
-          <Route
-            path={ROUTES.orderDetails}
-            element={
-              <WithAuthCheck
-                component={
-                  <Modal id="order-info" onModalClose={handleModalClose}>
-                    <OrderInfo hasWrapper />
-                  </Modal>
-                }
-              />
-            }
-          />
-        </Routes>
-      )}
+      {background?.pathname.endsWith(ROUTES.orders) &&
+        navigationType === NavigationType.Push && (
+          <Routes>
+            <Route
+              path={ROUTES.orderDetails}
+              element={
+                <WithAuthCheck
+                  component={
+                    <Modal id="order-info" onModalClose={handleModalClose}>
+                      <OrderInfo hasWrapper />
+                    </Modal>
+                  }
+                />
+              }
+            />
+          </Routes>
+        )}
+
+      {background?.pathname.endsWith(
+        `${ROUTES.user.profile}/${ROUTES.user.orders}`
+      ) &&
+        navigationType === NavigationType.Push && (
+          <Routes>
+            <Route
+              path={`${ROUTES.user.profile}/${ROUTES.user.orderDetails}`}
+              element={
+                <WithAuthCheck
+                  component={
+                    <Modal id="order-info" onModalClose={handleModalClose}>
+                      <OrderInfo hasWrapper />
+                    </Modal>
+                  }
+                />
+              }
+            />
+          </Routes>
+        )}
     </>
   );
 };

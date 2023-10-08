@@ -14,11 +14,13 @@ import styles from './order-info.module.scss';
 
 interface IOrderInfoProps {
   orderNumPosition?: 'start' | 'center';
+  isSinglePage?: boolean;
   hasWrapper?: boolean;
 }
 
 const OrderInfo = ({
   orderNumPosition = 'start',
+  isSinglePage = false,
   hasWrapper = false,
 }: IOrderInfoProps) => {
   const { id } = useParams();
@@ -63,7 +65,11 @@ const OrderInfo = ({
           [styles.positionCenter]: orderNumPosition === 'center',
         })}
       >{`#${number}`}</h3>
-      <div className={styles.name}>
+      <div
+        className={classNames(styles.name, {
+          [styles.nameSinglePage]: isSinglePage,
+        })}
+      >
         <h4 className="text text_type_main-medium">{name}</h4>
         <span
           className={classNames('text text_type_main-default', {

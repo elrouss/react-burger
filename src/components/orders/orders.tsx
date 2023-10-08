@@ -4,10 +4,14 @@ import { useGetIngredientsQuery } from 'services/features/ingredients/reducer';
 import mockOrders from 'components/cards/card-order/mock';
 import CardOrder from 'components/cards/card-order/card-order';
 import { IIngredient } from 'services/features/ingredients/types';
-import { ROUTES } from 'utils/constants';
 import styles from './orders.module.scss';
 
-const Orders = () => {
+interface IOrdersProps {
+  dynamicParentRoute: string;
+  haveStatus: boolean;
+}
+
+const Orders = ({ haveStatus, dynamicParentRoute }: IOrdersProps) => {
   const { data } = useGetIngredientsQuery();
   const location = useLocation();
 
@@ -36,7 +40,7 @@ const Orders = () => {
           return (
             <Link
               key={order._id}
-              to={`${ROUTES.orders}/${order._id}`}
+              to={`${dynamicParentRoute}/${order._id}`}
               state={{ background: location }}
             >
               <CardOrder
@@ -46,6 +50,7 @@ const Orders = () => {
                 images={previewIcons}
                 timestamp={order.createdAt}
                 totalPrice={totalPrice}
+                status={haveStatus ? order.status : undefined}
               />
             </Link>
           );

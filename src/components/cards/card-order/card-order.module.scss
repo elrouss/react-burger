@@ -54,6 +54,14 @@
     $size: $font-size-s,
     $line-height: $font-line-height-l
   );
+
+  &Profile {
+    margin-bottom: 8px;
+  }
+}
+
+.ingredientName {
+  max-width: 320px;
 }
 
 .date {
@@ -66,4 +74,12 @@
 
 .ingredients {
   display: flex;
+}
+
+.status {
+  color: $color-neutral-0;
+}
+
+.statusDone {
+  color: $colors-interface-success;
 }
