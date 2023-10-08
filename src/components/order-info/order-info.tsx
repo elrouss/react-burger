@@ -1,14 +1,16 @@
 import classNames from 'classnames';
 import { useParams } from 'react-router-dom';
+import { useAppSelector } from 'services/app/hooks';
 import { useGetIngredientsQuery } from 'services/features/ingredients/reducer';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import Price from 'components/price/price';
-import mockOrders, { TMockOrder } from 'components/cards/card-order/mock';
 import getStatusLocalLang from 'utils/calculations/get-status-local-lang';
 import {
   IIngredient,
   TCardIngredientsDetails,
 } from 'services/features/ingredients/types';
+import { getLiveOrderFeedData } from 'services/features/live-order-feed/selectors';
+import { TWebsocketOrder } from 'services/types/live-order-feed';
 import Ingredients from './components/ingredients/ingredients';
 import styles from './order-info.module.scss';
 
@@ -29,10 +31,13 @@ const OrderInfo = ({
   const map = new Map<string, IIngredient>();
   data?.data.forEach(({ _id, ...rest }) => map.set(_id, rest));
 
-  if (!map.size) return null;
+  const liveFeedOrders = useAppSelector(getLiveOrderFeedData);
 
-  const { number, name, status, createdAt, ingredients } =
-    mockOrders.orders.find((order) => order._id === id) as TMockOrder;
+  if (!map.size || !liveFeedOrders) return null;
+
+  const { number, name, status, createdAt, ingredients } = liveFeedOrders.find(
+    (order) => order._id === id
+  ) as TWebsocketOrder;
 
   const cardIngredientsDetails: TCardIngredientsDetails = {};
   let totalPrice = 0;

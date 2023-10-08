@@ -1,4 +1,9 @@
-import mockOrders from 'components/cards/card-order/mock';
+import { useAppSelector } from 'services/app/hooks';
+import {
+  getLiveOrderFeedData,
+  getLiveOrderFeedTotalAll,
+  getLiveOrderFeedTotalToday,
+} from 'services/features/live-order-feed/selectors';
 import Status from './components/status/status';
 import Report from './components/report/report';
 import styles from './statistics.module.scss';
@@ -9,7 +14,14 @@ const Statistics = () => {
   const ordersDone: number[] = [];
   const ordersInProgress: number[] = [];
 
-  mockOrders.orders
+  const liveFeedOrders = useAppSelector(getLiveOrderFeedData);
+  const liveOrderFeedTotalAll = useAppSelector(getLiveOrderFeedTotalAll);
+  const liveOrderFeedTotalToday = useAppSelector(getLiveOrderFeedTotalToday);
+
+  if (!liveFeedOrders || !liveOrderFeedTotalAll || !liveOrderFeedTotalToday)
+    return null;
+
+  liveFeedOrders
     .slice(0, maxOrdersNum)
     .forEach(({ status, number }) =>
       status === 'done'
@@ -37,13 +49,13 @@ const Statistics = () => {
             Выполнено за все время:
           </h2>
         }
-        counter={mockOrders.total}
+        counter={liveOrderFeedTotalAll}
       />
       <Report
         heading={
           <h2 className="text text_type_main-medium">Выполнено за сегодня:</h2>
         }
-        counter={mockOrders.totalToday}
+        counter={liveOrderFeedTotalToday}
       />
     </section>
   );
