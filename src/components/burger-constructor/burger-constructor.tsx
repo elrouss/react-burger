@@ -96,13 +96,13 @@ const BurgerConstructor = () => {
       (selectedIngredient) => selectedIngredient._id
     );
 
+    setIsModalOpened(true);
+
     dispatch(sendOrder({ order, token }))
       .then((res) => {
         if (res.payload?.success) dispatch(RESET());
       })
       .catch((err) => console.error(`Error: ${err}`));
-
-    setIsModalOpened(true);
   };
 
   const handleModalClose = () => {
@@ -154,10 +154,11 @@ const BurgerConstructor = () => {
           <div className={styles.info}>
             <Price type="total" totalPrice={totalPrice} size="big" />
             <Button
-              htmlType="submit"
+              htmlType={status ? 'button' : 'submit'}
               type="primary"
               size="large"
               disabled={isDisabled}
+              onClick={() => setIsModalOpened(true)}
             >
               {status ? 'Подождите...' : 'Оформить заказ'}
             </Button>
@@ -167,11 +168,10 @@ const BurgerConstructor = () => {
 
       <Modal
         id="order-details"
-        isLoading={status}
         isModalOpened={isModalOpened}
         onModalClose={handleModalClose}
       >
-        <OrderDetails />
+        <OrderDetails isPending={status} />
       </Modal>
     </>
   );

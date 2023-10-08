@@ -6,18 +6,16 @@ export interface IModalOverlayProps {
   id: string;
   children: ReactNode;
   isModalOpened: boolean;
-  isLoading?: boolean;
 }
 
 const ModalOverlay: FC<IModalOverlayProps> = ({
   id,
   children,
   isModalOpened,
-  isLoading = false,
 }) => (
   <div
     className={classNames(styles.overlay, {
-      [styles.opened]: !isLoading && isModalOpened,
+      [styles.opened]: isModalOpened,
     })}
     id={id}
   >
