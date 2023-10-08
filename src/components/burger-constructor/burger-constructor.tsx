@@ -88,13 +88,15 @@ const BurgerConstructor = () => {
       return;
     }
 
-    if (!selectedBun || !selectedIngredients.length) return;
+    const token = localStorage.getItem('accessToken');
+
+    if (!selectedBun || !selectedIngredients.length || !token) return;
 
     const order = [selectedBun, ...selectedIngredients, selectedBun].map(
       (selectedIngredient) => selectedIngredient._id
     );
 
-    dispatch(sendOrder(order))
+    dispatch(sendOrder({ order, token }))
       .then((res) => {
         if (res.payload?.success) dispatch(RESET());
       })

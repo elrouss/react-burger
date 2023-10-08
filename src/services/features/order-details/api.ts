@@ -2,15 +2,23 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from 'utils/constants';
 import { IOrderResponseSuccess, IOrderResponseFail } from './types';
 
+type TOrder = {
+  order: string[];
+  token: string;
+};
+
 const sendOrder = createAsyncThunk<
   IOrderResponseSuccess,
-  string[],
+  TOrder,
   { rejectValue: IOrderResponseFail }
->('orderDetails/sendOrder', async (order) => {
+>('orderDetails/sendOrder', async (data) => {
+  const { order, token } = data;
+
   const res = await fetch(`${API.baseUrl}${API.endpoints.orders}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ ingredients: order }),
   });
