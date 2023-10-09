@@ -50,6 +50,16 @@ const App = () => {
       }
     | undefined = location.state?.background;
 
+  let backgroundLocation;
+
+  if (
+    background &&
+    (location.pathname.includes(ROUTES.ingredients) ||
+      navigationType !== NavigationType.Pop)
+  ) {
+    backgroundLocation = background;
+  }
+
   const handleModalClose = () => {
     const MILLISECONDS = 100; // clear data in modal after it is closed
 
@@ -65,7 +75,7 @@ const App = () => {
 
   return (
     <>
-      <Routes location={background || location}>
+      <Routes location={backgroundLocation || location}>
         <Route path={ROUTES.home} element={<HomePage />} />
 
         <Route
