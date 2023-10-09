@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useAppSelector } from 'services/app/hooks';
 import { useGetIngredientsQuery } from 'services/features/ingredients/reducer';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,7 +10,9 @@ import {
   TCardIngredientsDetails,
 } from 'services/features/ingredients/types';
 import { getLiveOrderFeedData } from 'services/features/live-order-feed/selectors';
+import { getProfileLiveOrderFeedData } from 'services/features/profile-live-order-feed/selectors';
 import { TWebsocketOrder } from 'services/types/live-order-feed';
+import { ROUTES } from 'utils/constants';
 import Ingredients from './components/ingredients/ingredients';
 import styles from './order-info.module.scss';
 
@@ -25,19 +27,27 @@ const OrderInfo = ({
   isSinglePage = false,
   hasWrapper = false,
 }: IOrderInfoProps) => {
+  const { pathname } = useLocation();
   const { id } = useParams();
   const { data } = useGetIngredientsQuery();
+
+  const isRouteLiveOrderFeedRoute = pathname.includes(ROUTES.orders);
 
   const map = new Map<string, IIngredient>();
   data?.data.forEach(({ _id, ...rest }) => map.set(_id, rest));
 
-  const liveFeedOrders = useAppSelector(getLiveOrderFeedData);
+  const liveFeedOrdersData = useAppSelector(
+    isRouteLiveOrderFeedRoute
+      ? getLiveOrderFeedData
+      : getProfileLiveOrderFeedData
+  );
 
-  if (!map.size || !liveFeedOrders) return null;
+  if (!map.size || !liveFeedOrdersData) return null;
 
-  const { number, name, status, createdAt, ingredients } = liveFeedOrders.find(
-    (order) => order._id === id
-  ) as TWebsocketOrder;
+  const { number, name, status, createdAt, ingredients } =
+    liveFeedOrdersData.orders.find(
+      (order) => order._id === id
+    ) as TWebsocketOrder;
 
   const cardIngredientsDetails: TCardIngredientsDetails = {};
   let totalPrice = 0;

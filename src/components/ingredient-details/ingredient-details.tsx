@@ -30,7 +30,6 @@ const IngredientDetails = ({
     if (res) {
       dispatch(SHOW_INGREDIENT_DETAILS(res));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const currentIngredient = useAppSelector(getCurrentIngredient);

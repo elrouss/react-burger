@@ -38,7 +38,6 @@ const BurgerIngredient = ({ ingredient }: IBurgerIngredient) => {
   const counter = useMemo(
     () =>
       countSelectedIngredients(ingredient, selectedBun, selectedIngredients),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedBun, selectedIngredients]
   );
 

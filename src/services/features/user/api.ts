@@ -20,7 +20,7 @@ const checkIsAccessTokenExpired = (token: string): boolean => {
 };
 
 // eslint-disable-next-line consistent-return
-const refreshAccessToken = async () => {
+export const refreshAccessToken = async () => {
   try {
     const res = await fetch(
       `${API.baseUrl}${API.endpoints.user.tokenRefresh}`,

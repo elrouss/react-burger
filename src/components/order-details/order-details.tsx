@@ -13,9 +13,7 @@ const OrderDetails = ({ isPending }: IOrderDetailsProps) => (
       {isPending ? 'Ваш заказ начали готовить' : 'Ваш заказ готов'}
     </p>
     <p className={styles.waiting}>
-      {isPending
-        ? 'Дождитесь его номера'
-        : 'Приятного аппетита!'}
+      {isPending ? 'Дождитесь его номера' : 'Приятного аппетита!'}
     </p>
   </div>
 );

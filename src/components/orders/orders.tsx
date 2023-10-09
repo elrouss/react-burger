@@ -1,36 +1,27 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
-import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from 'services/app/hooks';
 import { useGetIngredientsQuery } from 'services/features/ingredients/reducer';
-// import { WebsocketStatus } from 'services/types/live-order-feed';
-import { connect } from 'services/features/live-order-feed/actions';
-import { getLiveOrderFeedData } from 'services/features/live-order-feed/selectors';
 import CardOrder from 'components/cards/card-order/card-order';
 import { IIngredient } from 'services/features/ingredients/types';
-import { WEBSOCKET } from 'utils/constants';
+import { TWebsocketOrders } from 'services/types/live-order-feed';
 import styles from './orders.module.scss';
 
 interface IOrdersProps {
+  ordersData: TWebsocketOrders;
   dynamicParentRoute: string;
   haveStatus: boolean;
 }
 
-const Orders = ({ haveStatus, dynamicParentRoute }: IOrdersProps) => {
-  const dispatch = useAppDispatch();
-
+const Orders = ({
+  ordersData,
+  haveStatus,
+  dynamicParentRoute,
+}: IOrdersProps) => {
   const { data } = useGetIngredientsQuery();
   const location = useLocation();
 
   const map = new Map<string, IIngredient>();
   data?.data.forEach(({ _id, ...rest }) => map.set(_id, rest));
-
-  useEffect(() => {
-    dispatch(connect(`${WEBSOCKET.baseUrl}${WEBSOCKET.endpoints.ordersAll}`));
-  }, []);
-
-  const liveFeedOrders = useAppSelector(getLiveOrderFeedData);
 
   return (
     <section
@@ -38,8 +29,7 @@ const Orders = ({ haveStatus, dynamicParentRoute }: IOrdersProps) => {
       aria-label="Список сделанных заказов"
     >
       {!!map.size &&
-        !!liveFeedOrders &&
-        liveFeedOrders.map((order) => {
+        ordersData.orders.map((order) => {
           let previewIcons: string[] = [];
           let totalPrice = 0;
 

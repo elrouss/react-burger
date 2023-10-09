@@ -1,7 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { liveOrderFeedReducer } from 'services/features/live-order-feed/reducer';
-import { liveOrderFeedMiddleware } from 'services/middlewares/ws-middleware';
+import { profileLiveOrderFeedReducer } from 'services/features/profile-live-order-feed/reducer';
+import {
+  liveOrderFeedMiddleware,
+  profileLiveOrderFeedMiddleware,
+} from 'services/middlewares/ws-middleware';
 
 import userSlice from '../features/user/slice';
 import authMiddleware from '../middlewares/auth-middleware';
@@ -20,13 +24,15 @@ const store = configureStore({
     selectedIngredients: selectedIngredientsSlice,
     orderDetails: orderDetailsSlice,
     liveOrderFeed: liveOrderFeedReducer,
+    profileOrderFeed: profileLiveOrderFeedReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authMiddleware,
       ingredientsApiReducer.middleware,
-      liveOrderFeedMiddleware
+      liveOrderFeedMiddleware,
+      profileLiveOrderFeedMiddleware
     ),
 });
 

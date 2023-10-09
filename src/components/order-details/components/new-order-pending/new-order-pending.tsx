@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
 import { useState, useEffect } from 'react';
 import orderPendingImage from 'assets/images/cosmic.gif';
