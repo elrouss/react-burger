@@ -11,7 +11,6 @@ import {
 } from 'services/features/ingredients/types';
 import { getLiveOrderFeedData } from 'services/features/live-order-feed/selectors';
 import { getProfileLiveOrderFeedData } from 'services/features/profile-live-order-feed/selectors';
-import { TWebsocketOrder } from 'services/types/live-order-feed';
 import { ROUTES } from 'utils/constants';
 import Ingredients from './components/ingredients/ingredients';
 import styles from './order-info.module.scss';
@@ -44,10 +43,20 @@ const OrderInfo = ({
 
   if (!map.size || !liveFeedOrdersData) return null;
 
-  const { number, name, status, createdAt, ingredients } =
-    liveFeedOrdersData.orders.find(
-      (order) => order._id === id
-    ) as TWebsocketOrder;
+  const orderFound = liveFeedOrdersData.orders.find(
+    (order) => order._id === id
+  );
+
+  if (!orderFound)
+    return (
+      <div className={classNames({ [styles.wrapper]: hasWrapper })}>
+        <h1 className={`text text_type_main-medium ${styles.notFoundHeading}`}>
+          Заказ с таким идентификатором не найден
+        </h1>
+      </div>
+    );
+
+  const { number, name, status, createdAt, ingredients } = orderFound;
 
   const cardIngredientsDetails: TCardIngredientsDetails = {};
   let totalPrice = 0;

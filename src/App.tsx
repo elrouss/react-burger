@@ -165,7 +165,7 @@ const App = () => {
             <Route
               path={`${ROUTES.user.profile}/${ROUTES.user.orderDetails}`}
               element={
-                <WithAuthCheck
+                <OnlyAuth
                   component={
                     <Modal id="order-info" onModalClose={handleModalClose}>
                       <OrderInfo hasWrapper />
