@@ -92,6 +92,11 @@ const App = () => {
         </Route>
 
         <Route
+          path={`${ROUTES.user.profile}/${ROUTES.user.orderDetails}`}
+          element={<OnlyAuth component={<OrderDetailsPage />} />}
+        />
+
+        <Route
           path={ROUTES.sign.up}
           element={<OnlyUnAuth component={<RegisterPage />} />}
         />
