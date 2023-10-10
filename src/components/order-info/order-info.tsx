@@ -51,7 +51,7 @@ const OrderInfo = ({
     return (
       <div className={classNames({ [styles.wrapper]: hasWrapper })}>
         <h1 className={`text text_type_main-medium ${styles.notFoundHeading}`}>
-          Заказ с таким идентификатором не найден
+          Заказ с таким идентификатором не найден, либо&nbsp;ссылка устарела
         </h1>
       </div>
     );
