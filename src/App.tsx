@@ -30,6 +30,7 @@ import IngredientDetails from 'components/ingredient-details/ingredient-details'
 import OrderInfo from 'components/order-info/order-info';
 
 import { ROUTES } from 'utils/constants';
+
 import { checkUserAuth } from 'services/features/user/api';
 import { useGetIngredientsQuery } from 'services/features/ingredients/reducer';
 import { RESET_INGREDIENT_DETAILS } from 'services/features/current-ingredient/slice';
