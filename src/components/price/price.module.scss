@@ -1,0 +1,15 @@
+@use 'assets/styles/variables' as *;
+
+.price {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  color: $color-neutral-0;
+}
+
+.bigIcon {
+  > svg {
+    width: 33px;
+    height: 33px;
+  }
+}

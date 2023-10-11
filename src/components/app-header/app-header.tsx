@@ -1,7 +1,6 @@
 import { memo, ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Logo,
   BurgerIcon,
@@ -37,7 +36,7 @@ const AppHeader = () => (
         <nav>
           <ul className={styles.navLinks}>
             {links.map(({ name, url, icon }) => (
-              <li key={uuidv4()}>
+              <li key={url}>
                 <NavLink
                   className={({ isActive }) =>
                     classNames(styles.navLink, {

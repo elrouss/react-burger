@@ -4,10 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'services/app/hooks';
 import { useDrop } from 'react-dnd';
 
-import {
-  CurrencyIcon,
-  Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import Price from 'components/price/price';
 
 import classNames from 'classnames';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,7 +26,7 @@ import {
 
 import { ROUTES } from 'utils/constants';
 import DragTypes from 'utils/types/drag-types';
-import { IIngredient } from 'services/features/ingredients/types';
+import { IIngredientWithId } from 'services/features/ingredients/types';
 import countTotalPrice from 'utils/calculations/total-price-counter';
 
 import BurgerBun from './selected-burger-bun/selected-burger-bun';
@@ -71,7 +69,7 @@ const BurgerConstructor = () => {
         isOver: monitor.isOver(),
         ingredientTypeDrop: monitor.getItem()?.type,
       }),
-      drop: (ingredient: IIngredient) => {
+      drop: (ingredient: IIngredientWithId) => {
         dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
       },
     }),
@@ -90,19 +88,21 @@ const BurgerConstructor = () => {
       return;
     }
 
-    if (!selectedBun || !selectedIngredients.length) return;
+    const token = localStorage.getItem('accessToken');
+
+    if (!selectedBun || !selectedIngredients.length || !token) return;
 
     const order = [selectedBun, ...selectedIngredients, selectedBun].map(
       (selectedIngredient) => selectedIngredient._id
     );
 
-    dispatch(sendOrder(order))
+    setIsModalOpened(true);
+
+    dispatch(sendOrder({ order, token }))
       .then((res) => {
         if (res.payload?.success) dispatch(RESET());
       })
       .catch((err) => console.error(`Error: ${err}`));
-
-    setIsModalOpened(true);
   };
 
   const handleModalClose = () => {
@@ -122,8 +122,8 @@ const BurgerConstructor = () => {
           />
 
           {(selectedIngredients.length && (
-            <div className={styles.components}>
-              {selectedIngredients.map((ingredient, index: number) => (
+            <div className={`custom-scroll ${styles.components}`}>
+              {selectedIngredients.map((ingredient, index) => (
                 <SelectedBurgerIngredient
                   key={`component-${ingredient.key}`}
                   ingredient={ingredient}
@@ -152,15 +152,13 @@ const BurgerConstructor = () => {
           />
 
           <div className={styles.info}>
-            <div className={styles.price}>
-              <span>{totalPrice}</span>
-              <CurrencyIcon type="primary" />
-            </div>
+            <Price type="total" totalPrice={totalPrice} size="big" />
             <Button
-              htmlType="submit"
+              htmlType={status ? 'button' : 'submit'}
               type="primary"
               size="large"
               disabled={isDisabled}
+              onClick={() => setIsModalOpened(true)}
             >
               {status ? 'Подождите...' : 'Оформить заказ'}
             </Button>
@@ -170,11 +168,10 @@ const BurgerConstructor = () => {
 
       <Modal
         id="order-details"
-        isLoading={status}
         isModalOpened={isModalOpened}
         onModalClose={handleModalClose}
       >
-        <OrderDetails />
+        <OrderDetails isPending={status} />
       </Modal>
     </>
   );

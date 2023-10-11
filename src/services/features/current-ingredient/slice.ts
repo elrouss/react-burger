@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IIngredient } from '../ingredients/types';
+import { IIngredientWithId } from '../ingredients/types';
 
-const initialState: { ingredient: null | IIngredient } = {
+const initialState: { ingredient: null | IIngredientWithId } = {
   ingredient: null,
 };
 
@@ -9,8 +9,11 @@ const currentIngredientSlice = createSlice({
   name: 'currentIngredient',
   initialState,
   reducers: {
-    SHOW_INGREDIENT_DETAILS: (state, { payload }: { payload: IIngredient }) => {
-      state.ingredient = payload
+    SHOW_INGREDIENT_DETAILS: (
+      state,
+      { payload }: { payload: IIngredientWithId }
+    ) => {
+      state.ingredient = payload;
     },
 
     RESET_INGREDIENT_DETAILS: () => initialState,

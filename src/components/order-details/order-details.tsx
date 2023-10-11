@@ -1,26 +1,21 @@
-import { useAppSelector } from 'services/app/hooks';
-import { getCurrentOrderNumber } from 'services/features/order-details/selectors';
-import orderAccepted from 'assets/icons/order-accepted.svg';
+import NewOrderPending from './components/new-order-pending/new-order-pending';
+import NewOrderFulfilled from './components/new-order-fulfilled/new-order-fulfilled';
 import styles from './order-details.module.scss';
 
-const OrderDetails = () => {
-  const currentOrderNumber = useAppSelector(getCurrentOrderNumber);
+interface IOrderDetailsProps {
+  isPending: boolean;
+}
 
-  return (
-    <div className={styles.wrapper}>
-      <span className={styles.order}>{currentOrderNumber}</span>
-      <h3 className={styles.heading}>идентификатор заказа</h3>
-      <img
-        className={styles.image}
-        src={orderAccepted}
-        alt="Три фиолетовых круга с белой галочкой в центре"
-      />
-      <p className={styles.paragraph}>Ваш заказ начали готовить</p>
-      <p className={styles.waiting}>
-        Дождитесь готовности на орбитальной станции
-      </p>
-    </div>
-  );
-};
+const OrderDetails = ({ isPending }: IOrderDetailsProps) => (
+  <div className={styles.wrapper}>
+    {isPending ? <NewOrderPending /> : <NewOrderFulfilled />}
+    <p className={styles.paragraph}>
+      {isPending ? 'Ваш заказ начали готовить' : 'Ваш заказ готов'}
+    </p>
+    <p className={styles.waiting}>
+      {isPending ? 'Дождитесь его номера' : 'Приятного аппетита!'}
+    </p>
+  </div>
+);
 
 export default OrderDetails;

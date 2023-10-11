@@ -1,4 +1,5 @@
-@import '../../../index.scss';
+@use 'assets/styles/variables.scss' as *;
+@use 'assets/styles/mixins.scss' as *;
 
 .heading {
   @include show-font(

@@ -29,6 +29,9 @@
 <b>Чек-листы</b>:
 <br>https://code.s3.yandex.net/react/checklists-pdf/checklist-1.pdf
 <br>https://code.s3.yandex.net/react/checklists-pdf/checklist-2.pdf
+<br>https://code.s3.yandex.net/react/checklists-pdf/checklist-3.pdf
+<br>https://code.s3.yandex.net/react/checklists-pdf/checklist-4.pdf
+<br>https://code.s3.yandex.net/react/checklists-pdf/checklist-5.pdf
 <br>
 
 <i>* - проект прошел код-ревью</i>
@@ -50,7 +53,8 @@
 <a name="installation"><h2>3. Установка и запуск приложения в локальном репозитории</h2></a>
 1. `git clone https://github.com/elrouss/react-burger.git` - клонировать репозиторий (HTTPS)
 2. `npm i` - установить зависимости (предварительно проверить наличие Node.js командой `node -v`, а также - NPM командой `npm -v`; в случае необходимости скачать и установить Node.js по этой <a href="https://nodejs.org/en/download">ссылке</a>)
-3. `npm run start` - запустить приложение
+3. `npm run prepare` - установить husky
+4. `npm run start` - запустить приложение
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
@@ -61,6 +65,7 @@
 2. Перенос проекта на Redux Toolkit и написание бизнес-логики (см. функционал)
 3. Добавление роутов
 4. Переписывание проекта на TypeScript
+5. Завершение бизнес-логики приложения: подключение ленты заказов с помощью WebSocket
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
@@ -71,6 +76,7 @@
 - Счетчики ингредиентов и цены
 - Подсветка активных табов в списке ингредиентов при скролле
 - Открытие и закрытие модальных окон по кнопке, оверлею и клавише `Escape` с сохранением открытого состояния после обновления страницы (также открытие информации об ингредиенте на отдельной странице при копировании ссылки в адресную строку новой вкладки/нового окна браузера)
+- Лента заказов, обновляющаяся в режиме реального времени
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 

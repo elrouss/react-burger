@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { API } from 'utils/constants';
-import { IIngredient } from './types';
+import { IIngredientWithId } from './types';
 
 interface IGetIngredientsResponse {
-  data: IIngredient[];
+  data: IIngredientWithId[];
 }
 
 export const ingredientsApiReducer = createApi({

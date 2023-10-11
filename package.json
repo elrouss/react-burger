@@ -36,10 +36,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:es": "eslint --ext .js,.jsx,.ts,.tsx src",
-    "lint:es:fix": "npm run lint:es -- --fix",
-    "lint:css": "stylelint src",
-    "lint:css:fix": "npm run lint:css -- --fix",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|css|scss)\"",
     "prepare": "husky install"
   },
   "eslintConfig": {
@@ -71,6 +69,7 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
     "prettier": "2.8.8",
     "stylelint": "^15.10.2",
     "stylelint-config-clean-order": "^5.0.1",

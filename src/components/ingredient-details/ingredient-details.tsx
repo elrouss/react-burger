@@ -1,4 +1,4 @@
-import { useEffect, FC, ReactElement } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'services/app/hooks';
 import { useGetIngredientsQuery } from 'services/features/ingredients/reducer';
@@ -16,9 +16,9 @@ interface IListIngredientParams {
   nameRus: string;
 }
 
-const IngredientDetails: FC<IIngredientDetailsProps> = ({
+const IngredientDetails = ({
   isSinglePage = false,
-}): ReactElement => {
+}: IIngredientDetailsProps) => {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const { id: _id } = useParams();
   const { data } = useGetIngredientsQuery();
@@ -30,7 +30,6 @@ const IngredientDetails: FC<IIngredientDetailsProps> = ({
     if (res) {
       dispatch(SHOW_INGREDIENT_DETAILS(res));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const currentIngredient = useAppSelector(getCurrentIngredient);

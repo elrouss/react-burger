@@ -1,0 +1,23 @@
+@use 'assets/styles/variables.scss' as *;
+
+.green {
+  color: $colors-interface-success;
+}
+
+.white {
+  color: $color-neutral-0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 313px;
+  margin-top: 24px;
+}
+
+.item {
+  &:not(:nth-child(10n + 1)) {
+    margin-top: 8px;
+  }
+}

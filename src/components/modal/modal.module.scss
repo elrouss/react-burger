@@ -1,4 +1,4 @@
-@import '../../index.scss';
+@use 'assets/styles/variables.scss' as *;
 
 .modal {
   $color-shadow: rgba(0, 0, 0, 0.04);

@@ -70,7 +70,10 @@ const BurgerIngredients: FC = (): ReactElement => {
             </Tab>
           ))}
         </div>
-        <div className={styles.ingredients} onScroll={handleTabsScroll}>
+        <div
+          className={`custom-scroll ${styles.ingredients}`}
+          onScroll={handleTabsScroll}
+        >
           {table.map(({ typeRus, typeEng, ref }) => (
             <BurgerIngredientsSection
               key={typeEng}

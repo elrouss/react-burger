@@ -24,7 +24,6 @@ const UserInfoPage = () => {
     if (userName && userEmail) {
       setData({ ...data, name: userName, email: userEmail });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userName, userEmail]);
 
   useEffect(() => {
@@ -37,7 +36,6 @@ const UserInfoPage = () => {
     if (userName && userEmail) {
       setData({ name: userName, email: userEmail, password: '' });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userName, userEmail]);
 
   const onSubmit = (evt: FormEvent<HTMLFormElement>) => {

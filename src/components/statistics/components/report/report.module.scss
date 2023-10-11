@@ -1,0 +1,7 @@
+@use 'assets/styles/variables.scss' as *;
+
+.counter {
+  text-shadow: 0 4px 32px rgba($color: $color-accent-counter, $alpha: 0.5),
+    0 0 8px rgba($color: $color-accent-counter, $alpha: 0.25),
+    0 0 16px rgba($color: $color-accent-counter, $alpha: 0.25);
+}

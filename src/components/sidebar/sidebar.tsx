@@ -1,7 +1,6 @@
-import { FC } from 'react';
+import classNames from 'classnames';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'services/app/hooks';
-import { v4 as uuidv4 } from 'uuid';
 import { ROUTES } from 'utils/constants';
 import { logoutUser } from 'services/features/user/api';
 import { isLoading } from 'services/features/user/selectors';
@@ -27,7 +26,7 @@ const links: ILinks[] = [
   },
 ];
 
-const Sidebar: FC<ISidebarProps> = ({ description }) => {
+const Sidebar = ({ description }: ISidebarProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,20 +41,18 @@ const Sidebar: FC<ISidebarProps> = ({ description }) => {
     <nav className={styles.nav}>
       <ul className={styles.links}>
         {links.map(({ name, url }) => (
-          <li className={styles.linksItem} key={uuidv4()}>
+          <li className={styles.linksItem} key={name}>
             <Link
-              className={`${styles.link}${
-                (location.pathname.endsWith(url) && ` ${styles.linkActive}`) ||
-                ''
-              }`}
-              key={uuidv4()}
+              className={classNames(styles.link, {
+                [styles.linkActive]: location.pathname.endsWith(url),
+              })}
               to={url}
             >
               {name}
             </Link>
           </li>
         ))}
-        <li className={styles.linksItem} key={uuidv4()}>
+        <li className={styles.linksItem}>
           <button
             className={`${styles.link} ${styles.button}`}
             type="button"

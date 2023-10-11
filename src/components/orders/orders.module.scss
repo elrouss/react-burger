@@ -1,0 +1,10 @@
+.section {
+  height: 100vh;
+  padding-right: 7px;
+  overflow-y: auto;
+
+  > a:not(:first-child) {
+    display: inherit;
+    margin-top: 24px;
+  }
+}

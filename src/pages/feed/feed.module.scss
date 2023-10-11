@@ -1,0 +1,23 @@
+@use 'assets/styles/variables.scss' as *;
+@use 'assets/styles/mixins.scss' as *;
+
+.wrapper {
+  max-width: $wrapper-desktop-xl;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+
+.heading {
+  @include show-font(
+    $weight: 700,
+    $size: $font-size-l,
+    $line-height: $font-line-height-m
+  );
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: 48.5% 46.77%;
+  justify-content: space-between;
+  margin-top: 20px;
+}

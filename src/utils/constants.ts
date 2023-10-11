@@ -18,6 +18,14 @@ export const API = Object.freeze({
   },
 });
 
+export const WEBSOCKET = Object.freeze({
+  baseUrl: 'wss://norma.nomoreparties.space',
+  endpoints: {
+    ordersAll: '/orders/all',
+    ordersPersonal: '/orders', // do not forget accessToken in headers
+  },
+});
+
 export const ROUTES = Object.freeze({
   home: '/',
   sign: {
@@ -31,7 +39,10 @@ export const ROUTES = Object.freeze({
   user: {
     profile: '/profile',
     orders: 'orders',
+    orderDetails: 'orders/:id',
   },
   orders: '/feed',
+  orderDetails: '/feed/:id',
+  ingredients: '/ingredients',
   ingredientDetails: '/ingredients/:id',
 });

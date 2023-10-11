@@ -1,4 +1,4 @@
-@import '../../index.scss';
+@use 'assets/styles/variables.scss' as *;
 
 .wrapper {
   display: grid;
@@ -6,5 +6,10 @@
   column-gap: 60px;
   max-width: $wrapper-desktop-xl;
   margin: 0 auto;
-  padding: 120px 0 512px;
+  padding-top: 120px;
+
+  &Orders {
+    grid-template-columns: 25.8% 70.4%;
+    column-gap: 48px;
+  }
 }

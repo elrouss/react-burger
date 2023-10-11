@@ -1,4 +1,6 @@
-@import '../../index.scss';
+@use 'assets/styles/variables.scss' as *;
+@use 'assets/styles/mixins.scss' as *;
+@use 'assets/styles/placeholders.scss' as *;
 
 .order {
   display: flex;
@@ -15,7 +17,6 @@
   margin: 16px 0 16px 17px;
 
   overflow-y: auto;
-  composes: custom-scroll;
 }
 
 .componentsEmpty {
@@ -35,21 +36,4 @@
   align-items: center;
   column-gap: 40px;
   margin-top: 40px;
-}
-
-.price {
-  display: flex;
-  align-items: center;
-  column-gap: 9.5px;
-
-  @include show-font(
-    $family: 'Iceland',
-    $size: $font-size-xl,
-    $line-height: $font-line-height-xxs
-  );
-
-  > svg {
-    width: 33px;
-    height: 33px;
-  }
 }

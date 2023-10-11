@@ -1,36 +1,11 @@
-@import '../../index.scss';
+@use 'assets/styles/variables.scss' as *;
+@use 'assets/styles/mixins.scss' as *;
 
 .wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 120px 100px;
-}
-
-.order {
-  @include show-font(
-    $family: 'Iceland',
-    $size: $font-size-xxl,
-    $line-height: $font-line-height-xs
-  );
-
-  filter: drop-shadow(0 4px 32px rgba(51, 51, 255, 0.5))
-    drop-shadow(0 0 8px rgba(51, 51, 255, 0.25))
-    drop-shadow(0 0 16px rgba(51, 51, 255, 0.25));
-}
-
-.heading {
-  padding-top: 33px;
-
-  @include show-font(
-    $weight: 700,
-    $size: $font-size-s,
-    $line-height: $font-line-height-l
-  );
-}
-
-.image {
-  padding-top: 68px;
 }
 
 .paragraph {
