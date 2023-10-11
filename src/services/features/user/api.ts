@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import jwtDecode from 'jwt-decode';
 import dayjs from 'dayjs';
 import { API } from 'utils/constants';
+import { request } from 'utils/api/request';
 import {
   IAccessToken,
   IUserRegistration,
@@ -54,19 +55,13 @@ export const registerUser = createAsyncThunk<
   { rejectValue: unknown }
 >('user/register', async (data, { rejectWithValue }) => {
   try {
-    const res = await fetch(`${API.baseUrl}${API.endpoints.user.register}`, {
+    return await request(API.endpoints.user.register, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
-
-    if (!res.ok) {
-      Promise.reject(new Error(`Error ${res.status}`));
-    }
-
-    return (await res.json()) as IUserAuthResponse;
   } catch (err) {
     return rejectWithValue(`User registration error: ${err}`);
   }
@@ -76,37 +71,27 @@ export const loginUser = createAsyncThunk<
   IUserAuthResponse,
   IUserLogin,
   { rejectValue: unknown }
->('user/login', async (data) => {
-  const res = await fetch(`${API.baseUrl}${API.endpoints.user.login}`, {
+>('user/login', async (data) =>
+  request(API.endpoints.user.login, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
-  });
+  })
+);
 
-  if (!res.ok) {
-    Promise.reject(new Error(`Error ${res.status}`));
-  }
-
-  return (await res.json()) as IUserAuthResponse;
-});
-
-export const logoutUser = createAsyncThunk('user/logout', async () => {
-  const res = await fetch(`${API.baseUrl}${API.endpoints.user.logout}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
-  });
-
-  if (!res.ok) {
-    Promise.reject(new Error(`Error ${res.status}`));
-  }
-
-  return (await res.json()) as IUserLogoutResponse;
-});
+export const logoutUser = createAsyncThunk(
+  'user/logout',
+  async () =>
+    (await request(API.endpoints.user.logout, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
+    })) as IUserLogoutResponse
+);
 
 export const checkUserAuth = createAsyncThunk(
   'user/auth',
@@ -120,17 +105,12 @@ export const checkUserAuth = createAsyncThunk(
     }
 
     try {
-      const res = await fetch(`${API.baseUrl}${API.endpoints.user.data}`, {
+      return await request(API.endpoints.user.data, {
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      if (!res.ok) {
-        Promise.reject(new Error(`Error ${res.status}`));
-      }
-
-      return await res.json();
     } catch (err) {
       return rejectWithValue(`User get data error: ${err}`);
     }
@@ -149,7 +129,7 @@ export const editUserData = createAsyncThunk<
   }
 
   try {
-    const res = await fetch(`${API.baseUrl}${API.endpoints.user.data}`, {
+    return await request(API.endpoints.user.data, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -157,12 +137,6 @@ export const editUserData = createAsyncThunk<
       },
       body: JSON.stringify(data),
     });
-
-    if (!res.ok) {
-      Promise.reject(new Error(`Error ${res.status}`));
-    }
-
-    return (await res.json()) as IUserEditInfoResponse;
   } catch (err) {
     return rejectWithValue(`User edit error: ${err}`);
   }
