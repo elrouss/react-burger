@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { v4 as uuidv4 } from 'uuid';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import Price from 'components/price/price';
 import getStatusLocalLang from 'utils/calculations/get-status-local-lang';
@@ -43,14 +42,14 @@ const CardOrder = (props: TCardOrderProps) => {
             .slice(0, iconsLimit)
             .map((image, i) => (
               <IngredientIcon
-                key={uuidv4()}
+                key={image}
                 image={image}
                 position={i}
                 imagesMore={i + 1 === iconsLimit ? imagesMore : 0}
               />
             ))
         : images.map((image, i) => (
-            <IngredientIcon key={uuidv4()} image={image} position={i} />
+            <IngredientIcon key={image} image={image} position={i} />
           ));
 
     const ingredientStatus = getStatusLocalLang(status);
