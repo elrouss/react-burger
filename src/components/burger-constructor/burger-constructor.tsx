@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 import sendOrder from 'services/features/order-details/api';
 import { isLoading } from 'services/features/order-details/selectors';
 import {
+  SET_BUN,
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   RESET,
@@ -70,7 +71,11 @@ const BurgerConstructor = () => {
         ingredientTypeDrop: monitor.getItem()?.type,
       }),
       drop: (ingredient: IIngredientWithId) => {
-        dispatch(ADD_INGREDIENT({ ingredient, key: uuidv4() }));
+        const data = { ingredient, key: uuidv4() };
+
+        dispatch(
+          ingredient.type === 'bun' ? SET_BUN(data) : ADD_INGREDIENT(data)
+        );
       },
     }),
     []
