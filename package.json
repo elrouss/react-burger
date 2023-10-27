@@ -34,7 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|css|scss)\"",
