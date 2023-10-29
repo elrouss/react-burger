@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import reducer, { initialState } from './slice';
-import { registerUser, loginUser, logoutUser } from './api';
+import { registerUser, loginUser, logoutUser, editUserData } from './api';
 
 const MOCK_EMAIL = 'janet.weaver@reqres.in';
 const MOCK_PASSWORD = '111111';
@@ -9,10 +9,7 @@ const MOCK_ACCESS_TOKEN = '100500';
 const MOCK_REFRESH_TOKEN = '100500';
 
 describe('check user authorization', () => {
-  let store = configureStore({
-    reducer,
-    preloadedState: initialState,
-  });
+  let store;
 
   beforeEach(() => {
     store = configureStore({
@@ -78,14 +75,26 @@ describe('check user authorization', () => {
     });
     expect(fetch).toHaveBeenCalledTimes(1);
   });
+});
+
+describe('check user manipulating with data', () => {
+  let store;
+
+  beforeEach(() => {
+    store = configureStore({
+      reducer,
+      preloadedState: {
+        ...initialState,
+        user: { email: MOCK_EMAIL, name: MOCK_NAME },
+      },
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
 
   it('should logout be successful', async () => {
-    const mockUser = { email: MOCK_EMAIL, name: MOCK_NAME };
-    const storeAuth = configureStore({
-      reducer,
-      preloadedState: { ...initialState, user: mockUser },
-    });
-
     jest.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: jest.fn().mockResolvedValue({
@@ -94,11 +103,31 @@ describe('check user authorization', () => {
       }),
     });
 
-    await storeAuth.dispatch(logoutUser());
+    await store.dispatch(logoutUser());
 
     expect(store.getState()).toEqual({
       ...initialState,
       user: null,
+    });
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("should editing user's personal data be successful", async () => {
+    const newUserPersonalData = { email: 'jasper@test.com', name: 'Jasper' };
+
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue({
+        success: true,
+        user: newUserPersonalData,
+      }),
+    });
+
+    await store.dispatch(editUserData(newUserPersonalData));
+
+    expect(store.getState()).toEqual({
+      ...initialState,
+      user: newUserPersonalData,
     });
     expect(fetch).toHaveBeenCalledTimes(1);
   });
