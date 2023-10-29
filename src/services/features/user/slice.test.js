@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { API } from 'utils/constants';
 import reducer, { initialState } from './slice';
 import { registerUser, loginUser, logoutUser, editUserData } from './api';
 
@@ -42,11 +43,22 @@ describe('check user authorization', () => {
       registerUser({ ...mockUser, password: MOCK_PASSWORD })
     );
 
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(
+      `${API.baseUrl}${API.endpoints.user.register}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...mockUser, password: MOCK_PASSWORD }),
+      }
+    );
+
     expect(store.getState()).toEqual({
       ...initialState,
       user: mockUser,
     });
-    expect(fetch).toHaveBeenCalledTimes(1);
   });
 
   it('should login be successful', async () => {
@@ -69,11 +81,22 @@ describe('check user authorization', () => {
       loginUser({ email: MOCK_EMAIL, password: MOCK_PASSWORD })
     );
 
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(
+      `${API.baseUrl}${API.endpoints.user.login}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: MOCK_EMAIL, password: MOCK_PASSWORD }),
+      }
+    );
+
     expect(store.getState()).toEqual({
       ...initialState,
       user: mockUser,
     });
-    expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -105,11 +128,11 @@ describe('check user manipulating with data', () => {
 
     await store.dispatch(logoutUser());
 
+    expect(fetch).toHaveBeenCalledTimes(1);
     expect(store.getState()).toEqual({
       ...initialState,
       user: null,
     });
-    expect(fetch).toHaveBeenCalledTimes(1);
   });
 
   it("should editing user's personal data be successful", async () => {
@@ -125,10 +148,10 @@ describe('check user manipulating with data', () => {
 
     await store.dispatch(editUserData(newUserPersonalData));
 
+    expect(fetch).toHaveBeenCalledTimes(1);
     expect(store.getState()).toEqual({
       ...initialState,
       user: newUserPersonalData,
     });
-    expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
