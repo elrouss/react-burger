@@ -8,7 +8,7 @@ type TSliceState = {
   error: null | IOrderResponseFail;
 };
 
-const initialState: TSliceState = {
+export const initialState: TSliceState = {
   order: null,
   status: false,
   error: null,

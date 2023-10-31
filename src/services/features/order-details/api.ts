@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API } from 'utils/constants';
 import { request } from 'utils/api/request';
-import { IOrderResponseSuccess, IOrderResponseFail } from './types';
+import { IOrderResponseSuccess } from './types';
 
 type TOrder = {
   order: string[];
@@ -11,18 +11,21 @@ type TOrder = {
 const sendOrder = createAsyncThunk<
   IOrderResponseSuccess,
   TOrder,
-  { rejectValue: IOrderResponseFail }
->('orderDetails/sendOrder', async (data) => {
+  { rejectValue: unknown }
+>('orderDetails/sendOrder', async (data, { rejectWithValue }) => {
   const { order, token } = data;
-
-  return request(API.endpoints.orders, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ ingredients: order }),
-  });
+  try {
+    return await request(API.endpoints.orders, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ ingredients: order }),
+    });
+  } catch (err) {
+    return rejectWithValue(err);
+  }
 });
 
 export default sendOrder;
