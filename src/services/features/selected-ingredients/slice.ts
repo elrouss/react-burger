@@ -6,24 +6,30 @@ type TSliceState = {
   ingredients: IIngredientWithKey[];
 };
 
-const initialState: TSliceState = { bun: null, ingredients: [] };
+export const initialState: TSliceState = { bun: null, ingredients: [] };
 
 const selectedIngredientsSlice = createSlice({
   name: 'selectedIngredients',
   initialState,
   reducers: {
-    ADD_INGREDIENT: (state, { payload }) => {
-      const { key, ingredient } = payload;
+    SET_BUN: (state, action) => {
+      const { key, ingredient } = action.payload;
       const data = {
         ...ingredient,
         key,
       };
 
-      if (ingredient.type === 'bun') {
-        state.bun = data;
-      } else {
-        state.ingredients.push(data);
-      }
+      state.bun = data;
+    },
+
+    ADD_INGREDIENT: (state, action) => {
+      const { key, ingredient } = action.payload;
+      const data = {
+        ...ingredient,
+        key,
+      };
+
+      state.ingredients.push(data);
     },
 
     CHANGE_POSITION_INGREDIENT: (
@@ -49,6 +55,7 @@ const selectedIngredientsSlice = createSlice({
 });
 
 export const {
+  SET_BUN,
   ADD_INGREDIENT,
   CHANGE_POSITION_INGREDIENT,
   REMOVE_INGREDIENT,
