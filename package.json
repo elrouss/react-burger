@@ -32,10 +32,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --watchAll=false",
     "testCoverage": "npm test -- --coverage",
+    "cypress:open": "cypress open",
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|css|scss)\"",
@@ -62,10 +63,12 @@
   "devDependencies": {
     "@types/jwt-decode": "^3.1.0",
     "@types/uuid": "^9.0.2",
+    "cypress": "^13.6.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",

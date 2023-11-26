@@ -1,4 +1,4 @@
-import { useRef, useState, FC, ReactElement, RefObject } from 'react';
+import { useRef, useState, RefObject } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IIngredientsTable } from 'services/features/ingredients/types';
 import BurgerIngredientsSection from './burger-ingredients-section/burger-ingredients-section';
@@ -8,7 +8,7 @@ interface ITable extends IIngredientsTable {
   value: string;
 }
 
-const BurgerIngredients: FC = (): ReactElement => {
+const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState('one');
 
   const tabsRef = useRef<HTMLDivElement>(null);

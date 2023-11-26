@@ -105,6 +105,7 @@ const BurgerConstructor = () => {
 
     dispatch(sendOrder({ order, token }))
       .then((res) => {
+        // @ts-ignore
         if (res.payload?.success) dispatch(RESET());
       })
       .catch((err) => console.error(`Error: ${err}`));

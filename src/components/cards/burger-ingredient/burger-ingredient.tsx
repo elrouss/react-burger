@@ -1,6 +1,7 @@
 import { useMemo, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
+import classNames from 'classnames';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Price from 'components/price/price';
 import { useAppSelector } from 'services/app/hooks';
@@ -48,7 +49,9 @@ const BurgerIngredient = ({ ingredient }: IBurgerIngredient) => {
     >
       <div ref={dragPreview} role="button" tabIndex={0}>
         <article
-          className={`${styles.card} ${isDragging && styles.cardDragging}`}
+          className={classNames(styles.card, {
+            [styles.cardDragging]: isDragging,
+          })}
           ref={drag}
         >
           {(counter && <Counter count={counter} size="default" />) || null}

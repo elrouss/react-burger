@@ -14,6 +14,7 @@ const sendOrder = createAsyncThunk<
   { rejectValue: unknown }
 >('orderDetails/sendOrder', async (data, { rejectWithValue }) => {
   const { order, token } = data;
+
   try {
     return await request(API.endpoints.orders, {
       method: 'POST',
