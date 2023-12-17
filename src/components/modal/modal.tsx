@@ -22,10 +22,19 @@ const Modal: FC<IModalProps> = ({
 }) => {
   useCloseModal(id, isModalOpened, onModalClose);
 
+  if (!isModalOpened) return null;
+
   return createPortal(
     <ModalOverlay id={id} isModalOpened={isModalOpened} {...rest}>
       <div className={styles.modal}>
-        <CloseIcon type="primary" onClick={onModalClose} />
+        <button
+          className={styles.button}
+          data-test="close-button"
+          type="button"
+          onClick={onModalClose}
+        >
+          <CloseIcon type="primary" />
+        </button>
         {children}
       </div>
     </ModalOverlay>,

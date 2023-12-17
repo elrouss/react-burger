@@ -105,6 +105,7 @@ const BurgerConstructor = () => {
 
     dispatch(sendOrder({ order, token }))
       .then((res) => {
+        // @ts-ignore
         if (res.payload?.success) dispatch(RESET());
       })
       .catch((err) => console.error(`Error: ${err}`));
@@ -117,7 +118,12 @@ const BurgerConstructor = () => {
   return (
     <>
       <section aria-label="Оформление заказа">
-        <form className={styles.order} ref={drop} onSubmit={handleOrder}>
+        <form
+          className={styles.order}
+          data-test="constructor"
+          ref={drop}
+          onSubmit={handleOrder}
+        >
           <BurgerBun
             selectedBun={selectedBun}
             isOver={isOver}

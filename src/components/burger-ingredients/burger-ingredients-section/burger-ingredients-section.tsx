@@ -16,9 +16,9 @@ const BurgerIngredientsSection: ForwardRefExoticComponent<
   const ingredients = data?.data || [];
 
   return (
-    <section aria-label={typeRus} ref={ref}>
+    <section aria-label={typeRus} ref={ref} data-test={typeEng}>
       <h2 className={styles.heading}>{typeRus}</h2>
-      <div className={styles.content}>
+      <div className={styles.content} data-test="content">
         {ingredients
           .filter(({ type }) => type === typeEng)
           .map((ingredient) => (
