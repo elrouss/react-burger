@@ -1,15 +1,17 @@
 describe('creating an order in the burger constructor', () => {
   beforeEach(() => {
-    window.localStorage.setItem('refreshToken', 'test-refreshToken');
-    window.localStorage.setItem('accessToken', 'test-accessToken');
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
-      fixture: 'user.json',
-    }).as('signin');
+    window.localStorage.setItem(
+      'refreshToken',
+      '417e11f2290cf4350663a3e4971b508bcca6f9cb7c802f6e4539b8edf83e41365c7bb234b756c694'
+    );
+    window.localStorage.setItem(
+      'accessToken',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWI4NDhkMTJmNGEyMDAxYmQ1Y2FhOSIsImlhdCI6MTcwMjgzOTk1MCwiZXhwIjoxNzAyODQxMTUwfQ.eZH6SugnK2A7niCKruwsmpYH4lbnMcr0oXd303aZP2s'
+    );
     cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
       fixture: 'ingredients.json',
     }).as('ingredients');
     cy.visit('http://localhost:3000/');
-    // cy.wait('@signin');
     cy.wait('@ingredients');
   });
 
@@ -50,6 +52,12 @@ describe('creating an order in the burger constructor', () => {
   });
 
   it.only('allows an authorized user create an order', () => {
+    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+      fixture: 'user.json',
+    }).as('signin');
+    cy.intercept('POST', 'https://norma.nomoreparties.space/api/auth/token', {
+      fixture: 'accessToken.json',
+    });
     cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
       fixture: 'order.json',
     }).as('order');
@@ -135,6 +143,7 @@ describe('creating an order in the burger constructor', () => {
 
     // check order's creation
     cy.get('@submitBtn').should('be.enabled').click();
+    // cy.wait('@signin');
     cy.getByData('order-details').should('exist');
     cy.getByData('order-number').should('exist').and('contain', '100500');
 
