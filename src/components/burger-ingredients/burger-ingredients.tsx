@@ -72,6 +72,7 @@ const BurgerIngredients = () => {
         </div>
         <div
           className={`custom-scroll ${styles.ingredients}`}
+          data-test="ingredients"
           onScroll={handleTabsScroll}
         >
           {table.map(({ typeRus, typeEng, ref }) => (

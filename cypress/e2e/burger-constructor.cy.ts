@@ -1,9 +1,15 @@
 describe('creating an order in the burger constructor', () => {
   beforeEach(() => {
+    window.localStorage.setItem('refreshToken', 'test-refreshToken');
+    window.localStorage.setItem('accessToken', 'test-accessToken');
+    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+      fixture: 'user.json',
+    }).as('signin');
     cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
       fixture: 'ingredients.json',
     }).as('ingredients');
     cy.visit('http://localhost:3000/');
+    // cy.wait('@signin');
     cy.wait('@ingredients');
   });
 
@@ -43,13 +49,103 @@ describe('creating an order in the burger constructor', () => {
     });
   });
 
-  // it('allows an authorized user create an order', () => {
-  //   cy.intercept('GET', 'api/auth/user', { fixture: 'user.json' });
+  it.only('allows an authorized user create an order', () => {
+    cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
+      fixture: 'order.json',
+    }).as('order');
 
-  // cy.wait('@signin');
-  // });
+    const dataTransfer = new DataTransfer();
 
-  // it('does not allow unauth user create an order', () => {
-  //   expect(true).to.equal(true);
-  // });
+    // constants
+    cy.getByData('ingredients').find('a').as('ingredients');
+    cy.getByData('constructor').as('constructor');
+    cy.get('@constructor').getByData('total-price').as('totalPrice');
+    cy.get('@constructor').find('button[type="submit"]').as('submitBtn');
+
+    // check initial state
+    cy.get('@constructor')
+      .should('exist')
+      .and('contain', 'Перетащите булку')
+      .and('contain', 'Перетащите начинку');
+    cy.get('@totalPrice').should('exist').and('contain', '0');
+    cy.get('@submitBtn').should('be.disabled');
+
+    // check drag and drop
+    cy.get('@ingredients').eq(1).trigger('dragstart', {
+      dataTransfer,
+    });
+    cy.get('@constructor')
+      .trigger('drop', { dataTransfer })
+      .should('contain', 'Флюоресцентная булка R2-D3')
+      .and('contain', '988');
+
+    cy.get('@ingredients').eq(0).trigger('dragstart', {
+      dataTransfer,
+    });
+    cy.get('@constructor')
+      .trigger('drop', { dataTransfer })
+      .should('contain', 'Краторная булка N-200i')
+      .and('contain', '1255');
+
+    cy.get('@submitBtn').should('be.disabled');
+
+    cy.get('@ingredients').eq(2).trigger('dragstart', {
+      dataTransfer,
+    });
+    cy.get('@constructor').trigger('drop', { dataTransfer });
+    cy.get('@ingredients').eq(4).trigger('dragstart', {
+      dataTransfer,
+    });
+    cy.get('@constructor').trigger('drop', { dataTransfer });
+    cy.get('@ingredients').eq(4).trigger('dragstart', {
+      dataTransfer,
+    });
+    cy.get('@constructor').trigger('drop', { dataTransfer });
+    cy.get('@ingredients').eq(5).trigger('dragstart', {
+      dataTransfer,
+    });
+    cy.get('@constructor').trigger('drop', { dataTransfer });
+
+    cy.get('@constructor')
+      .should('contain', 'Краторная булка N-200i')
+      .and('contain', '1255')
+      .should('contain', 'Соус Spicy-X')
+      .and('contain', '90')
+      .should('contain', 'Биокотлета из марсианской Магнолии')
+      .and('contain', '424')
+      .should('contain', 'Филе Люминесцентного тетраодонтимформа')
+      .and('contain', '988');
+
+    cy.get('@constructor').within(() => {
+      cy.get('.constructor-element').should('have.length', '6');
+
+      cy.get('.constructor-element')
+        .eq(1)
+        .within(() => {
+          cy.get('.constructor-element__action').find('svg').as('deleteBtn');
+          cy.get('@deleteBtn').click();
+        });
+
+      cy.get('.constructor-element').should('have.length', '5');
+    });
+
+    cy.get('@constructor')
+      .should('not.contain', 'Соус Spicy-X')
+      .and('not.contain', '90');
+
+    // check order's creation
+    cy.get('@submitBtn').should('be.enabled').click();
+    cy.getByData('order-details').should('exist');
+    cy.getByData('order-number').should('exist').and('contain', '100500');
+
+    // check closing modal and initial state
+    cy.getByData('close-button').should('exist').click();
+    cy.getByData('order-details').should('not.exist');
+    cy.get('@constructor')
+      .should('exist')
+      .and('contain', 'Перетащите булку')
+      .and('contain', 'Перетащите начинку');
+    cy.get('@totalPrice').should('exist').and('contain', '0');
+    cy.get('@submitBtn').should('be.disabled');
+  });
 });
