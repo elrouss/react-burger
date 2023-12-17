@@ -143,7 +143,6 @@ describe('creating an order in the burger constructor', () => {
 
     // check order's creation
     cy.get('@submitBtn').should('be.enabled').click();
-    // cy.wait('@signin');
     cy.getByData('order-details').should('exist');
     cy.getByData('order-number').should('exist').and('contain', '100500');
 
