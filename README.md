@@ -23,6 +23,9 @@
 
 <b>Ссылки на проект</b>
 <br>
+<b>Деплой</b>:
+<br>https://elrouss.github.io/react-burger/
+<br>
 <b>Макет:</b>
 <br>https://www.figma.com/file/zFGN2O5xktHl9VmoOieq5E/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link?node-id=0%3A1
 <br>
@@ -32,6 +35,7 @@
 <br>https://code.s3.yandex.net/react/checklists-pdf/checklist-3.pdf
 <br>https://code.s3.yandex.net/react/checklists-pdf/checklist-4.pdf
 <br>https://code.s3.yandex.net/react/checklists-pdf/checklist-5.pdf
+<br>https://code.s3.yandex.net/react/checklists-pdf/checklist-6.pdf
 <br>
 
 <i>* - проект прошел код-ревью</i>
@@ -44,6 +48,8 @@
   <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" alt="Иконка React Router">
   <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" alt="Иконка Redux">
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Иконка 'TypeScript'">
+  <img src="https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white" alt="Иконка 'Cypress'">
+  <img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white" alt="Иконка 'Jest'">
   <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" alt="Иконка 'Sass (SCSS)'">
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="Иконка HTML5">
 </span>
@@ -66,6 +72,7 @@
 3. Добавление роутов
 4. Переписывание проекта на TypeScript
 5. Завершение бизнес-логики приложения: подключение ленты заказов с помощью WebSocket
+6. Покрытие проекта юнит- и e2e тестами
 
 <div align="right">(<a href="#summary">к оглавлению</a>)</div>
 
