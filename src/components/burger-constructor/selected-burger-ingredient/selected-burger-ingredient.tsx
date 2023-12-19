@@ -1,4 +1,5 @@
 import { useRef, FC } from 'react';
+import classNames from 'classnames';
 import { useDrag, useDrop } from 'react-dnd';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { useAppDispatch } from 'services/app/hooks';
@@ -94,9 +95,7 @@ const SelectedBurgerIngredient: FC<ISelectedBurgerIngredientProps> = ({
 
   return (
     <div
-      className={`${styles.item}${
-        (isDragging && ` ${styles.itemDragging}`) || ''
-      }`}
+      className={classNames(styles.item, { [styles.itemDragging]: isDragging })}
       key={`container-${ingredient.key}`}
       ref={ref}
       data-handler-id={handlerId}

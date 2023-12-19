@@ -7,7 +7,7 @@ interface IOrderDetailsProps {
 }
 
 const OrderDetails = ({ isPending }: IOrderDetailsProps) => (
-  <div className={styles.wrapper}>
+  <div className={styles.wrapper} data-test="order-details">
     {isPending ? <NewOrderPending /> : <NewOrderFulfilled />}
     <p className={styles.paragraph}>
       {isPending ? 'Ваш заказ начали готовить' : 'Ваш заказ готов'}

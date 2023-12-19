@@ -18,7 +18,7 @@ type TSliceState = {
   };
 };
 
-const initialState: TSliceState = {
+export const initialState: TSliceState = {
   user: null,
   isAuthChecked: false,
 

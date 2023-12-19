@@ -8,7 +8,9 @@ const NewOrderFulfilled = () => {
 
   return (
     <>
-      <span className={styles.order}>{currentOrderNumber}</span>
+      <span className={styles.order} data-test="order-number">
+        {currentOrderNumber}
+      </span>
       <h3 className={styles.heading}>идентификатор заказа</h3>
       <img
         className={styles.image}

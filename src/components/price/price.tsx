@@ -33,7 +33,7 @@ const Price = (props: TPriceProps) => {
           { [styles.bigIcon]: size === 'big' }
         )}
       >
-        <span>{totalPrice}</span>
+        <span data-test="total-price">{totalPrice}</span>
         <CurrencyIcon type="primary" />
       </div>
     );

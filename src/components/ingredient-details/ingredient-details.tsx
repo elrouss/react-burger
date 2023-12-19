@@ -58,7 +58,7 @@ const IngredientDetails = ({
   ];
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-test="ingredient-details">
       {(isSinglePage && (
         <h1 className={styles.heading}>Детали ингредиента</h1>
       )) || <h3 className={styles.heading}>Детали ингредиента</h3>}

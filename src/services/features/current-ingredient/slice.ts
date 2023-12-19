@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IIngredientWithId } from '../ingredients/types';
 
-const initialState: { ingredient: null | IIngredientWithId } = {
+export const initialState: { ingredient: null | IIngredientWithId } = {
   ingredient: null,
 };
 

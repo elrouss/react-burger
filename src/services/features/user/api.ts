@@ -71,15 +71,19 @@ export const loginUser = createAsyncThunk<
   IUserAuthResponse,
   IUserLogin,
   { rejectValue: unknown }
->('user/login', async (data) =>
-  request(API.endpoints.user.login, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-);
+>('user/login', async (data, { rejectWithValue }) => {
+  try {
+    return await request(API.endpoints.user.login, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  } catch (err) {
+    return rejectWithValue(`User login error: ${err}`);
+  }
+});
 
 export const logoutUser = createAsyncThunk(
   'user/logout',
