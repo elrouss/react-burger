@@ -51,7 +51,7 @@ describe('creating an order in the burger constructor', () => {
     });
   });
 
-  it.only('allows an authorized user create an order', () => {
+  it('allows an authorized user create an order', () => {
     cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
       fixture: 'user.json',
     }).as('signin');
